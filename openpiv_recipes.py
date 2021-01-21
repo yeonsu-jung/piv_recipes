@@ -19,14 +19,14 @@ def run_piv(
     winsize = 64, # pixels, interrogation window size in frame A
     searchsize = 66,  # pixels, search in image B
     overlap = 32, # pixels, 50% overlap
-    dt = 0.0005, # sec, time interval between pulses
+    dt = 0.0001, # sec, time interval between pulses
     image_check = False,
     show_vertical_profiles = False,
     figure_export_name = 'results.png',
     text_export_name =  "results.txt",
     scale_factor = 1
     ):  
-    
+           
     u0, v0, sig2noise = pyprocess.extended_search_area_piv(frame_a.astype(np.int32), 
                                                         frame_b.astype(np.int32), 
                                                         window_size=winsize, 
@@ -64,7 +64,7 @@ def run_piv(
     fig, ax = plt.subplots(figsize=(24,12))
     tools.display_vector_field(text_export_name, 
                                    ax=ax, scaling_factor=41.22, 
-                                   scale=0.05e5*scale_factor, # scale defines here the arrow length
+                                   scale=2e5*scale_factor, # scale defines here the arrow length
                                    width=0.001, # width is the thickness of the arrow
                                    on_img=True, # overlay on the image
                                    image_name= 'test_img.tiff');            
