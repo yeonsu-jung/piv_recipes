@@ -43,12 +43,12 @@ def run_piv(
                                             sig2noise, 
                                             threshold = 1.05 )
 
-    u2, v2 = filters.replace_outliers( u1, v1, 
-                                    method='localmean', 
-                                    max_iter=10, 
+    u2, v2 = filters.replace_outliers( u1, v1,
+                                    method='localmean',
+                                    max_iter=10,
                                     kernel_size=3)
 
-    x, y, u3, v3 = scaling.uniform(x, y, u2, v2, 
+    x, y, u3, v3 = scaling.uniform(x, y, u2, v2,
                                 scaling_factor = 41.22 ) # 41.22 microns/pixel        
 
     #save in the simple ASCII table format    
@@ -61,14 +61,14 @@ def run_piv(
 
     imageio.imwrite('test_img.tiff',frame_a)
 
-    fig, ax = plt.subplots(figsize=(24,12))
-    tools.display_vector_field(text_export_name, 
-                                   ax=ax, scaling_factor=41.22, 
-                                   scale=2e5*scale_factor, # scale defines here the arrow length
-                                   width=0.001, # width is the thickness of the arrow
-                                   on_img=True, # overlay on the image
-                                   image_name= 'test_img.tiff');            
-    fig.savefig(figure_export_name)       
+    # fig, ax = plt.subplots(figsize=(24,12))
+    # tools.display_vector_field(text_export_name, 
+    #                                ax=ax, scaling_factor=41.22, 
+    #                                scale=2e5*scale_factor, # scale defines here the arrow length
+    #                                width=0.001, # width is the thickness of the arrow
+    #                                on_img=True, # overlay on the image
+    #                                image_name= 'test_img.tiff');            
+    # fig.savefig(figure_export_name)       
 
     if show_vertical_profiles:
         field_shape = pyprocess.get_field_shape(image_size=frame_a.shape,search_area_size=searchsize,overlap=overlap)

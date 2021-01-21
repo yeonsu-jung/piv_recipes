@@ -3,6 +3,7 @@ import re
 import imageio as io
 import os
 import numpy as np
+import pandas as pd
 from scipy.ndimage import gaussian_filter1d
 
 from matplotlib import pyplot as plt
@@ -15,7 +16,10 @@ import skimage.feature
 import skimage.viewer
 
 import importlib
-
+importlib.reload(openpiv_recipes)
+# %%
+search_size = 50
+overlap = 24
 # %%
 def param_string_to_dictionary(pstr):      
     running_parameter = re.findall("_[a-z]+[0-9]+[.]*[0-9]*", pstr, re.IGNORECASE)
@@ -65,12 +69,19 @@ def match_images(img_a,img_b):
         return img_a, img_b[:,span_b-span_a:-1]
 # %%
 folder_path = 'D:/Rowland/piv-data/2021-01-20'
+folder_path = "/Volumes/Backup Plus /ROWLAND/piv-data/2021-01-20"
+
+result_folder_path = '_results/2021-01-20'
 
 param_string_list = os.listdir(folder_path)
 param_string_to_dictionary(param_string_list[5])
+
 # %%
-importlib.reload(openpiv_recipes)
-param_string_list = [param_string_list[5]]
+garo = 1408
+sero = (1296)*11
+entire_image = np.zeros((sero,garo))
+# %%
+param_string_5 = [param_string_list[5]]
 
 for param_string in param_string_list:
     img_a_name = 'frame_000102.tiff'
@@ -82,70 +93,163 @@ for param_string in param_string_list:
         file_path_a = os.path.join(folder_path,param_string,img_a_name)
         file_path_b = os.path.join(folder_path,param_string,img_b_name)        
         img_a = io.imread(file_path_a)
-        img_b = io.imread(file_path_b)
+        img_b = io.imread(file_path_b)        
     except:
         file_path_a = os.path.join(folder_path,'img_' + param_string,img_a_name)
         file_path_b = os.path.join(folder_path,'img_' + param_string,img_b_name)
 
         img_a = io.imread(file_path_a)
-        img_b = io.imread(file_path_b)
+        img_b = io.imread(file_path_b)          
+        
+    position = int(param_dict['pos'])
+    v_offset = int(param_dict['VOFFSET'])    
 
-    
-    
-    a_left, a_right = split_image_arg(img_a)
-    b_left, b_right = split_image_arg(img_b)
+    start_index = (position-1)*1296 + (v_offset//80)*108
+    end_index = start_index + 108   
 
-    right_edge_index = max(a_right,b_right)
+    entire_image[start_index:end_index,:] = img_a
     
-    img_a_right = img_a[:,right_edge_index:-1]
-    img_b_right = img_b[:,right_edge_index:-1]
+    # a_left, a_right = split_image_arg(img_a)
+    # b_left, b_right = split_image_arg(img_b)
+
+    # right_edge_index = max(a_right,b_right)
     
-    openpiv_recipes.run_piv(img_a_right,img_b_right,
+    # img_a_right = img_a[:,right_edge_index:-1]
+    # img_b_right = img_b[:,right_edge_index:-1]    
+
+    result_folder_path = '_results/2021-01-20'
+
+    text_path = os.path.join(result_folder_path,param_string+'.txt')
+    figure_path = os.path.join(result_folder_path,param_string+'.png')
+    
+    openpiv_recipes.run_piv(img_a,img_b,
         winsize=48,
         searchsize=50,
         overlap=24,
         show_vertical_profiles=False,
-        image_check=True,
-        figure_export_name='results.png')
+        image_check=False,
+        figure_export_name=figure_path,
+        text_export_name=text_path)
+
+# %%
+txt_list = [x for x in os.listdir(result_folder_path) if 'txt' in x]
+
+entire_u_array = np.zeros((53,3*12*11))
+entire_v_array = np.zeros((53,3*12*11))
+
+for k in txt_list:
+    param_dict = param_string_to_dictionary(k)
+    # print(param_dict)
+
+    result_path = os.path.join(result_folder_path,k)
+    df = pd.read_csv(result_path,comment='#',delimiter='\t',names=['x','y','u','v','s2n','mask'])
+
+    x_array = df.iloc[:,0].to_numpy()
+    y_array = df.iloc[:,1].to_numpy()
+    u_array = df.iloc[:,2].to_numpy()
+    v_array = df.iloc[:,3].to_numpy()
+    
+    field_shape = pyprocess.get_field_shape(image_size=img_a.shape,search_area_size=search_size,overlap=overlap)
+
+    num_rows = field_shape[0] # 11
+    num_cols = field_shape[1] # 100
+    
+    # x_coord = x_array.reshape(num_rows,num_cols)[0,:]
+    # y_coord = np.flipud(y_array.reshape(num_rows,num_cols)[:,0])
+    u_array_reshaped = u_array.reshape(num_rows,num_cols).T
+    v_array_reshaped = v_array.reshape(num_rows,num_cols).T
+
+    position = int(param_dict['pos'])
+    v_offset = int(param_dict['VOFFSET'])    
+
+    start_index = (position-1)*36 + (v_offset//80)*3
+    end_index = start_index + 3
+
+    entire_u_array[:,start_index:end_index] = u_array_reshaped
+    entire_v_array[:,start_index:end_index] = v_array_reshaped
 
     
-    
+# %%
+plt.figure(figsize=(8,8))
+plt.quiver(entire_v_array[:,150:170],entire_u_array[:,150:170])
+# %%
+plt.figure(figsize=(20,3))
+plt.quiver(entire_v_array,entire_u_array)
+
+
+
+
 
 # %%
-img_a_left,img_a_right = split_image(img_a)
-img_b_left,img_b_right = split_image(img_b)
+plt.figure(figsize=(15,4))
+plt.imshow(entire_image.T)
+plt.axis('off')
+# plt.savefig('_stitched.png', bbox_inches='tight', pad_inches = 0)
 
 # %%
-trimmed_a,trimmed_b = match_images(img_a_right,img_b_right)
-
-plt.imshow(trimmed_b)
-
+search_size = 50
+overlap = 24
 # %%
-importlib.reload(openpiv_recipes)
-openpiv_recipes.run_piv(trimmed_a,trimmed_b,
-    winsize=48,
-    searchsize=50,
-    overlap=24,
-    show_vertical_profiles=False,
-    image_check=True,
-    figure_export_name='results.png')
-        
-# %%
-importlib.reload(openpiv_recipes)
 openpiv_recipes.run_piv(img_a,img_b,
     winsize=48,
-    searchsize=50,
+    searchsize=search_size,
     overlap=24,
     show_vertical_profiles=False,
     image_check=True,
     figure_export_name='results.png')
+
 # %%
-importlib.reload(openpiv_recipes)
-openpiv_recipes.run_piv(img_a[:,700:-1],img_b[:,700:-1],
-    winsize=48,
-    searchsize=50,
-    overlap=24,
-    show_vertical_profiles=False,
-    image_check=True,
-    figure_export_name='results.png')
+
+df = pd.read_csv('results.txt',comment='#',delimiter='\t',names=['x','y','u','v','s2n','mask'])
+
+x_array = df.iloc[:,0].to_numpy()
+y_array = df.iloc[:,1].to_numpy()
+u_array = df.iloc[:,2].to_numpy()
+
+field_shape = pyprocess.get_field_shape(image_size=img_a.shape,search_area_size=search_size,overlap=overlap)
+
+num_rows = field_shape[0] # 11
+num_cols = field_shape[1] # 100
+
+# U_array = np.sqrt(uv_array[:,0]**2+uv_array[:,0]**2).reshape(num_rows,num_cols).T        
+x_coord = x_array.reshape(num_rows,num_cols)[0,:]
+y_coord = np.flipud(y_array.reshape(num_rows,num_cols)[:,0])
+U_array = u_array.reshape(num_rows,num_cols).T
+
+# %%
+
+fig, ax = plt.subplots()
+ax.plot(U_array[:,0],x_coord,'o-')
+ax.plot(U_array[:,1],x_coord,'o-')
+ax.plot(U_array[:,2],x_coord,'o-')
+
+
+# %%
+a = np.loadtxt('results.txt')
+window_size = 48
+scaling_factor = 1
+
+xmax = np.amax(a[:, 0]) + window_size / (2 * scaling_factor)
+ymax = np.amax(a[:, 1]) + window_size / (2 * scaling_factor)
+
+ax.imshow(img_a, origin="lower", cmap="Greys_r", extent=[0.0, xmax, 0.0, ymax])
+
+
+# %%
+fig,axes = plt.subplots(4,3,figsize=(16,16))
+
+axes_flatten = np.ravel(axes)
+ii = 0  
+for ax in axes_flatten:            
+    for i in range(ii*10,(ii+1)*10):
+        if i >= num_rows:
+            break
+        ax.plot(U_array[:,i],x_coord,'o-',label='%.2f'%x_coord[i])
+        ax.legend()
+        ax.axis([0,np.max(U_array),0,np.max(y_coord)])        
+    ax.set_xlabel('Velocity (mm/s)')
+    ax.set_ylabel('y-coordinate (mm)')
+    ii = ii + 1        
+# fig.savefig('vertical_profile.png')
+
 # %%
