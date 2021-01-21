@@ -70,7 +70,7 @@ def run_piv(
                                    image_name= 'test_img.tiff');            
     fig.savefig(figure_export_name)       
 
-    if show_vertical_profiles is True:
+    if show_vertical_profiles:
         field_shape = pyprocess.get_field_shape(image_size=frame_a.shape,search_area_size=searchsize,overlap=overlap)
         vertical_profiles(text_export_name,field_shape)
 
