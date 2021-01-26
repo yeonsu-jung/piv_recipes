@@ -70,8 +70,9 @@ def match_images(img_a,img_b):
 # %%
 folder_path = 'D:/Rowland/piv-data/2021-01-20'
 folder_path = "/Volumes/Backup Plus /ROWLAND/piv-data/2021-01-20"
+folder_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-data/2021-01-18'
 
-result_folder_path = '_results/2021-01-20'
+result_folder_path = '_results/2021-01-18'
 
 param_string_list = os.listdir(folder_path)
 param_string_to_dictionary(param_string_list[5])
