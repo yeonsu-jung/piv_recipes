@@ -162,7 +162,7 @@ for k in txt_list:
     v_array_reshaped = v_array.reshape(num_rows,num_cols).T
 
     position = int(param_dict['pos'])
-    v_offset = int(param_dict['VOFFSET'])    
+    v_offset = int(param_dict['VOFFSET'])
 
     start_index = (position-1)*36 + (v_offset//80)*3
     end_index = start_index + 3
@@ -177,10 +177,6 @@ plt.quiver(entire_v_array[:,150:170],entire_u_array[:,150:170])
 # %%
 plt.figure(figsize=(20,3))
 plt.quiver(entire_v_array,entire_u_array)
-
-
-
-
 
 # %%
 plt.figure(figsize=(15,4))
@@ -235,7 +231,6 @@ xmax = np.amax(a[:, 0]) + window_size / (2 * scaling_factor)
 ymax = np.amax(a[:, 1]) + window_size / (2 * scaling_factor)
 
 ax.imshow(img_a, origin="lower", cmap="Greys_r", extent=[0.0, xmax, 0.0, ymax])
-
 
 # %%
 fig,axes = plt.subplots(4,3,figsize=(16,16))
@@ -300,4 +295,87 @@ def show_entire_image(entire_image):
 show_entire_image(entire_image)
 
 # %%
-def 
+def stitch_images(folder_path):
+    param_string_list = os.listdir(folder_path)
+    for param_string in param_string_list:
+        # CHECK IMAGE VALIDITY ?
+        img_a_name = 'frame_000102.tiff'
+        img_b_name = 'frame_000103.tiff'
+
+        param_dict = param_string_to_dictionary(param_string)
+        # print(param_dict)
+        try:
+            file_path_a = os.path.join(folder_path,param_string,img_a_name)
+            file_path_b = os.path.join(folder_path,param_string,img_b_name)
+            img_a = io.imread(file_path_a)
+            # img_b = io.imread(file_path_b)
+        except:
+            file_path_a = os.path.join(folder_path,'img_' + param_string,img_a_name)
+            file_path_b = os.path.join(folder_path,'img_' + param_string,img_b_name)
+
+            img_a = io.imread(file_path_a)
+            # img_b = io.imread(file_path_b)
+            
+        position = int(param_dict['pos'])
+        v_offset = int(param_dict['VOFFSET'])
+
+        start_index = (position-1)*1296 + (v_offset//80)*108
+        end_index = start_index + 108
+
+        entire_image[start_index:end_index,:] = img_a
+
+        return entire_image
+
+
+openpiv_recipes.run_piv(img_a,img_b,
+        winsize=48,
+        searchsize=50,
+        overlap=24,
+        show_vertical_profiles=False,
+        image_check=False,
+        figure_export_name=figure_path,
+        text_export_name=text_path)
+
+
+# %%
+folder_path = 'D:/Rowland/piv-data/2021-01-20'
+
+class ParticleImage:
+
+    def __init__(self, folder_path):
+        self.path = folder_path
+        self.param_string_list = os.listdir(self.path)
+
+            
+
+    def param_string_to_dictionary(pstr):
+        running_parameter = re.findall("_[a-z]+[0-9]+[.]*[0-9]*", pstr, re.IGNORECASE)
+        sample_parameter = pstr.replace("img_","")
+
+        for k in running_parameter:
+            sample_parameter = sample_parameter.replace(k,"")
+
+        param_dict = {'sample': sample_parameter}
+        for k in running_parameter:
+            kk = re.findall('[a-x]+', k,re.IGNORECASE)
+            vv = re.findall('[0-9]+[.]*[0-9]*', k,re.IGNORECASE)
+            param_dict[kk[0]] = vv[0]
+
+        return param_dict
+
+pi_instance = ParticleImage(folder_path)
+
+# pi_instance.param_string_list
+
+pi_instance.param_dict
+
+# %%
+
+openpiv_recipes.run_piv(img_a,img_b,
+        winsize=48,
+        searchsize=50,
+        overlap=24,
+        show_vertical_profiles=False,
+        image_check=False,
+        figure_export_name=figure_path,
+        text_export_name=text_path)
