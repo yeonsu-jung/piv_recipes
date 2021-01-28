@@ -67,12 +67,13 @@ def match_images(img_a,img_b):
         return img_a[:,span_a-span_b:-1], img_b
     else:
         return img_a, img_b[:,span_b-span_a:-1]
+
 # %%
 folder_path = 'D:/Rowland/piv-data/2021-01-20'
-folder_path = "/Volumes/Backup Plus /ROWLAND/piv-data/2021-01-20"
-folder_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-data/2021-01-18'
+# folder_path = "/Volumes/Backup Plus /ROWLAND/piv-data/2021-01-20"
+# folder_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-data/2021-01-18'
 
-result_folder_path = '_results/2021-01-18'
+result_folder_path = '_results/2021-01-20'
 
 param_string_list = os.listdir(folder_path)
 param_string_to_dictionary(param_string_list[5])
@@ -116,7 +117,7 @@ for param_string in param_string_list:
     # right_edge_index = max(a_right,b_right)
     
     # img_a_right = img_a[:,right_edge_index:-1]
-    # img_b_right = img_b[:,right_edge_index:-1]    
+    # img_b_right = img_b[:,right_edge_index:-1]
 
     result_folder_path = '_results/2021-01-20'
 
@@ -254,3 +255,49 @@ for ax in axes_flatten:
 # fig.savefig('vertical_profile.png')
 
 # %%
+
+def stitch_images(folder_path):
+    param_string_list = os.listdir(folder_path)
+    for param_string in param_string_list:
+        # CHECK IMAGE VALIDITY ?
+        img_a_name = 'frame_000102.tiff'
+        img_b_name = 'frame_000103.tiff'
+
+        param_dict = param_string_to_dictionary(param_string)
+        # print(param_dict)
+        try:
+            file_path_a = os.path.join(folder_path,param_string,img_a_name)
+            file_path_b = os.path.join(folder_path,param_string,img_b_name)
+            img_a = io.imread(file_path_a)
+            # img_b = io.imread(file_path_b)
+        except:
+            file_path_a = os.path.join(folder_path,'img_' + param_string,img_a_name)
+            file_path_b = os.path.join(folder_path,'img_' + param_string,img_b_name)
+
+            img_a = io.imread(file_path_a)
+            # img_b = io.imread(file_path_b)
+            
+        position = int(param_dict['pos'])
+        v_offset = int(param_dict['VOFFSET'])
+
+        start_index = (position-1)*1296 + (v_offset//80)*108
+        end_index = start_index + 108
+
+        entire_image[start_index:end_index,:] = img_a
+
+        return entire_image
+
+entire_image = stitch_images(folder_path)
+
+# %%
+
+def show_entire_image(entire_image):
+    plt.figure(figsize=(15,4))
+    plt.imshow(entire_image.T)
+    plt.axis('off')
+    # plt.savefig('_stitched.png', bbox_inches='tight', pad_inches = 0)
+
+show_entire_image(entire_image)
+
+# %%
+def 
