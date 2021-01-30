@@ -59,16 +59,16 @@ def run_piv(
         ax[0].imshow(frame_a)
         ax[1].imshow(frame_b)
 
-    imageio.imwrite('test_img.tiff',frame_a)
+    imageio.imwrite(figure_export_name,frame_a)
 
-    # fig, ax = plt.subplots(figsize=(24,12))
-    # tools.display_vector_field(text_export_name, 
-    #                                ax=ax, scaling_factor=41.22, 
-    #                                scale=2e5*scale_factor, # scale defines here the arrow length
-    #                                width=0.001, # width is the thickness of the arrow
-    #                                on_img=True, # overlay on the image
-    #                                image_name= 'test_img.tiff');            
-    # fig.savefig(figure_export_name)       
+    fig, ax = plt.subplots(figsize=(24,12))
+    tools.display_vector_field(text_export_name, 
+                                   ax=ax, scaling_factor=41.22, 
+                                   scale=2e5*scale_factor, # scale defines here the arrow length
+                                   width=0.001, # width is the thickness of the arrow
+                                   on_img=True, # overlay on the image
+                                   image_name= figure_export_name)
+    fig.savefig(figure_export_name)       
 
     if show_vertical_profiles:
         field_shape = pyprocess.get_field_shape(image_size=frame_a.shape,search_area_size=searchsize,overlap=overlap)
