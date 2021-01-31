@@ -203,8 +203,6 @@ class ParticleImage:
         img_a = np.array(img_a)
         img_b = np.array(img_b)
 
-        print(np.correlate(img_a.flatten(),img_b.flatten()))
-
         img_a = img_a[:,-surface_index:-1].T
         img_b = img_b[:,-surface_index:-1].T
 
