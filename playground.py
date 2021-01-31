@@ -74,6 +74,9 @@ class ParticleImage:
         img_a = io.imread(file_a_path)
         img_b = io.imread(file_b_path)
 
+        img_a = Image.open(file_a_path)
+        img_b = Image.open(file_b_path)
+
         # plt.ion()
         # fig,ax = plt.subplots(2,1,figsize=(15,4))
         # ax[0].imshow(img_a)
@@ -238,7 +241,8 @@ for param_string in param_string_list:
         file_path_a = os.path.join(folder_path,param_string,img_a_name)
         file_path_b = os.path.join(folder_path,param_string,img_b_name)        
         img_a = io.imread(file_path_a)
-        img_b = io.imread(file_path_b)        
+        img_b = io.imread(file_path_b)       
+
     except:
         file_path_a = os.path.join(folder_path,'img_' + param_string,img_a_name)
         file_path_b = os.path.join(folder_path,'img_' + param_string,img_b_name)
@@ -312,7 +316,6 @@ for k in txt_list:
 
     entire_u_array[:,start_index:end_index] = u_array_reshaped
     entire_v_array[:,start_index:end_index] = v_array_reshaped
-
     
 # %%
 plt.figure(figsize=(8,8))
@@ -479,9 +482,6 @@ openpiv_recipes.run_piv(img_a,img_b,
         figure_export_name=figure_path,
         text_export_name=text_path)
 
-
-
-
 # %%
 
 openpiv_recipes.run_piv(img_a,img_b,
@@ -492,3 +492,18 @@ openpiv_recipes.run_piv(img_a,img_b,
         image_check=False,
         figure_export_name=figure_path,
         text_export_name=text_path)
+
+# %%
+import openpiv_recipes
+import importlib
+importlib.reload(openpiv_recipes)
+from openpiv_recipes import ParticleImage
+
+
+folder_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-data/2021-01-20'
+folder_path = '/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-01-20'
+pi = ParticleImage(folder_path)
+
+
+pi.param_string_list
+# %%
