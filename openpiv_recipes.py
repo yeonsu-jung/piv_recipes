@@ -45,8 +45,7 @@ class ParticleImage:
             "show_vertical_profiles": False,            
             "figure_export_name": '_quick_piv.tiff',
             "text_export_name": '_quick_piv.txt',
-            "scale_factor": 1,
-            "scale_factor": 1e4,
+            "scale_factor": 1,            
             "pixel_density": 36.74,
             "arrow_width": 0.02,
         }
@@ -128,7 +127,7 @@ class ParticleImage:
         figure_path = '_quick_piv.tiff'
         text_path = '_quick_piv.txt'
 
-        run_piv(img_a,img_b,**self.piv_param)
+        run_piv(img_a.T,img_b.T,**self.piv_param)
 
     def stitch_images(self):
         entire_image_path = os.path.join(self.path,'_entire_image.png')
@@ -237,9 +236,9 @@ def run_piv(
     dt = 0.0001, # sec, time interval between pulses
     image_check = False,
     show_vertical_profiles = False,
-    figure_export_name = 'results.png',
-    text_export_name =  "results.txt",
-    scale_factor = 1e4,
+    figure_export_name = '_results.png',
+    text_export_name =  "_results.txt",
+    scale_factor = 1,
     pixel_density = 36.74,
     arrow_width = 0.02,
     ):
@@ -376,8 +375,7 @@ piv_param = {
         "image_check": False,    
         "show_vertical_profiles": False,            
         "figure_export_name": '_quick_piv.tiff',
-        "text_export_name": '_quick_piv.txt',
-        "scale_factor": 1,
+        "text_export_name": '_quick_piv.txt',        
         "scale_factor": 1e4,
         "pixel_density": 36.74,
         "arrow_width": 0.02,
@@ -395,9 +393,10 @@ pi.piv_lower_region(11,1,surface_index=1000)
 # %%
 pi.piv_lower_region(9,11,surface_index=714)
 # %%
-pi.piv_upper_region(1,1,surface_index=1000)
-# %%
-pi.quick_piv(1,1)
+pi.set_piv_param({"scale_factor": 1e1,"arrow_width":0.02,"pixel_density":1400/0.0381})
+pi.quick_piv(10,5)
+
+
 # %%
 im = entire_image = pi.stitch_images()
 # %%
@@ -454,20 +453,38 @@ ic = np.array(img_c)
 print(np.mean(ia-ib), np.mean(ib-ic))
 
 # %%
+a = np.loadtxt('_quick_piv.txt')
 
-piv_param = {
-            "winsize": 48,
-            "searchsize": 50,
-            "overlap": 24,
-            "dt": 0.0001,
-            "image_check": False,    
-            "show_vertical_profiles": False,            
-            "figure_export_name": '_quick_piv.tiff',
-            "text_export_name": '_quick_piv.txt',
-            "scale_factor": 1
-        }
+print(a.shape)
 
-run_piv(ia,ib,**piv_param)
-
+xy_array = a[:,0:2]
+print(xy_array)
+# %%
+x_array = a[:,0]
+y_array = a[:,1]
+u_array = a[:,2]
 
 # %%
+xx = x_array.reshape(53,3)
+yy = y_array.reshape(53,3)
+uu = u_array.reshape(53,3)
+print(uu)
+# %%
+print(yy)
+
+# %%
+fig,ax = plt.subplots()
+ax.plot(uu[:,0],yy[:,0],'o-')
+
+
+
+# ax.invert_yaxis()
+# %%
+num_rows = field_shape[0] # 11
+    num_cols = field_shape[1] # 100
+
+    U_array = np.sqrt(uv_array[:,0]**2+uv_array[:,0]**2).reshape(num_rows,num_cols).T        
+    x_coord = x_array.reshape(num_rows,num_cols)[0,:]
+    y_coord = np.flipud(y_array.reshape(num_rows,num_cols)[:,0])
+
+xx = x
