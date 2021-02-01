@@ -127,7 +127,7 @@ class ParticleImage:
 
         u_std = run_piv(img_a,img_b,**self.piv_param)
         
-        if u_std > 500:
+        if u_std > 480:
             img_a, img_b = self.read_two_images(camera_position,sensor_position,index_a=index_a+1,index_b=index_b+1)
             img_a = np.array(img_a).T
             img_b = np.array(img_b).T
@@ -193,7 +193,7 @@ class ParticleImage:
         img_b = img_b[:,0:surface_index].T        
 
         u_std = run_piv(img_a,img_b,**self.piv_param)
-        if u_std > 500:
+        if u_std > 480:
             img_a, img_b = self.read_two_images(camera_position,sensor_position,index_a=index_a+1,index_b=index_b+1)
             img_a = np.array(img_a)
             img_b = np.array(img_b)
@@ -216,7 +216,7 @@ class ParticleImage:
         img_b = img_b[:,-surface_index:-1].T
 
         u_std = run_piv(img_a,img_b,**self.piv_param)
-        if u_std > 500:
+        if u_std > 480:
             img_a, img_b = self.read_two_images(camera_position,sensor_position,index_a=index_a+1,index_b=index_b+1)
             img_a = np.array(img_a)
             img_b = np.array(img_b)
@@ -225,10 +225,13 @@ class ParticleImage:
             img_b = img_b[:,-surface_index:-1].T
             u_std = run_piv(img_a,img_b,**self.piv_param)
 
-    def fast_piv():
+    def fast_piv(self, pos, voffset, index_a=100,index_b=101):
         
+        img_a, img_b = self.read_two_images(pos,voffset,index_a = index_a,index_b=index_b)
 
-    def get_entire_vector_field(self,index_a=100,index_b=101):
+        return 0
+
+    def get_entire_vector_field(self,num_pos = 11,index_a=100,index_b=101):
         self.set_piv_param({"show_result":False})
         # pos_list = [x['pos'] for x in self.param_dict_list]
         # voffset_list = [x['VOFFSET'] for x in self.param_dict_list]
@@ -238,10 +241,10 @@ class ParticleImage:
         entire_u = np.empty((49,3))
         entire_v = np.empty((49,3))
 
-        for pos in range(1,7,1):
+        for pos in range(1,num_pos+1,1):
             for voffset in range(1,13,1):
                 
-                self.fast_piv(pos,voffset)
+                self.quick_piv(pos,voffset)
 
                 xx,yy,uu,vv = convert_xyuv()
 
@@ -278,6 +281,71 @@ class ParticleImage:
 
         im1.show()
         im2.show()    
+
+    def calculate_drag(self,start = 3, end = 3):
+        entire_x = np.loadtxt('_entire_x.txt')
+        entire_y = np.loadtxt('_entire_y.txt')
+        entire_u = np.loadtxt('_entire_u.txt')
+        entire_v = np.loadtxt('_entire_v.txt')
+
+        left_u = entire_u[start,:]
+        right_u = entire_u[-end,:]
+
+        left_v = entire_v[start,:]
+        right_v = entire_v[-end,:]
+
+        # top_u = entire_u[3:-1,1]
+        # bottom_u = entire_u[3:-1,-1]
+
+        # top_v = entire_v[3:-1,1]
+        # bottom_v = entire_v[3:-1,-1]
+        
+        # X = (52-24)*215*1.5*25.4/1400
+        Y = (52-24)*49*1.5*25.4/1400
+
+        # x_coord = np.linspace(0,X,215)
+        y_coord = np.linspace(0,Y,49)
+
+        fig,ax = plt.subplots(2,2)
+        ax[0,0].plot(y_coord,left_u)
+        ax[1,0].plot(y_coord,right_u)
+
+        ax[0,1].plot(y_coord,left_v)
+        ax[1,1].plot(y_coord,right_v)
+
+        ax[1,0].set_xlabel('y coordinate (mm)')
+        ax[0,0].set_ylabel('u (mm/s)')
+        ax[1,0].set_ylabel('u (mm/s)')
+
+        ax[0,1].set_ylabel('v (mm/s)')
+        ax[1,1].set_ylabel('v (mm/s)')
+
+        # fig,ax = plt.subplots(2,2)
+        # ax[0,0].plot(x_coord,top_u)
+        # ax[1,0].plot(x_coord,bottom_u)
+
+        # ax[0,1].plot(x_coord,top_v)
+        # ax[1,1].plot(x_coord,bottom_v)
+
+        # ax[1,0].set_xlabel('y coordinate')
+        # ax[0,0].set_ylabel('u (mm/s)')
+        # ax[1,0].set_ylabel('u (mm/s)')
+
+        # ax[0,1].set_ylabel('v (mm/s)')
+        # ax[1,1].set_ylabel('v (mm/s)')
+        rho = 1000
+        delta_y = (52-24)*1.5*25.4/1400/1000
+        # delta_x = (52-24)*1.5*25.4/1400/1000
+
+        A = np.sum(rho*((left_u/1000)**2 - (right_u/1000)**2)) * delta_y
+
+        mdot_1 = np.sum((left_u - right_u))/1000*delta_y
+        # mdot_2 = np.sum((top_v - bottom_v))/1000*delta_y
+
+        B1 = mdot_1*np.mean(left_u)/1000
+
+        F1 = A - B1
+        print(F1)
 
 # plt.rcParams['animation.ffmpeg_path'] = '/Users/yeonsu/opt/anaconda3/envs/piv/share/ffmpeg'
 
@@ -323,10 +391,11 @@ def run_piv(
                                     kernel_size=3)
 
     x, y, u3, v3 = scaling.uniform(x, y, u2, v2,
-                                scaling_factor = pixel_density) # no. pixel per distance
+                                scaling_factor = pixel_density) # no. pixel per distance    
 
     #save in the simple ASCII table format    
-    tools.save(x, y, u3, v3, sig2noise,mask, text_export_name)
+    if np.std(u3) < 480:
+        tools.save(x, y, u3, v3, sig2noise,mask, text_export_name)
     
     if image_check == True:
         fig,ax = plt.subplots(2,1,figsize=(24,12))
@@ -441,38 +510,22 @@ def negative(image):
 
 # %%
 folder_path = '/Volumes/Backup Plus /ROWLAND/piv-data/2021-01-19'
+folder_path = '/Volumes/Backup Plus /ROWLAND/piv-data/2021-01-20'
 pi = ParticleImage(folder_path)
 # %%
 # pi.param_dict_list = [x for x in pi.param_dict_list if x['sample'] == 'Flat_10' and x['motor'] == 25.0]
-pi.param_dict_list = [x for x in pi.param_dict_list if x['sample'] == '1_1_1_10' and x['motor'] == 25.0]
+# pi.param_dict_list = [x for x in pi.param_dict_list if x['sample'] == '1_1_1_10' and x['motor'] == 25.0]
 # print(pi.param_dict_list)
 
 # %%
 pi.get_entire_vector_field()
+# %%
+pi.calculate_drag(start=3,end=4)
 
 # %%
-entire_x = np.loadtxt('_entire_x.txt').T
-entire_y = np.loadtxt('_entire_y.txt').T
-entire_u = np.loadtxt('_entire_u.txt').T
-entire_v = np.loadtxt('_entire_v.txt').T
-
-
-# %%
-left_u = entire_u[:,1]
-right_u = entire_u[:,-1]
-
-top_u = entire_u[2,:]
-bottom_u = entire_u[-2,:]
-
-# %%
-fig,ax = plt.subplots(2)
-ax[0].plot(left_u)
-ax[1].plot(right_u)
-# %%
-fig,ax = plt.subplots(2)
-ax[0].plot(top_u)
-ax[1].plot(bottom_u)
-
+aa = 99
+bb = 100
+pi.quick_piv(9,9,index_a=aa,index_b=bb)
 # %%
 pi.quick_piv(1,1,index_a=100,index_b=101)
 # %%
@@ -487,7 +540,7 @@ pi.quick_piv(6,5,index_a=aa,index_b=bb)
 
 
 # %%
-pi.set_piv_param({"show_result": False})
+# pi.set_piv_param({"show_result": False})
 pi.quick_piv(6,5,index_a=aa,index_b=bb)
 
 # %%
@@ -680,3 +733,5 @@ ax[0].plot(top_u)
 ax[1].plot(bottom_u)
 
 # %%
+
+
