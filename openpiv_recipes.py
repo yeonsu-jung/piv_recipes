@@ -71,7 +71,7 @@ class ParticleImage:
 
     def read_two_images(self,camera_position,sensor_position,index_a = 100,index_b = 101):
 
-        location_path = [x['path'] for x in self.param_dict_list if x['pos'] == camera_position and x['VOFFSET'] == (sensor_position-1)*80]        
+        location_path = [x['path'] for x in self.param_dict_list if x['pos'] == camera_position and x['VOFFSET'] == (sensor_position-1)*80]
 
         file_a_path = os.path.join(self.path,*location_path,'frame_%06d.tiff' %index_a)
         file_b_path = os.path.join(self.path,*location_path,'frame_%06d.tiff' %index_b)
@@ -130,7 +130,23 @@ class ParticleImage:
             img_a = np.array(img_a).T
             img_b = np.array(img_b).T
             
-            u_std = run_piv(img_a,img_b,**self.piv_param)
+            u_std = run_piv(img_a,img_b,**self.piv_param)        
+
+    def quick_piv_by_key(self,**keyords,index_a = 100, index_b = 101):        
+
+        img_a, img_b = self.read_two_images(camera_position,sensor_position,index_a=index_a,index_b=index_b)
+
+        img_a = np.array(img_a).T
+        img_b = np.array(img_b).T
+
+        u_std = run_piv(img_a,img_b,**self.piv_param)
+        
+        if u_std > 480:
+            img_a, img_b = self.read_two_images(camera_position,sensor_position,index_a=index_a+1,index_b=index_b+1)
+            img_a = np.array(img_a).T
+            img_b = np.array(img_b).T
+            
+            u_std = run_piv(img_a,img_b,**self.piv_param)        
 
 
     def stitch_images(self):
@@ -416,7 +432,8 @@ def run_piv(
         field_shape = pyprocess.get_field_shape(image_size=frame_a.shape,search_area_size=searchsize,overlap=overlap)
         vertical_profiles(text_export_name,field_shape)
     
-    print(np.std(u3))
+    print('Std of u3: %.3f' %np.std(u3))
+    print('Mean of u3: %.3f' %np.mean(u3))
 
     return np.std(u3)
 
@@ -505,3 +522,4 @@ def negative(image):
 
     """
     return 255 - image
+# %%

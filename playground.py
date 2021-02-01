@@ -115,7 +115,7 @@ class ParticleImage:
         # ax[0].imshow(img_a)
         # ax[1].imshow(img_b)
         # ax[0].axis('off')
-        # ax[1].axis('off')        
+        # ax[1].axis('off')
 
     def quick_piv(self,camera_position,sensor_position,index_a = 100, index_b = 101):
         img_a, img_b = self.read_two_images(camera_position,sensor_position,index_a=index_a,index_b=index_b)
