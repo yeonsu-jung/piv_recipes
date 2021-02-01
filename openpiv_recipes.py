@@ -38,7 +38,7 @@ class ParticleImage:
         self.param_string_list = sorted(self.param_string_list, key = lambda i: (self.param_string_to_dictionary(i)['pos'],self.param_string_to_dictionary(i)['VOFFSET']))
         self.piv_param = {
             "winsize": 48,
-            "searchsize": 50,
+            "searchsize": 52,
             "overlap": 24,
             "dt": 0.0001,
             "image_check": False,    
@@ -48,6 +48,7 @@ class ParticleImage:
             "scale_factor": 1,            
             "pixel_density": 36.74,
             "arrow_width": 0.02,
+            "show_result": True,
         }
 
 
@@ -58,22 +59,24 @@ class ParticleImage:
         for k in running_parameter:
             sample_parameter = sample_parameter.replace(k,"")
 
+        sample_parameter = sample_parameter.replace('_01-18',"")
+
         param_dict = {'sample': sample_parameter}
         for k in running_parameter:
             kk = re.findall('[a-x]+', k,re.IGNORECASE)
             vv = re.findall('[0-9]+[.]*[0-9]*', k,re.IGNORECASE)
             param_dict[kk[0]] = float(vv[0])
 
+        param_dict['path'] = pstr
+
         return param_dict    
 
     def read_two_images(self,camera_position,sensor_position,index_a = 100,index_b = 101):
-        location = (camera_position - 1) * 12 + (sensor_position)
-        location_info = self.param_dict_list[location]
-        location_name = self.param_string_list[location]
-        location_path = os.path.join(self.path, location_name)
 
-        file_a_path = os.path.join(location_path,'frame_%06d.tiff' %index_a)
-        file_b_path = os.path.join(location_path,'frame_%06d.tiff' %index_b)
+        location_path = [x['path'] for x in self.param_dict_list if x['pos'] == camera_position and x['VOFFSET'] == (sensor_position-1)*80]        
+
+        file_a_path = os.path.join(self.path,*location_path,'frame_%06d.tiff' %index_a)
+        file_b_path = os.path.join(self.path,*location_path,'frame_%06d.tiff' %index_b)
 
         # exception handling needed
         # img_a = io.imread(file_a_path)
@@ -82,28 +85,26 @@ class ParticleImage:
         img_a = Image.open(file_a_path)
         img_b = Image.open(file_b_path)
 
-        if np.mean(np.array(img_b) - np.array(img_a)) < 100:
-            index_a = index_a + 1
-            index_b = index_b + 1
+        # print(np.std(np.array(img_b) - np.array(img_a)))
 
-            file_a_path = os.path.join(location_path,'frame_%06d.tiff' %index_a)
-            file_b_path = os.path.join(location_path,'frame_%06d.tiff' %index_b)
+        # if np.mean(np.array(img_b) - np.array(img_a)) < 80:
+        #     index_a = index_a + 1
+        #     index_b = index_b + 1
 
-            img_a = Image.open(file_a_path)
-            img_b = Image.open(file_b_path)
+        #     file_a_path = os.path.join(self.path,*location_path,'frame_%06d.tiff' %index_a)
+        #     file_b_path = os.path.join(self.path,*location_path,'frame_%06d.tiff' %index_b)
+
+        #     img_a = Image.open(file_a_path)
+        #     img_b = Image.open(file_b_path)
         
-
-
         return img_a, img_b
 
-    def open_two_images(self,camera_position,sensor_position,index_a = 100,index_b = 101):
-        location = camera_position * sensor_position
-        location_info = self.param_dict_list[location]
-        location_name = self.param_string_list[location]
-        location_path = os.path.join(self.path, location_name)
+    def check_image_pair():
+        return True
 
-        file_a_path = os.path.join(location_path,'frame_%06d.tiff' %index_a)
-        file_b_path = os.path.join(location_path,'frame_%06d.tiff' %index_b)        
+    def open_two_images(self,camera_position,sensor_position,index_a = 100,index_b = 101):
+        
+        im1, im2 = self.read_two_images(camera_position,sensor_position,index_a=index_a,index_b=index_b)
 
         im1 = Image.open(file_a_path)
         im2 = Image.open(file_b_path)
@@ -121,13 +122,18 @@ class ParticleImage:
     def quick_piv(self,camera_position,sensor_position,index_a = 100, index_b = 101):
         img_a, img_b = self.read_two_images(camera_position,sensor_position,index_a=index_a,index_b=index_b)
 
-        img_a = np.array(img_a)
-        img_b = np.array(img_b)
+        img_a = np.array(img_a).T
+        img_b = np.array(img_b).T
 
-        figure_path = '_quick_piv.tiff'
-        text_path = '_quick_piv.txt'
+        u_std = run_piv(img_a,img_b,**self.piv_param)
+        
+        if u_std > 500:
+            img_a, img_b = self.read_two_images(camera_position,sensor_position,index_a=index_a+1,index_b=index_b+1)
+            img_a = np.array(img_a).T
+            img_b = np.array(img_b).T
+            
+            u_std = run_piv(img_a,img_b,**self.piv_param)
 
-        run_piv(img_a.T,img_b.T,**self.piv_param)
 
     def stitch_images(self):
         entire_image_path = os.path.join(self.path,'_entire_image.png')
@@ -182,16 +188,19 @@ class ParticleImage:
 
         img_a = np.array(img_a)
         img_b = np.array(img_b)
-
-        print(np.correlate(img_a.flatten(),img_b.flatten()))
-
+        
         img_a = img_a[:,0:surface_index].T
         img_b = img_b[:,0:surface_index].T        
 
-        figure_path = '_upper_piv.tiff'
-        text_path = '_upper_piv.txt'
+        u_std = run_piv(img_a,img_b,**self.piv_param)
+        if u_std > 500:
+            img_a, img_b = self.read_two_images(camera_position,sensor_position,index_a=index_a+1,index_b=index_b+1)
+            img_a = np.array(img_a)
+            img_b = np.array(img_b)
 
-        average_velocity = run_piv(img_a,img_b,**self.piv_param)
+            img_a = img_a[:,0:surface_index].T
+            img_b = img_b[:,0:surface_index].T
+            u_std = run_piv(img_a,img_b,**self.piv_param)
 
     def piv_lower_region(self,camera_position,sensor_position,index_a = 100, index_b = 101,surface_index = 360):
         
@@ -206,10 +215,43 @@ class ParticleImage:
         img_a = img_a[:,-surface_index:-1].T
         img_b = img_b[:,-surface_index:-1].T
 
-        figure_path = '_upper_piv.tiff'
-        text_path = '_upper_piv.txt'
+        u_std = run_piv(img_a,img_b,**self.piv_param)
+        if u_std > 500:
+            img_a, img_b = self.read_two_images(camera_position,sensor_position,index_a=index_a+1,index_b=index_b+1)
+            img_a = np.array(img_a)
+            img_b = np.array(img_b)
 
-        run_piv(img_a,img_b,**self.piv_param)
+            img_a = img_a[:,-surface_index:-1].T
+            img_b = img_b[:,-surface_index:-1].T
+            u_std = run_piv(img_a,img_b,**self.piv_param)
+
+    def get_entire_vector_field(self,index_a=100,index_b=101):
+        
+        pos_list = [x['pos'] for x in self.param_dict_list]
+        voffset_list = [x['VOFFSET'] for x in self.param_dict_list]
+
+        entire_x = np.empty((49,3))
+        entire_y = np.empty((49,3))
+        entire_u = np.empty((49,3))
+        entire_v = np.empty((49,3))
+
+        for pos in pos_list:
+            for voffset in voffset_list:
+                
+                voffset_index = (voffset)//80+1
+                self.quick_piv(pos,voffset_index)
+
+                xx,yy,uu,vv = convert_xyuv()
+
+                entire_x = np.append(entire_x,xx)
+                entire_y = np.append(entire_y,yy)
+                entire_u = np.append(entire_u,uu)
+                entire_v = np.append(entire_v,vv)
+
+        np.savetxt('_entire_x.txt',entire_x.T)
+        np.savetxt('_entire_x.txt',entire_y.T)
+        np.savetxt('_entire_x.txt',entire_u.T)
+        np.savetxt('_entire_x.txt',entire_v.T)
 
     def set_piv_param(self,param):
         for k in param:
@@ -218,7 +260,20 @@ class ParticleImage:
     def my_argsort(lis):
         return sorted(range(len(lis)),key=lis.__getitem__)
 
+    def open_two_images(self,camera_position,sensor_position,index_a = 100,index_b = 101):
+        location = camera_position * sensor_position
+        location_info = self.param_dict_list[location]
+        location_name = self.param_string_list[location]
+        location_path = os.path.join(self.path, location_name)
 
+        file_a_path = os.path.join(location_path,'frame_%06d.tiff' %index_a)
+        file_b_path = os.path.join(location_path,'frame_%06d.tiff' %index_b)        
+
+        im1 = Image.open(file_a_path)
+        im2 = Image.open(file_b_path)
+
+        im1.show()
+        im2.show()
 
 # plt.rcParams['animation.ffmpeg_path'] = '/Users/yeonsu/opt/anaconda3/envs/piv/share/ffmpeg'
 
@@ -239,6 +294,7 @@ def run_piv(
     scale_factor = 1,
     pixel_density = 36.74,
     arrow_width = 0.02,
+    show_result = True,
     ):
            
     u0, v0, sig2noise = pyprocess.extended_search_area_piv(frame_a.astype(np.int32), 
@@ -275,20 +331,23 @@ def run_piv(
 
     imageio.imwrite(figure_export_name,frame_a)
 
-    fig, ax = plt.subplots(figsize=(24,12))
-    tools.display_vector_field(text_export_name, 
-                                   ax=ax, scaling_factor= pixel_density, 
-                                   scale=scale_factor, # scale defines here the arrow length
-                                   width=arrow_width, # width is the thickness of the arrow
-                                   on_img=True, # overlay on the image
-                                   image_name= figure_export_name)
-    fig.savefig(figure_export_name)       
+    if show_result == True:
+        fig, ax = plt.subplots(figsize=(24,12))
+        tools.display_vector_field(text_export_name, 
+                                    ax=ax, scaling_factor= pixel_density, 
+                                    scale=scale_factor, # scale defines here the arrow length
+                                    width=arrow_width, # width is the thickness of the arrow
+                                    on_img=True, # overlay on the image
+                                    image_name= figure_export_name)
+        fig.savefig(figure_export_name)       
 
     if show_vertical_profiles:
         field_shape = pyprocess.get_field_shape(image_size=frame_a.shape,search_area_size=searchsize,overlap=overlap)
         vertical_profiles(text_export_name,field_shape)
     
-    return np.mean(u3) + np.mean(v3)
+    print(np.std(u3))
+
+    return np.std(u3)
 
 
 def vertical_profiles(text_export_name,field_shape):
@@ -347,6 +406,21 @@ def vertical_profiles(text_export_name,field_shape):
     #                 blit=True)                    
     #     ani.save('animation.mp4',writer=writer)   
 
+def convert_xyuv():
+    saved_txt = np.loadtxt('_quick_piv.txt')
+    
+    xx = saved_txt[:,0]
+    yy = saved_txt[:,1]
+    uu = saved_txt[:,2]
+    vv = saved_txt[:,3]
+
+    xx2 = xx.reshape(49,3)
+    yy2 = yy.reshape(49,3)
+    uu2 = uu.reshape(49,3)
+    vv2 = vv.reshape(49,3)
+
+    return xx2,yy2,uu2,vv2
+
 def negative(image):
     """ Return the negative of an image
     
@@ -360,129 +434,184 @@ def negative(image):
 
     """
     return 255 - image
-    
+# %%
+
+
+convert_xyuv()
+
+
 
 # %%
-folder_path = '/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-01-20'
-
-piv_param = {
-        "winsize": 48,
-        "searchsize": 50,
-        "overlap": 24,
-        "dt": 0.0001,
-        "image_check": False,    
-        "show_vertical_profiles": False,            
-        "figure_export_name": '_quick_piv.tiff',
-        "text_export_name": '_quick_piv.txt',        
-        "scale_factor": 1e4,
-        "pixel_density": 36.74,
-        "arrow_width": 0.02,
-}
-
+folder_path = '/Volumes/Backup Plus /ROWLAND/piv-data/2021-01-19'
 pi = ParticleImage(folder_path)
-pi.set_piv_param(piv_param)
+# %%
+# pi.param_dict_list = [x for x in pi.param_dict_list if x['sample'] == 'Flat_10' and x['motor'] == 25.0]
+pi.param_dict_list = [x for x in pi.param_dict_list if x['sample'] == '1_1_1_10' and x['motor'] == 25.0]
+# print(pi.param_dict_list)
 
 # %%
-# pi.set_piv_param({"winsize": 35})
-
-pi.piv_upper_region(9,7,surface_index=285)
-# %%
-pi.piv_lower_region(11,1,surface_index=1000)
-# %%
-pi.piv_lower_region(9,11,surface_index=714)
-# %%
-pi.set_piv_param({"scale_factor": 1e1,"arrow_width":0.02,"pixel_density":1400/0.0381})
-pi.quick_piv(10,5)
-
+aa = 100
+bb = 101
 
 # %%
-im = entire_image = pi.stitch_images()
+pi.get_entire_vector_field()
 # %%
-im_rotated = im.rotate(-1.364)
+pi.quick_piv(3,3,index_a=aa,index_b=bb)
+# pi.quick_piv(3,2,index_a=100,index_b=101)
 # %%
-im_array = np.array(im.rotate(-1.364))
+pi.quick_piv(1,2,index_a=aa,index_b=bb)
 
-im_array_cropped = im_array[200:1200,:]
-plt.imshow(im_array_cropped)
+
+# %%
+pi.quick_piv(6,5,index_a=aa,index_b=bb)
+
+
+# %%
+pi.set_piv_param({"show_result": False})
+pi.quick_piv(6,5,index_a=aa,index_b=bb)
 
 # %%
 
-width, height = im.size
 
-length_to_cut = 10
+# # %%
+# folder_path = '/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-01-20'
 
-# left = 0
-# right = width
-# bottom = length_to_cut
-# top = height - length_to_cut
+# piv_param = {
+#         "winsize": 48,
+#         "searchsize": 50,
+#         "overlap": 24,
+#         "dt": 0.0001,
+#         "image_check": False,    
+#         "show_vertical_profiles": False,            
+#         "figure_export_name": '_quick_piv.tiff',
+#         "text_export_name": '_quick_piv.txt',        
+#         "scale_factor": 1e4,
+#         "pixel_density": 36.74,
+#         "arrow_width": 0.02,
+# }
 
-left = 20
-right = 20
-bottom = 200
-top = 200
+# pi = ParticleImage(folder_path)
+# pi.set_piv_param(piv_param)
 
-im_cropped = im_rotated.crop((left, top, width - right, height - bottom)) 
+# # %%
+# # pi.set_piv_param({"winsize": 35})
 
-# %%
-im_cropped.show()
-
-im_cropped_array = np.array(im_cropped)
-
-im_cropped.save('_rotated_and_cropped.png')
-
-# 370, 594
-
-# %%
-im_cropped_array = np.array(im_cropped)
+# pi.piv_upper_region(9,7,surface_index=285)
+# # %%
+# pi.piv_lower_region(11,1,surface_index=1000)
+# # %%
+# pi.piv_lower_region(9,11,surface_index=714)
+# # %%
+# pi.set_piv_param({"scale_factor": 1e1,"arrow_width":0.02,"pixel_density":1400/0.0381})
+# pi.quick_piv(10,5)
 
 
-# np.savetxt('_rotated_and_cropped.csv',im_cropped_array)
-# %%
+# # %%
+# im = entire_image = pi.stitch_images()
+# # %%
+# im_rotated = im.rotate(-1.364)
+# # %%
+# im_array = np.array(im.rotate(-1.364))
 
-ii = 102
+# im_array_cropped = im_array[200:1200,:]
+# plt.imshow(im_array_cropped)
 
-img_a,img_b = pi.read_two_images(10,9,index_a=ii,index_b=ii+1)
-img_b,img_c = pi.read_two_images(10,9,index_a=ii+1,index_b=ii+2)
+# # %%
 
-ia = np.array(img_a)
-ib = np.array(img_b)
-ic = np.array(img_c)
+# width, height = im.size
 
-print(np.mean(ia-ib), np.mean(ib-ic))
+# length_to_cut = 10
 
-# %%
-a = np.loadtxt('_quick_piv.txt')
+# # left = 0
+# # right = width
+# # bottom = length_to_cut
+# # top = height - length_to_cut
 
-print(a.shape)
+# left = 20
+# right = 20
+# bottom = 200
+# top = 200
 
-xy_array = a[:,0:2]
-print(xy_array)
-# %%
-x_array = a[:,0]
-y_array = a[:,1]
-u_array = a[:,2]
+# im_cropped = im_rotated.crop((left, top, width - right, height - bottom)) 
 
-# %%
-xx = x_array.reshape(53,3)
-yy = y_array.reshape(53,3)
-uu = u_array.reshape(53,3)
-print(uu)
-# %%
-print(yy)
+# # %%
+# im_cropped.show()
 
-# %%
-fig,ax = plt.subplots()
-ax.plot(uu[:,0],yy[:,0],'o-')
+# im_cropped_array = np.array(im_cropped)
+
+# im_cropped.save('_rotated_and_cropped.png')
+
+# # 370, 594
+
+# # %%
+# im_cropped_array = np.array(im_cropped)
+
+
+# # np.savetxt('_rotated_and_cropped.csv',im_cropped_array)
+# # %%
+
+# ii = 102
+
+# img_a,img_b = pi.read_two_images(10,9,index_a=ii,index_b=ii+1)
+# img_b,img_c = pi.read_two_images(10,9,index_a=ii+1,index_b=ii+2)
+
+# ia = np.array(img_a)
+# ib = np.array(img_b)
+# ic = np.array(img_c)
+
+# print(np.mean(ia-ib), np.mean(ib-ic))
+
+# # %%
+# a = np.loadtxt('_quick_piv.txt')
+
+# print(a.shape)
+
+# xy_array = a[:,0:2]
+# print(xy_array)
+# # %%
+# x_array = a[:,0]
+# y_array = a[:,1]
+# u_array = a[:,2]
+
+# # %%
+# xx = x_array.reshape(53,3)
+# yy = y_array.reshape(53,3)
+# uu = u_array.reshape(53,3)
+# print(uu)
+# # %%
+# print(yy)
+
+# # %%
+# fig,ax = plt.subplots()
+# ax.plot(uu[:,0],yy[:,0],'o-')
 
 
 
 # ax.invert_yaxis()
+# # %%
+# num_rows = field_shape[0] # 11
+#     num_cols = field_shape[1] # 100
+
+#     U_array = np.sqrt(uv_array[:,0]**2+uv_array[:,0]**2).reshape(num_rows,num_cols).T        
+#     x_coord = x_array.reshape(num_rows,num_cols)[0,:]
+#     y_coord = np.flipud(y_array.reshape(num_rows,num_cols)[:,0])
+
+# xx = x
 # %%
-num_rows = field_shape[0] # 11
-    num_cols = field_shape[1] # 100
 
-    U_array = np.sqrt(uv_array[:,0]**2+uv_array[:,0]**2).reshape(num_rows,num_cols).T        
-    x_coord = x_array.reshape(num_rows,num_cols)[0,:]
-    y_coord = np.flipud(y_array.reshape(num_rows,num_cols)[:,0])
+entire_x = np.array([])
+entire_y = np.array([])
 
-xx = x
+
+# %%
+tttt = np.zeros((5,2))
+
+tttt.shape
+
+# %%
+tttt2 = np.vstack((tttt,entire_x))
+
+tttt2.shape
+# %%
+
+convert_xyuv()
