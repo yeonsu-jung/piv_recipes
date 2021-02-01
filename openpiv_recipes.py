@@ -225,33 +225,37 @@ class ParticleImage:
             img_b = img_b[:,-surface_index:-1].T
             u_std = run_piv(img_a,img_b,**self.piv_param)
 
-    def get_entire_vector_field(self,index_a=100,index_b=101):
+    def fast_piv():
         
-        pos_list = [x['pos'] for x in self.param_dict_list]
-        voffset_list = [x['VOFFSET'] for x in self.param_dict_list]
+
+    def get_entire_vector_field(self,index_a=100,index_b=101):
+        self.set_piv_param({"show_result":False})
+        # pos_list = [x['pos'] for x in self.param_dict_list]
+        # voffset_list = [x['VOFFSET'] for x in self.param_dict_list]
 
         entire_x = np.empty((49,3))
         entire_y = np.empty((49,3))
         entire_u = np.empty((49,3))
         entire_v = np.empty((49,3))
 
-        for pos in pos_list:
-            for voffset in voffset_list:
+        for pos in range(1,7,1):
+            for voffset in range(1,13,1):
                 
-                voffset_index = (voffset)//80+1
-                self.quick_piv(pos,voffset_index)
+                self.fast_piv(pos,voffset)
 
                 xx,yy,uu,vv = convert_xyuv()
 
-                entire_x = np.append(entire_x,xx)
-                entire_y = np.append(entire_y,yy)
-                entire_u = np.append(entire_u,uu)
-                entire_v = np.append(entire_v,vv)
+                entire_x = np.hstack((entire_x,xx))
+                entire_y = np.hstack((entire_y,yy))
+                entire_u = np.hstack((entire_u,uu))
+                entire_v = np.hstack((entire_v,vv))
 
         np.savetxt('_entire_x.txt',entire_x.T)
-        np.savetxt('_entire_x.txt',entire_y.T)
-        np.savetxt('_entire_x.txt',entire_u.T)
-        np.savetxt('_entire_x.txt',entire_v.T)
+        np.savetxt('_entire_y.txt',entire_y.T)
+        np.savetxt('_entire_u.txt',entire_u.T)
+        np.savetxt('_entire_v.txt',entire_v.T)
+
+        self.set_piv_param({"show_result":True})
 
     def set_piv_param(self,param):
         for k in param:
@@ -273,7 +277,7 @@ class ParticleImage:
         im2 = Image.open(file_b_path)
 
         im1.show()
-        im2.show()
+        im2.show()    
 
 # plt.rcParams['animation.ffmpeg_path'] = '/Users/yeonsu/opt/anaconda3/envs/piv/share/ffmpeg'
 
@@ -434,12 +438,6 @@ def negative(image):
 
     """
     return 255 - image
-# %%
-
-
-convert_xyuv()
-
-
 
 # %%
 folder_path = '/Volumes/Backup Plus /ROWLAND/piv-data/2021-01-19'
@@ -450,11 +448,33 @@ pi.param_dict_list = [x for x in pi.param_dict_list if x['sample'] == '1_1_1_10'
 # print(pi.param_dict_list)
 
 # %%
-aa = 100
-bb = 101
+pi.get_entire_vector_field()
 
 # %%
-pi.get_entire_vector_field()
+entire_x = np.loadtxt('_entire_x.txt').T
+entire_y = np.loadtxt('_entire_y.txt').T
+entire_u = np.loadtxt('_entire_u.txt').T
+entire_v = np.loadtxt('_entire_v.txt').T
+
+
+# %%
+left_u = entire_u[:,1]
+right_u = entire_u[:,-1]
+
+top_u = entire_u[2,:]
+bottom_u = entire_u[-2,:]
+
+# %%
+fig,ax = plt.subplots(2)
+ax[0].plot(left_u)
+ax[1].plot(right_u)
+# %%
+fig,ax = plt.subplots(2)
+ax[0].plot(top_u)
+ax[1].plot(bottom_u)
+
+# %%
+pi.quick_piv(1,1,index_a=100,index_b=101)
 # %%
 pi.quick_piv(3,3,index_a=aa,index_b=bb)
 # pi.quick_piv(3,2,index_a=100,index_b=101)
@@ -615,3 +635,48 @@ tttt2.shape
 # %%
 
 convert_xyuv()
+
+# %%
+np.loadtxt('_quick_piv.txt')
+
+# %%
+entire_x = np.empty((49,3))
+aa = np.ones((49,3))
+# %%
+bb = np.hstack((entire_x,aa))
+
+bb.shape
+
+
+# %%
+
+aa = np.loadtxt('_quick_piv.txt')
+
+# %%
+aa[:,0]
+# %%
+
+entire_x = np.loadtxt('_entire_x.txt')
+entire_y = np.loadtxt('_entire_y.txt')
+entire_u = np.loadtxt('_entire_u.txt')
+entire_v = np.loadtxt('_entire_v.txt')
+
+
+# %%
+left_u = entire_u[:,2]
+right_u = entire_u[:,-1]
+
+top_u = entire_u[2,:]
+bottom_u = entire_u[-2,:]
+# %%
+
+# %%
+fig,ax = plt.subplots(2)
+ax[0].plot(left_u)
+ax[1].plot(right_u)
+# %%
+fig,ax = plt.subplots(2)
+ax[0].plot(top_u)
+ax[1].plot(bottom_u)
+
+# %%
