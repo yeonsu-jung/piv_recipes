@@ -67,6 +67,8 @@ class ParticleImage:
         # location_path = [x['path'] for x in self.param_dict_list if x['pos'] == camera_position and x['VOFFSET'] == (sensor_position-1)*80]
         location_path = [x['path'] for x in self.param_dict_list if search_dict.items() <= x.items()]
 
+        print(location_path)
+
         file_a_path = os.path.join(self.path,*location_path,'frame_%06d.tiff' %index_a)
         file_b_path = os.path.join(self.path,*location_path,'frame_%06d.tiff' %index_b)
 
@@ -237,12 +239,10 @@ class ParticleImage:
         entire_v = np.empty((49,3))
 
         for pos in range(first_position,last_position+1,1):
-            for voffset in range(1,13,1):
-                
+            for voffset in range(1,13,1):                
                 search_dict = {'pos': pos, 'VOFFSET': (voffset-1)*80}
 
                 self.quick_piv_by_key(search_dict)
-
                 xx,yy,uu,vv = convert_xyuv()
 
                 entire_x = np.hstack((entire_x,xx))
@@ -277,7 +277,7 @@ class ParticleImage:
         im1.show()
         im2.show()    
 
-    def calculate_drag(self,start = 3, end = 3):
+    def calculate_drag(self,start = 1, end = 1):
         entire_x = np.loadtxt('_entire_x.txt')
         entire_y = np.loadtxt('_entire_y.txt')
         entire_u = np.loadtxt('_entire_u.txt')
@@ -341,39 +341,9 @@ class ParticleImage:
         B1 = mdot_1*np.mean(left_u)/1000 * W
 
         F1 = A - B1
-        print('Dynamic pressure difference %.2f' %A)
-        print('m dot: %.8f' %B1)
-        print('Force (N) %.2f:' %F1)
-
-    def read_two_images(self,search_dict,index_a = 100,index_b = 101):
-
-        # location_path = [x['path'] for x in self.param_dict_list if x['pos'] == camera_position and x['VOFFSET'] == (sensor_position-1)*80]
-        location_path = [x['path'] for x in self.param_dict_list if search_dict.items() <= x.items()]
-
-        file_a_path = os.path.join(self.path,*location_path,'frame_%06d.tiff' %index_a)
-        file_b_path = os.path.join(self.path,*location_path,'frame_%06d.tiff' %index_b)
-
-        # exception handling needed
-        # img_a = io.imread(file_a_path)
-        # img_b = io.imread(file_b_path)
-
-        img_a = Image.open(file_a_path)
-        img_b = Image.open(file_b_path)
-
-        # print(np.std(np.array(img_b) - np.array(img_a)))
-
-        # if np.mean(np.array(img_b) - np.array(img_a)) < 80:
-        #     index_a = index_a + 1
-        #     index_b = index_b + 1
-
-        #     file_a_path = os.path.join(self.path,*location_path,'frame_%06d.tiff' %index_a)
-        #     file_b_path = os.path.join(self.path,*location_path,'frame_%06d.tiff' %index_b)
-
-        #     img_a = Image.open(file_a_path)
-        #     img_b = Image.open(file_b_path)
-        
-        return img_a, img_b
-
+        print('Dynamic pressure difference: %.4f (N)' %A)
+        print('m dot: %.8f (kg/s)' %B1)
+        print('Force (N): %.4f' %F1)  
 
 
 # %%
