@@ -12,14 +12,6 @@ import os
 from PIL import Image
 import imageio as io
 
-# import matplotlib
-# matplotlib.use('Qt5Agg')
-
-# from PyQt5 import QtCore, QtWidgets
-
-# from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
-# from matplotlib.figure import Figure
-
 # %%
 class ParticleImage:    
     def __init__(self, folder_path):
@@ -34,8 +26,8 @@ class ParticleImage:
             # self.param_dict_list.append(self.dummy(x))
             self.param_dict_list.append(self.param_string_to_dictionary(x))
 
-        self.param_dict_list = sorted(self.param_dict_list, key = lambda i: (i['pos'],i['VOFFSET']))
-        self.param_string_list = sorted(self.param_string_list, key = lambda i: (self.param_string_to_dictionary(i)['pos'],self.param_string_to_dictionary(i)['VOFFSET']))
+        # self.param_dict_list = sorted(self.param_dict_list, key = lambda i: (i['pos'],i['VOFFSET']))
+        # self.param_string_list = sorted(self.param_string_list, key = lambda i: (self.param_string_to_dictionary(i)['pos'],self.param_string_to_dictionary(i)['VOFFSET']))
         self.piv_param = {
             "winsize": 48,
             "searchsize": 52,
@@ -48,8 +40,9 @@ class ParticleImage:
             "scale_factor": 1,            
             "pixel_density": 36.74,
             "arrow_width": 0.02,
-            "show_result": True,
+            "show_result": True,        
         }
+        self.piv_dict_list = self.param_dict_list
 
     def param_string_to_dictionary(self,pstr):
         running_parameter = re.findall("_[a-z]+[0-9]+[.]*[0-9]*", pstr, re.IGNORECASE)
@@ -69,9 +62,10 @@ class ParticleImage:
         param_dict['path'] = pstr
         return param_dict    
 
-    def read_two_images(self,camera_position,sensor_position,index_a = 100,index_b = 101):
+    def read_two_images(self,search_dict,index_a = 100,index_b = 101):
 
-        location_path = [x['path'] for x in self.param_dict_list if x['pos'] == camera_position and x['VOFFSET'] == (sensor_position-1)*80]
+        # location_path = [x['path'] for x in self.param_dict_list if x['pos'] == camera_position and x['VOFFSET'] == (sensor_position-1)*80]
+        location_path = [x['path'] for x in self.param_dict_list if search_dict.items() <= x.items()]
 
         file_a_path = os.path.join(self.path,*location_path,'frame_%06d.tiff' %index_a)
         file_b_path = os.path.join(self.path,*location_path,'frame_%06d.tiff' %index_b)
@@ -98,27 +92,12 @@ class ParticleImage:
         return img_a, img_b
 
     def check_image_pair():
-        return True
-
-    def open_two_images(self,camera_position,sensor_position,index_a = 100,index_b = 101):
-        
-        im1, im2 = self.read_two_images(camera_position,sensor_position,index_a=index_a,index_b=index_b)
-
-        im1 = Image.open(file_a_path)
-        im2 = Image.open(file_b_path)
-
-        im1.show()
-        im2.show()
-
-        # plt.ion()
-        # fig,ax = plt.subplots(2,1,figsize=(15,4))
-        # ax[0].imshow(img_a)
-        # ax[1].imshow(img_b)
-        # ax[0].axis('off')
-        # ax[1].axis('off')        
+        return True   
 
     def quick_piv(self,camera_position,sensor_position,index_a = 100, index_b = 101):
-        img_a, img_b = self.read_two_images(camera_position,sensor_position,index_a=index_a,index_b=index_b)
+        
+        search_dict = {"pos": camera_position,"VOFFSET": (sensor_position - 1)*80 }        
+        img_a, img_b = self.read_two_images(search_dict,index_a=index_a,index_b=index_b)
 
         img_a = np.array(img_a).T
         img_b = np.array(img_b).T
@@ -126,15 +105,15 @@ class ParticleImage:
         u_std = run_piv(img_a,img_b,**self.piv_param)
         
         if u_std > 480:
-            img_a, img_b = self.read_two_images(camera_position,sensor_position,index_a=index_a+1,index_b=index_b+1)
+            img_a, img_b = self.read_two_images(search_dict,index_a=index_a+1,index_b=index_b+1)
             img_a = np.array(img_a).T
             img_b = np.array(img_b).T
             
             u_std = run_piv(img_a,img_b,**self.piv_param)        
 
-    def quick_piv_by_key(self,**keyords,index_a = 100, index_b = 101):        
+    def quick_piv_by_key(self, search_dict, index_a = 100, index_b = 101):
 
-        img_a, img_b = self.read_two_images(camera_position,sensor_position,index_a=index_a,index_b=index_b)
+        img_a, img_b = self.read_two_images(search_dict,index_a=index_a,index_b=index_b)
 
         img_a = np.array(img_a).T
         img_b = np.array(img_b).T
@@ -142,7 +121,7 @@ class ParticleImage:
         u_std = run_piv(img_a,img_b,**self.piv_param)
         
         if u_std > 480:
-            img_a, img_b = self.read_two_images(camera_position,sensor_position,index_a=index_a+1,index_b=index_b+1)
+            img_a, img_b = self.read_two_images(search_dict,index_a=index_a+1,index_b=index_b+1)
             img_a = np.array(img_a).T
             img_b = np.array(img_b).T
             
@@ -195,7 +174,8 @@ class ParticleImage:
 
     def piv_upper_region(self,camera_position,sensor_position,index_a = 100, index_b = 101,surface_index = 360):
         
-        img_a, img_b = self.read_two_images(camera_position,sensor_position,index_a=index_a,index_b=index_b)              
+        search_dict = {"pos": camera_position,"VOFFSET": (sensor_position - 1)*80 }
+        img_a, img_b = self.read_two_images(search_dict,index_a=index_a,index_b=index_b)              
 
         # img_a = np.array(img_a.rotate(-1.364))
         # img_b = np.array(img_b.rotate(-1.364))
@@ -218,7 +198,8 @@ class ParticleImage:
 
     def piv_lower_region(self,camera_position,sensor_position,index_a = 100, index_b = 101,surface_index = 360):
         
-        img_a, img_b = self.read_two_images(camera_position,sensor_position,index_a=index_a,index_b=index_b)
+        search_dict = {"pos": camera_position,"VOFFSET": (sensor_position - 1)*80 }
+        img_a, img_b = self.read_two_images(search_dict,index_a=index_a,index_b=index_b)
 
         # img_a = np.array(img_a.rotate(-1.364))
         # img_b = np.array(img_b.rotate(-1.364))
@@ -245,7 +226,7 @@ class ParticleImage:
 
         return 0
 
-    def get_entire_vector_field(self,num_pos = 11,index_a=100,index_b=101):
+    def get_entire_vector_field(self,first_position=1, last_position = 11,index_a=100,index_b=101):
         self.set_piv_param({"show_result":False})
         # pos_list = [x['pos'] for x in self.param_dict_list]
         # voffset_list = [x['VOFFSET'] for x in self.param_dict_list]
@@ -255,10 +236,12 @@ class ParticleImage:
         entire_u = np.empty((49,3))
         entire_v = np.empty((49,3))
 
-        for pos in range(1,num_pos+1,1):
+        for pos in range(first_position,last_position+1,1):
             for voffset in range(1,13,1):
                 
-                self.quick_piv(pos,voffset)
+                search_dict = {'pos': pos, 'VOFFSET': (voffset-1)*80}
+
+                self.quick_piv_by_key(search_dict)
 
                 xx,yy,uu,vv = convert_xyuv()
 
@@ -267,10 +250,10 @@ class ParticleImage:
                 entire_u = np.hstack((entire_u,uu))
                 entire_v = np.hstack((entire_v,vv))
 
-        np.savetxt('_entire_x.txt',entire_x.T)
-        np.savetxt('_entire_y.txt',entire_y.T)
-        np.savetxt('_entire_u.txt',entire_u.T)
-        np.savetxt('_entire_v.txt',entire_v.T)
+        np.savetxt('_entire_x.txt',entire_x[:,3:-1].T)
+        np.savetxt('_entire_y.txt',entire_y[:,3:-1].T)
+        np.savetxt('_entire_u.txt',entire_u[:,3:-1].T)
+        np.savetxt('_entire_v.txt',entire_v[:,3:-1].T)
 
         self.set_piv_param({"show_result":True})
 
@@ -281,14 +264,12 @@ class ParticleImage:
     def my_argsort(lis):
         return sorted(range(len(lis)),key=lis.__getitem__)
 
-    def open_two_images(self,camera_position,sensor_position,index_a = 100,index_b = 101):
-        location = camera_position * sensor_position
-        location_info = self.param_dict_list[location]
-        location_name = self.param_string_list[location]
-        location_path = os.path.join(self.path, location_name)
+    def open_two_images(self,search_dict,index_a = 100,index_b = 101):
+                        
+        location_path = [x['path'] for x in self.param_dict_list if search_dict.items() <= x.items()]
 
-        file_a_path = os.path.join(location_path,'frame_%06d.tiff' %index_a)
-        file_b_path = os.path.join(location_path,'frame_%06d.tiff' %index_b)        
+        file_a_path = os.path.join(self.path,*location_path,'frame_%06d.tiff' %index_a)
+        file_b_path = os.path.join(self.path,*location_path,'frame_%06d.tiff' %index_b)        
 
         im1 = Image.open(file_a_path)
         im2 = Image.open(file_b_path)
@@ -349,17 +330,53 @@ class ParticleImage:
         # ax[1,1].set_ylabel('v (mm/s)')
         rho = 1000
         delta_y = (52-24)*1.5*25.4/1400/1000
+        W = 0.048
         # delta_x = (52-24)*1.5*25.4/1400/1000
 
-        A = np.sum(rho*((left_u/1000)**2 - (right_u/1000)**2)) * delta_y
+        A = rho*(np.sum((left_u/1000)**2) - np.sum((right_u/1000)**2)) * delta_y * W
 
-        mdot_1 = np.sum((left_u - right_u))/1000*delta_y
+        mdot_1 = np.sum((left_u - right_u))/1000 * delta_y * W
         # mdot_2 = np.sum((top_v - bottom_v))/1000*delta_y
 
-        B1 = mdot_1*np.mean(left_u)/1000
+        B1 = mdot_1*np.mean(left_u)/1000 * W
 
         F1 = A - B1
-        print(F1)
+        print('Dynamic pressure difference %.2f' %A)
+        print('m dot: %.8f' %B1)
+        print('Force (N) %.2f:' %F1)
+
+    def read_two_images(self,search_dict,index_a = 100,index_b = 101):
+
+        # location_path = [x['path'] for x in self.param_dict_list if x['pos'] == camera_position and x['VOFFSET'] == (sensor_position-1)*80]
+        location_path = [x['path'] for x in self.param_dict_list if search_dict.items() <= x.items()]
+
+        file_a_path = os.path.join(self.path,*location_path,'frame_%06d.tiff' %index_a)
+        file_b_path = os.path.join(self.path,*location_path,'frame_%06d.tiff' %index_b)
+
+        # exception handling needed
+        # img_a = io.imread(file_a_path)
+        # img_b = io.imread(file_b_path)
+
+        img_a = Image.open(file_a_path)
+        img_b = Image.open(file_b_path)
+
+        # print(np.std(np.array(img_b) - np.array(img_a)))
+
+        # if np.mean(np.array(img_b) - np.array(img_a)) < 80:
+        #     index_a = index_a + 1
+        #     index_b = index_b + 1
+
+        #     file_a_path = os.path.join(self.path,*location_path,'frame_%06d.tiff' %index_a)
+        #     file_b_path = os.path.join(self.path,*location_path,'frame_%06d.tiff' %index_b)
+
+        #     img_a = Image.open(file_a_path)
+        #     img_b = Image.open(file_b_path)
+        
+        return img_a, img_b
+
+
+
+# %%
 
 # plt.rcParams['animation.ffmpeg_path'] = '/Users/yeonsu/opt/anaconda3/envs/piv/share/ffmpeg'
 
@@ -523,3 +540,50 @@ def negative(image):
     """
     return 255 - image
 # %%
+
+# folder_path = 'D:/ROWLAND/piv-data/2021-01-18'
+# pi = ParticleImage(folder_path)
+# print(pi.param_dict_list)
+
+# # %%
+# search_dict = {'sample': 'Flat_10','motor':25}
+
+# list_original = pi.param_dict_list
+# list_for_entire_piv = [x for x in list_original if search_dict.items() <= x.items()]
+
+# print(list_for_entire_piv)
+# # %%
+# pi.param_dict_list = list_for_entire_piv
+# # %%
+# pi.get_entire_vector_field(first_position=2,last_position=5)
+
+# # %%
+# pi.calculate_drag(start = 1, end = 1)
+
+# # %%
+# pi.quick_piv(5,7)
+# # %%
+# search_dict = {"sample": 'Flat_10',"motor":25.0,"pos":1,"VOFFSET":80}
+# pi.open_two_images(search_dict)
+
+
+# # %%
+# search_dict = {"sample": 'Flat_10',"motor": 15,"pos": 2, "VOFFSET": 0}
+# pi.quick_piv_by_key(search_dict)
+
+# # %%
+
+# search_dict = {"sample": 'Flat_10','motor':5}
+# [x for x in pi.param_dict_list if search_dict.items() <= x.items()]
+
+# # %%
+# pi.param_string_to_dictionary('Flat_10_motor5.00_pos2_VOFFSET0_01-18_ag2_laser10')
+
+
+# # %%
+# pi.param_string_list
+# # %%
+# len(pi.param_string_list)
+
+# # %%
+# len(os.listdir(folder_path))
