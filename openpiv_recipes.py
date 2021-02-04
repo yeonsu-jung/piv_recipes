@@ -1,33 +1,29 @@
 # %%
 from openpiv import tools, pyprocess, validation, filters, scaling 
-import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib import animation
-import pandas as pd
-import imageio
+from PIL import Image
+from argparse import Namespace
 
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
 import re
 import os
-
-from PIL import Image
 import imageio as io
+import logging
+# %% Logging configuration
+
+
 
 # %%
 class ParticleImage:    
     def __init__(self, folder_path):
         self.path = folder_path
-        self.param_string_list = [x for x in os.listdir(self.path) if os.path.isdir(os.path.join(folder_path,x)) and not x.startswith('_')]
-
-        # for x in self.param_string_list:
-        #     print(x)
+        self.param_string_list = [x for x in os.listdir(self.path) if os.path.isdir(os.path.join(folder_path,x)) and not x.startswith('_')]        
         self.param_dict_list = []
 
         for x in self.param_string_list:
-            # self.param_dict_list.append(self.dummy(x))
             self.param_dict_list.append(self.param_string_to_dictionary(x))
-
-        # self.param_dict_list = sorted(self.param_dict_list, key = lambda i: (i['pos'],i['VOFFSET']))
-        # self.param_string_list = sorted(self.param_string_list, key = lambda i: (self.param_string_to_dictionary(i)['pos'],self.param_string_to_dictionary(i)['VOFFSET']))
+        
         self.piv_param = {
             "winsize": 48,
             "searchsize": 52,
@@ -41,8 +37,13 @@ class ParticleImage:
             "pixel_density": 36.74,
             "arrow_width": 0.02,
             "show_result": True,        
+            "upper_bound": 2000, # (mm/s)
+            "lower_bound": -2000, # (mm/s) 
         }
         self.piv_dict_list = self.param_dict_list
+
+    def set_piv_list(self,exp_cond_dict):        
+        self.piv_dict_list = [x for x in self.param_dict_list if exp_cond_dict.items() <= x.items()]        
 
     def param_string_to_dictionary(self,pstr):
         running_parameter = re.findall("_[a-z]+[0-9]+[.]*[0-9]*", pstr, re.IGNORECASE)
@@ -60,75 +61,125 @@ class ParticleImage:
             param_dict[kk[0]] = float(vv[0])
 
         param_dict['path'] = pstr
-        return param_dict    
+        return param_dict
 
     def read_two_images(self,search_dict,index_a = 100,index_b = 101):
-
-        # location_path = [x['path'] for x in self.param_dict_list if x['pos'] == camera_position and x['VOFFSET'] == (sensor_position-1)*80]
-        location_path = [x['path'] for x in self.param_dict_list if search_dict.items() <= x.items()]
-
-        print(location_path)
+        location_path = [x['path'] for x in self.piv_dict_list if search_dict.items() <= x.items()]
+        print('Read image from:', *location_path)
 
         file_a_path = os.path.join(self.path,*location_path,'frame_%06d.tiff' %index_a)
-        file_b_path = os.path.join(self.path,*location_path,'frame_%06d.tiff' %index_b)
+        file_b_path = os.path.join(self.path,*location_path,'frame_%06d.tiff' %index_b)        
 
-        # exception handling needed
-        # img_a = io.imread(file_a_path)
-        # img_b = io.imread(file_b_path)
+        try:              
+            img_a = Image.open(file_a_path)
+            img_b = Image.open(file_b_path)
+        except FileNotFoundError:
+            print('No such file: ' + file_a_path)
+            print('No such file: ' + file_b_path)
 
-        img_a = Image.open(file_a_path)
-        img_b = Image.open(file_b_path)
-
-        # print(np.std(np.array(img_b) - np.array(img_a)))
-
-        # if np.mean(np.array(img_b) - np.array(img_a)) < 80:
-        #     index_a = index_a + 1
-        #     index_b = index_b + 1
-
-        #     file_a_path = os.path.join(self.path,*location_path,'frame_%06d.tiff' %index_a)
-        #     file_b_path = os.path.join(self.path,*location_path,'frame_%06d.tiff' %index_b)
-
-        #     img_a = Image.open(file_a_path)
-        #     img_b = Image.open(file_b_path)
-        
         return img_a, img_b
 
     def check_image_pair():
-        return True   
+        return True
+
+    def show_piv_param(self):
+        print("- PIV parameters -")
+        for x, y in self.piv_param.items():
+            print(x +":", y)    
 
     def quick_piv(self,camera_position,sensor_position,index_a = 100, index_b = 101):
-        
+        self.show_piv_param()
+                
         search_dict = {"pos": camera_position,"VOFFSET": (sensor_position - 1)*80 }        
         img_a, img_b = self.read_two_images(search_dict,index_a=index_a,index_b=index_b)
 
         img_a = np.array(img_a).T
         img_b = np.array(img_b).T
 
-        u_std = run_piv(img_a,img_b,**self.piv_param)
+        u_std = self.run_piv(img_a,img_b,**self.piv_param)
         
         if u_std > 480:
             img_a, img_b = self.read_two_images(search_dict,index_a=index_a+1,index_b=index_b+1)
             img_a = np.array(img_a).T
             img_b = np.array(img_b).T
             
-            u_std = run_piv(img_a,img_b,**self.piv_param)        
+            u_std = self.run_piv(img_a,img_b,**self.piv_param)        
 
     def quick_piv_by_key(self, search_dict, index_a = 100, index_b = 101):
+        self.show_piv_param()
+        
+        ns = Namespace(**self.piv_param)
 
         img_a, img_b = self.read_two_images(search_dict,index_a=index_a,index_b=index_b)
 
         img_a = np.array(img_a).T
-        img_b = np.array(img_b).T
-
-        u_std = run_piv(img_a,img_b,**self.piv_param)
-        
-        if u_std > 480:
-            img_a, img_b = self.read_two_images(search_dict,index_a=index_a+1,index_b=index_b+1)
-            img_a = np.array(img_a).T
-            img_b = np.array(img_b).T
+        img_b = np.array(img_b).T                
             
-            u_std = run_piv(img_a,img_b,**self.piv_param)        
+        u0, v0, sig2noise = pyprocess.extended_search_area_piv(img_a.astype(np.int32),
+                                                            img_b.astype(np.int32),
+                                                            window_size=ns.winsize,
+                                                            overlap=ns.overlap, 
+                                                            dt=ns.dt, 
+                                                            search_area_size=ns.searchsize, 
+                                                            sig2noise_method='peak2peak')
 
+        x, y = pyprocess.get_coordinates(image_size=img_a.shape, 
+                                        search_area_size=ns.searchsize,                                    
+                                        overlap=ns.overlap)
+
+        x, y, u0, v0 = scaling.uniform(x, y, u0, v0, scaling_factor = ns.pixel_density) # no. pixel per distance
+
+        u0, v0, mask = validation.global_val(u0,v0,(0,150),(-150,150))
+
+        u1, v1, mask = validation.sig2noise_val( u0, v0, 
+                                                sig2noise, 
+                                                threshold = 1.01)
+
+        u3, v3 = filters.replace_outliers( u1, v1,
+                                        method='localmean',
+                                        max_iter=10,
+                                        kernel_size=3)
+        
+
+        #save in the simple ASCII table format
+        # if np.std(u3) < 480:
+        tools.save(x, y, u3, v3, sig2noise,mask, ns.text_export_name)
+        
+        if ns.image_check == True:
+            fig,ax = plt.subplots(2,1,figsize=(24,12))
+            ax[0].imshow(frame_a)
+            ax[1].imshow(frame_b)
+
+        io.imwrite(ns.figure_export_name,img_a)
+
+        if ns.show_result == True:
+            fig, ax = plt.subplots(figsize=(24,12))
+            tools.display_vector_field(ns.text_export_name, 
+                                        ax=ax, scaling_factor= ns.pixel_density, 
+                                        scale=ns.scale_factor, # scale defines here the arrow length
+                                        width=ns.arrow_width, # width is the thickness of the arrow
+                                        on_img=True, # overlay on the image
+                                        image_name= ns.figure_export_name)
+            fig.savefig(ns.figure_export_name)       
+
+        if ns.show_vertical_profiles:
+            field_shape = pyprocess.get_field_shape(image_size=img_a.shape,search_area_size=ns.searchsize,overlap=ns.overlap)
+            vertical_profiles(ns.text_export_name,field_shape)
+        
+        print('Std of u3: %.3f' %np.std(u3))
+        print('Mean of u3: %.3f' %np.mean(u3))
+
+        return np.std(u3)
+
+
+    # u_std = self.run_piv(img_a,img_b,**self.piv_param)
+    
+    # if u_std > 480:
+    #     img_a, img_b = self.read_two_images(search_dict,index_a=index_a+1,index_b=index_b+1)
+    #     img_a = np.array(img_a).T
+    #     img_b = np.array(img_b).T
+        
+    #     u_std = self.run_piv(img_a,img_b,**self.piv_param)        
 
     def stitch_images(self):
         entire_image_path = os.path.join(self.path,'_entire_image.png')
@@ -137,7 +188,7 @@ class ParticleImage:
             im = Image.open(entire_image_path)        
             im.show(entire_image_path)            
 
-        except:            
+        except FileNotFoundError:
             garo = 1408
             sero = (1296)*11
             entire_image = np.zeros((sero,garo))
@@ -177,10 +228,7 @@ class ParticleImage:
     def piv_upper_region(self,camera_position,sensor_position,index_a = 100, index_b = 101,surface_index = 360):
         
         search_dict = {"pos": camera_position,"VOFFSET": (sensor_position - 1)*80 }
-        img_a, img_b = self.read_two_images(search_dict,index_a=index_a,index_b=index_b)              
-
-        # img_a = np.array(img_a.rotate(-1.364))
-        # img_b = np.array(img_b.rotate(-1.364))
+        img_a, img_b = self.read_two_images(search_dict,index_a=index_a,index_b=index_b)                      
 
         img_a = np.array(img_a)
         img_b = np.array(img_b)
@@ -188,7 +236,7 @@ class ParticleImage:
         img_a = img_a[:,0:surface_index].T
         img_b = img_b[:,0:surface_index].T        
 
-        u_std = run_piv(img_a,img_b,**self.piv_param)
+        u_std = self.run_piv(img_a,img_b,**self.piv_param)
         if u_std > 480:
             img_a, img_b = self.read_two_images(camera_position,sensor_position,index_a=index_a+1,index_b=index_b+1)
             img_a = np.array(img_a)
@@ -196,7 +244,7 @@ class ParticleImage:
 
             img_a = img_a[:,0:surface_index].T
             img_b = img_b[:,0:surface_index].T
-            u_std = run_piv(img_a,img_b,**self.piv_param)
+            u_std = self.run_piv(img_a,img_b,**self.piv_param)
 
     def piv_lower_region(self,camera_position,sensor_position,index_a = 100, index_b = 101,surface_index = 360):
         
@@ -212,7 +260,7 @@ class ParticleImage:
         img_a = img_a[:,-surface_index:-1].T
         img_b = img_b[:,-surface_index:-1].T
 
-        u_std = run_piv(img_a,img_b,**self.piv_param)
+        u_std = self.run_piv(img_a,img_b,**self.piv_param)
         if u_std > 480:
             img_a, img_b = self.read_two_images(camera_position,sensor_position,index_a=index_a+1,index_b=index_b+1)
             img_a = np.array(img_a)
@@ -220,10 +268,9 @@ class ParticleImage:
 
             img_a = img_a[:,-surface_index:-1].T
             img_b = img_b[:,-surface_index:-1].T
-            u_std = run_piv(img_a,img_b,**self.piv_param)
+            u_std = self.run_piv(img_a,img_b,**self.piv_param)
 
-    def fast_piv(self, pos, voffset, index_a=100,index_b=101):
-        
+    def fast_piv(self, pos, voffset, index_a=100,index_b=101):        
         img_a, img_b = self.read_two_images(pos,voffset,index_a = index_a,index_b=index_b)
 
         return 0
@@ -403,7 +450,7 @@ def run_piv(
         ax[0].imshow(frame_a)
         ax[1].imshow(frame_b)
 
-    imageio.imwrite(figure_export_name,frame_a)
+    io.imwrite(figure_export_name,frame_a)
 
     if show_result == True:
         fig, ax = plt.subplots(figsize=(24,12))
