@@ -10,9 +10,6 @@ import re
 import os
 import imageio as io
 import logging
-# %% Logging configuration
-
-
 
 # %%
 class ParticleImage:    
@@ -129,7 +126,7 @@ class ParticleImage:
 
         x, y, u0, v0 = scaling.uniform(x, y, u0, v0, scaling_factor = ns.pixel_density) # no. pixel per distance
 
-        u0, v0, mask = validation.global_val(u0,v0,(0,150),(-150,150))
+        u0, v0, mask = validation.global_val(u0,v0,(0,200),(-200,200))
 
         u1, v1, mask = validation.sig2noise_val( u0, v0, 
                                                 sig2noise, 
@@ -137,7 +134,7 @@ class ParticleImage:
 
         u3, v3 = filters.replace_outliers( u1, v1,
                                         method='localmean',
-                                        max_iter=10,
+                                        max_iter=500,
                                         kernel_size=3)
         
 
@@ -313,7 +310,7 @@ class ParticleImage:
 
     def open_two_images(self,search_dict,index_a = 100,index_b = 101):
                         
-        location_path = [x['path'] for x in self.param_dict_list if search_dict.items() <= x.items()]
+        location_path = [x['path'] for x in self.piv_dict_list if search_dict.items() <= x.items()]
 
         file_a_path = os.path.join(self.path,*location_path,'frame_%06d.tiff' %index_a)
         file_b_path = os.path.join(self.path,*location_path,'frame_%06d.tiff' %index_b)        

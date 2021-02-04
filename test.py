@@ -20,6 +20,7 @@ from importlib import reload
 reload(piv)
 
 folder_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-data/2021-01-18'
+folder_path = '/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-01-18'
 pi = piv.ParticleImage(folder_path)
 
 exp_cond_dict = {'sample': 'Flat_10', 'motor': 5}
@@ -86,7 +87,6 @@ ymax = np.amax(piv_result[:, 1]) + window_size / (2 * scaling_factor)
 ax.quiver(xx,yy,uu,vv,angles='xy',width=arrow_width,color='r')
 ax.imshow(bgd,origin="lower", cmap="Greys_r",interpolation='nearest',aspect='auto')
 # ax.invert_yaxis()
-
 
 plt.show()
 
