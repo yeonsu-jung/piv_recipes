@@ -15,7 +15,7 @@ import logging
 class ParticleImage:    
     def __init__(self, folder_path):
         self.path = folder_path
-        self.param_string_list = [x for x in os.listdir(self.path) if os.path.isdir(os.path.join(folder_path,x)) and not x.startswith('_')]        
+        self.param_string_list = [x for x in os.listdir(self.path) if os.path.isdir(os.path.join(folder_path,x)) and not x.startswith('_') and not x.startswith('pos')]
         self.param_dict_list = []
 
         for x in self.param_string_list:
@@ -44,7 +44,9 @@ class ParticleImage:
 
     def param_string_to_dictionary(self,pstr):
         running_parameter = re.findall("_[a-z]+[0-9]+[.]*[0-9]*", pstr, re.IGNORECASE)
-        sample_parameter = pstr.replace("img_","")
+        date_parameter = re.findall("_\[.*?\].tiff",pstr)
+        sample_parameter = pstr.replace("img_","")        
+        sample_parameter = pstr.replace(date_parameter[0],"")        
 
         for k in running_parameter:
             sample_parameter = sample_parameter.replace(k,"")
