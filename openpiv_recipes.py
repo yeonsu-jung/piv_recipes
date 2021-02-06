@@ -44,9 +44,10 @@ class ParticleImage:
 
     def param_string_to_dictionary(self,pstr):
         running_parameter = re.findall("_[a-z]+[0-9]+[.]*[0-9]*", pstr, re.IGNORECASE)
-        date_parameter = re.findall("_\[.*?\].tiff",pstr)
-        sample_parameter = pstr.replace("img_","")        
-        sample_parameter = pstr.replace(date_parameter[0],"")        
+        date_parameter = re.findall("_\[.*?\].tiff",pstr)        
+        sample_parameter = pstr.replace("img_","")       
+        if date_parameter:
+            sample_parameter = pstr.replace(date_parameter[0],"")        
 
         for k in running_parameter:
             sample_parameter = sample_parameter.replace(k,"")
@@ -128,7 +129,7 @@ class ParticleImage:
 
         x, y, u0, v0 = scaling.uniform(x, y, u0, v0, scaling_factor = ns.pixel_density) # no. pixel per distance
 
-        u0, v0, mask = validation.global_val(u0,v0,(0,200),(-200,200))
+        u0, v0, mask = validation.global_val(u0,v0,(ns.lower_bound,ns.upper_bound),(-ns.upper_bound,ns.upper_bound))
 
         u1, v1, mask = validation.sig2noise_val( u0, v0, 
                                                 sig2noise, 
