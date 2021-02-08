@@ -6,16 +6,22 @@ from argparse import Namespace
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import imageio as io
 import re
 import os
-import imageio as io
-import logging
+import sys
 
 # %%
 class ParticleImage:    
     def __init__(self, folder_path):
         self.path = folder_path
         self.param_string_list = [x for x in os.listdir(self.path) if os.path.isdir(os.path.join(folder_path,x)) and not x.startswith('_') and not x.startswith('pos')]
+        # temporary code here:
+        try:
+            self.param_string_list.remove('Blockage_upper_1_1_1_20_(3dp)_motor5.00_pos4_VOFFSET0_ag4_laser10_[02-06]')
+        except:
+            pass
+
         self.param_dict_list = []
 
         for x in self.param_string_list:
@@ -34,20 +40,26 @@ class ParticleImage:
             "pixel_density": 36.74,
             "arrow_width": 0.02,
             "show_result": True,        
-            "upper_bound": 2000, # (mm/s)
-            "lower_bound": -2000, # (mm/s) 
+            "u_upper_bound": 2000, # (mm/s)
+            "u_lower_bound": -2000, # (mm/s)
+            "v_upper_bound": 2000, # (mm/s)
+            "v_lower_bound": -2000, # (mm/s)
+            "transpose": False,
+            "crop": [0,0,0,0],
         }
         self.piv_dict_list = self.param_dict_list
+        self.search_dict_list = self.check_piv_dict_list()
 
     def set_piv_list(self,exp_cond_dict):        
-        self.piv_dict_list = [x for x in self.param_dict_list if exp_cond_dict.items() <= x.items()]        
+        self.piv_dict_list = [x for x in self.param_dict_list if exp_cond_dict.items() <= x.items()]
 
     def param_string_to_dictionary(self,pstr):
+        pstr = pstr.replace('.tiff',"")
         running_parameter = re.findall("_[a-z]+[0-9]+[.]*[0-9]*", pstr, re.IGNORECASE)
-        date_parameter = re.findall("_\[.*?\].tiff",pstr)        
-        sample_parameter = pstr.replace("img_","")       
+        date_parameter = re.findall("_\[.*?\]",pstr)
+        sample_parameter = pstr.replace("img_","")
         if date_parameter:
-            sample_parameter = pstr.replace(date_parameter[0],"")        
+            sample_parameter = pstr.replace(date_parameter[0],"")
 
         for k in running_parameter:
             sample_parameter = sample_parameter.replace(k,"")
@@ -63,57 +75,65 @@ class ParticleImage:
         param_dict['path'] = pstr
         return param_dict
 
-    def read_two_images(self,search_dict,index_a = 100,index_b = 101):
+    def read_two_images(self,search_dict,index_a = 100,index_b = 101, open = False):
         location_path = [x['path'] for x in self.piv_dict_list if search_dict.items() <= x.items()]
-        print('Read image from:', *location_path)
+        print('Read image from:', location_path[0])
 
         file_a_path = os.path.join(self.path,*location_path,'frame_%06d.tiff' %index_a)
-        file_b_path = os.path.join(self.path,*location_path,'frame_%06d.tiff' %index_b)        
+        file_b_path = os.path.join(self.path,*location_path,'frame_%06d.tiff' %index_b)
 
-        try:              
+        try:
             img_a = Image.open(file_a_path)
             img_b = Image.open(file_b_path)
         except FileNotFoundError:
             print('No such file: ' + file_a_path)
             print('No such file: ' + file_b_path)
+            return None
 
-        return img_a, img_b
+        if open == True:
+            img_a.show()
+            img_b.show()
+
+        if self.piv_param['transpose'] == True:
+            img_a_array = np.array(img_a).T
+            img_b_array = np.array(img_b).T
+        else:
+            img_a_array = np.array(img_a)
+            img_b_array = np.array(img_b)        
+
+        return img_a_array, img_b_array
 
     def check_image_pair():
+        # to be implemented to check if PIV result is successful or not
         return True
+
+    def check_piv_dict_list(self):
+        lis = self.piv_dict_list
+        search_dict_list = []
+        for x in lis:
+            search_dict = {'pos': x['pos'], 'VOFFSET': x['VOFFSET']}
+            search_dict_list.append(search_dict)
+
+        return search_dict_list
 
     def show_piv_param(self):
         print("- PIV parameters -")
         for x, y in self.piv_param.items():
             print(x +":", y)    
 
-    def quick_piv(self,camera_position,sensor_position,index_a = 100, index_b = 101):
-        self.show_piv_param()
-                
-        search_dict = {"pos": camera_position,"VOFFSET": (sensor_position - 1)*80 }        
-        img_a, img_b = self.read_two_images(search_dict,index_a=index_a,index_b=index_b)
-
-        img_a = np.array(img_a).T
-        img_b = np.array(img_b).T
-
-        u_std = self.run_piv(img_a,img_b,**self.piv_param)
-        
-        if u_std > 480:
-            img_a, img_b = self.read_two_images(search_dict,index_a=index_a+1,index_b=index_b+1)
-            img_a = np.array(img_a).T
-            img_b = np.array(img_b).T
-            
-            u_std = self.run_piv(img_a,img_b,**self.piv_param)        
-
-    def quick_piv_by_key(self, search_dict, index_a = 100, index_b = 101):
+    def quick_piv(self, search_dict, index_a = 100, index_b = 101):
         self.show_piv_param()
         
         ns = Namespace(**self.piv_param)
 
         img_a, img_b = self.read_two_images(search_dict,index_a=index_a,index_b=index_b)
 
-        img_a = np.array(img_a).T
-        img_b = np.array(img_b).T                
+        # img_a = np.array(img_a)
+        # img_b = np.array(img_b)
+
+        # crop
+        img_a = img_a[ns.crop[0]:-ns.crop[1]-1,ns.crop[2]:-ns.crop[3]-1]
+        img_b = img_b[ns.crop[0]:-ns.crop[1]-1,ns.crop[2]:-ns.crop[3]-1]
             
         u0, v0, sig2noise = pyprocess.extended_search_area_piv(img_a.astype(np.int32),
                                                             img_b.astype(np.int32),
@@ -129,7 +149,7 @@ class ParticleImage:
 
         x, y, u0, v0 = scaling.uniform(x, y, u0, v0, scaling_factor = ns.pixel_density) # no. pixel per distance
 
-        u0, v0, mask = validation.global_val(u0,v0,(ns.lower_bound,ns.upper_bound),(-ns.upper_bound,ns.upper_bound))
+        u0, v0, mask = validation.global_val(u0,v0,(ns.u_lower_bound,ns.u_upper_bound),(ns.v_lower_bound,ns.v_upper_bound))
 
         u1, v1, mask = validation.sig2noise_val( u0, v0, 
                                                 sig2noise, 
@@ -147,8 +167,8 @@ class ParticleImage:
         
         if ns.image_check == True:
             fig,ax = plt.subplots(2,1,figsize=(24,12))
-            ax[0].imshow(frame_a)
-            ax[1].imshow(frame_b)
+            ax[0].imshow(img_a)
+            ax[1].imshow(img_b)
 
         io.imwrite(ns.figure_export_name,img_a)
 
@@ -166,64 +186,73 @@ class ParticleImage:
             field_shape = pyprocess.get_field_shape(image_size=img_a.shape,search_area_size=ns.searchsize,overlap=ns.overlap)
             vertical_profiles(ns.text_export_name,field_shape)
         
-        print('Std of u3: %.3f' %np.std(u3))
-        print('Mean of u3: %.3f' %np.mean(u3))
+        print('Mean of u: %.3f' %np.mean(u3))
+        print('Std of u: %.3f' %np.std(u3))        
+        print('Mean of v: %.3f' %np.mean(v3))
+        print('Std of v: %.3f' %np.std(v3))
 
-        return np.std(u3)
+        output = np.array([np.mean(u3),np.std(u3),np.mean(v3),np.std(v3)])
 
+        if np.absolute(np.mean(v3)) < 50:
+            output = self.quick_piv(search_dict,index_a = index_a + 1, index_b = index_b + 1)
 
-    # u_std = self.run_piv(img_a,img_b,**self.piv_param)
-    
-    # if u_std > 480:
-    #     img_a, img_b = self.read_two_images(search_dict,index_a=index_a+1,index_b=index_b+1)
-    #     img_a = np.array(img_a).T
-    #     img_b = np.array(img_b).T
-        
-    #     u_std = self.run_piv(img_a,img_b,**self.piv_param)        
+        return output
 
-    def stitch_images(self):
-        entire_image_path = os.path.join(self.path,'_entire_image.png')
+        # return np.std(u3)    
 
-        try:
+    def stitch_images(self,update = False):
+        entire_image_path = os.path.join('_entire_image.png')        
+        if update == True:
+            try:
+                os.remove(entire_image_path)
+            except:
+                pass
+
+        try:            
             im = Image.open(entire_image_path)        
-            im.show(entire_image_path)            
-
+            im.show(entire_image_path)           
         except FileNotFoundError:
-            garo = 1408
-            sero = (1296)*11
-            entire_image = np.zeros((sero,garo))
-            for param_string in self.param_string_list:
-                # CHECK IMAGE VALIDITY ?
-                img_a_name = 'frame_000102.tiff'
-                img_b_name = 'frame_000103.tiff'
+            # garo = 1408
+            # sero = (1296)*11
 
-                param_dict = self.param_string_to_dictionary(param_string)
+            sd_list = self.search_dict_list
+            img_a,img_b = self.read_two_images(sd_list[0])
+            num_row, num_col = img_a.T.shape
 
-                try:
-                    file_path_a = os.path.join(folder_path,param_string,img_a_name)
-                    file_path_b = os.path.join(folder_path,param_string,img_b_name)
-                    img_a = io.imread(file_path_a)
-                    # img_b = io.imread(file_path_b)
-                except:
-                    file_path_a = os.path.join(folder_path,'img_' + param_string,img_a_name)
-                    file_path_b = os.path.join(folder_path,'img_' + param_string,img_b_name)
+            pos_list = []
+            voffset_list = []
+            [pos_list.append(x['pos']) for x in self.search_dict_list if x['pos'] not in pos_list]
+            [voffset_list.append(x['VOFFSET']) for x in self.search_dict_list if x['VOFFSET'] not in voffset_list]
 
-                    img_a = io.imread(file_path_a)
-                    # img_b = io.imread(file_path_b)
-                    
-                position = int(param_dict['pos'])
-                v_offset = int(param_dict['VOFFSET'])
+            num_pos = len(pos_list)
+            num_voffset = len(voffset_list)
 
-                start_index = (position-1)*1296 + (v_offset//80)*108
-                end_index = start_index + 108
+            voffset_unit = int(voffset_list[1])
 
-                entire_image[start_index:end_index,:] = img_a
+            entire_image = np.zeros((num_row,voffset_unit*num_pos*num_voffset+(num_col-voffset_unit)))
+            print(entire_image.shape)
 
-            io.imwrite(entire_image_path,entire_image.T)
+            for pos in pos_list:
+                for voffset in voffset_list:
+                    sd = {'pos': pos, 'VOFFSET': voffset}
+                    img_a, img_b = self.read_two_images(sd)
+
+                    xl = int(pos-1) * num_voffset * voffset_unit + int(voffset)
+                    xr = xl + num_col
+                    print(xl,xr)
+                    print(img_a.T.shape)
+                    print(entire_image[:,xl:xr].shape)
+                    entire_image[:,xl:xr] = img_a.T
+
+            io.imwrite(entire_image_path,entire_image)
             im = Image.open(entire_image_path)
-            im.show(entire_image_path)
+            # im.show(entire_image_path)
 
         return im
+
+    def crop_images(img,a,b,c,d):
+        # to be implemented to crop images        
+        return img[a:-b,c:-d]
 
     def piv_upper_region(self,camera_position,sensor_position,index_a = 100, index_b = 101,surface_index = 360):
         
@@ -268,17 +297,10 @@ class ParticleImage:
 
             img_a = img_a[:,-surface_index:-1].T
             img_b = img_b[:,-surface_index:-1].T
-            u_std = self.run_piv(img_a,img_b,**self.piv_param)
-
-    def fast_piv(self, pos, voffset, index_a=100,index_b=101):        
-        img_a, img_b = self.read_two_images(pos,voffset,index_a = index_a,index_b=index_b)
-
-        return 0
+            u_std = self.run_piv(img_a,img_b,**self.piv_param)    
 
     def get_entire_vector_field(self,first_position=1, last_position = 11,index_a=100,index_b=101):
-        self.set_piv_param({"show_result":False})
-        # pos_list = [x['pos'] for x in self.param_dict_list]
-        # voffset_list = [x['VOFFSET'] for x in self.param_dict_list]
+        self.set_piv_param({"show_result":False})       
 
         entire_x = np.empty((49,3))
         entire_y = np.empty((49,3))
@@ -289,7 +311,7 @@ class ParticleImage:
             for voffset in range(1,13,1):                
                 search_dict = {'pos': pos, 'VOFFSET': (voffset-1)*80}
 
-                self.quick_piv_by_key(search_dict)
+                self.quick_piv(search_dict)
                 xx,yy,uu,vv = convert_xyuv()
 
                 entire_x = np.hstack((entire_x,xx))
@@ -309,20 +331,7 @@ class ParticleImage:
             self.piv_param[k] = param[k]        
         
     def my_argsort(lis):
-        return sorted(range(len(lis)),key=lis.__getitem__)
-
-    def open_two_images(self,search_dict,index_a = 100,index_b = 101):
-                        
-        location_path = [x['path'] for x in self.piv_dict_list if search_dict.items() <= x.items()]
-
-        file_a_path = os.path.join(self.path,*location_path,'frame_%06d.tiff' %index_a)
-        file_b_path = os.path.join(self.path,*location_path,'frame_%06d.tiff' %index_b)        
-
-        im1 = Image.open(file_a_path)
-        im2 = Image.open(file_b_path)
-
-        im1.show()
-        im2.show()    
+        return sorted(range(len(lis)),key=lis.__getitem__)    
 
     def calculate_drag(self,start = 1, end = 1):
         entire_x = np.loadtxt('_entire_x.txt')
@@ -556,51 +565,3 @@ def negative(image):
 
     """
     return 255 - image
-# %%
-
-# folder_path = 'D:/ROWLAND/piv-data/2021-01-18'
-# pi = ParticleImage(folder_path)
-# print(pi.param_dict_list)
-
-# # %%
-# search_dict = {'sample': 'Flat_10','motor':25}
-
-# list_original = pi.param_dict_list
-# list_for_entire_piv = [x for x in list_original if search_dict.items() <= x.items()]
-
-# print(list_for_entire_piv)
-# # %%
-# pi.param_dict_list = list_for_entire_piv
-# # %%
-# pi.get_entire_vector_field(first_position=2,last_position=5)
-
-# # %%
-# pi.calculate_drag(start = 1, end = 1)
-
-# # %%
-# pi.quick_piv(5,7)
-# # %%
-# search_dict = {"sample": 'Flat_10',"motor":25.0,"pos":1,"VOFFSET":80}
-# pi.open_two_images(search_dict)
-
-
-# # %%
-# search_dict = {"sample": 'Flat_10',"motor": 15,"pos": 2, "VOFFSET": 0}
-# pi.quick_piv_by_key(search_dict)
-
-# # %%
-
-# search_dict = {"sample": 'Flat_10','motor':5}
-# [x for x in pi.param_dict_list if search_dict.items() <= x.items()]
-
-# # %%
-# pi.param_string_to_dictionary('Flat_10_motor5.00_pos2_VOFFSET0_01-18_ag2_laser10')
-
-
-# # %%
-# pi.param_string_list
-# # %%
-# len(pi.param_string_list)
-
-# # %%
-# len(os.listdir(folder_path))
