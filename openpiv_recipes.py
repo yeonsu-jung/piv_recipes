@@ -60,7 +60,9 @@ class ParticleImage:
         self.search_dict_list = self.check_piv_dict_list()
 
     def param_string_to_dictionary(self,pstr):
+        param_dict = {'path': pstr}
         pstr = pstr.replace('.tiff',"")
+
         running_parameter = re.findall("_[a-z]+[0-9]+[.]*[0-9]*", pstr, re.IGNORECASE)
         date_parameter = re.findall("_\[.*?\]",pstr)
         sample_parameter = pstr.replace("img_","")
@@ -72,13 +74,12 @@ class ParticleImage:
 
         sample_parameter = sample_parameter.replace('_01-18',"")
 
-        param_dict = {'sample': sample_parameter}
+        param_dict.update({'sample': sample_parameter})
         for k in running_parameter:
             kk = re.findall('[a-x]+', k,re.IGNORECASE)
             vv = re.findall('[0-9]+[.]*[0-9]*', k,re.IGNORECASE)
             param_dict[kk[0]] = float(vv[0])
 
-        param_dict['path'] = pstr
         return param_dict
 
     def read_two_images(self,search_dict,index_a = 100,index_b = 101, open = False):
