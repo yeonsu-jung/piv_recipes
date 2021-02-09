@@ -13,12 +13,14 @@ import sys
 
 # %%
 class ParticleImage:    
-    def __init__(self, folder_path):
+    def __init__(self, folder_path, exception_list = None):
         self.path = folder_path
         self.param_string_list = [x for x in os.listdir(self.path) if os.path.isdir(os.path.join(folder_path,x)) and not x.startswith('_') and not x.startswith('pos')]
         # temporary code here:
         try:
-            self.param_string_list.remove('Blockage_upper_1_1_1_20_(3dp)_motor5.00_pos4_VOFFSET0_ag4_laser10_[02-06]')
+            for x in exception_list:
+                self.param_string_list.remove(x)
+            # self.param_string_list.remove('Blockage_upper_1_1_1_20_(3dp)_motor5.00_pos4_VOFFSET0_ag4_laser10_[02-06]')
         except:
             pass
 
@@ -48,10 +50,14 @@ class ParticleImage:
             "crop": [0,0,0,0],
         }
         self.piv_dict_list = self.param_dict_list
-        self.search_dict_list = self.check_piv_dict_list()
+        try:
+            self.search_dict_list = self.check_piv_dict_list()
+        except:
+            pass
 
     def set_piv_list(self,exp_cond_dict):        
         self.piv_dict_list = [x for x in self.param_dict_list if exp_cond_dict.items() <= x.items()]
+        self.search_dict_list = self.check_piv_dict_list()
 
     def param_string_to_dictionary(self,pstr):
         pstr = pstr.replace('.tiff',"")
@@ -121,16 +127,22 @@ class ParticleImage:
         for x, y in self.piv_param.items():
             print(x +":", y)    
 
-    def quick_piv(self, search_dict, index_a = 100, index_b = 101):
-        self.show_piv_param()
-        
+    def quick_piv(self, search_dict, index_a = 100, index_b = 101, folder = None):
+        self.show_piv_param()        
         ns = Namespace(**self.piv_param)
 
-        img_a, img_b = self.read_two_images(search_dict,index_a=index_a,index_b=index_b)
+        if folder == None:
+            img_a, img_b = self.read_two_images(search_dict,index_a=index_a,index_b=index_b)
+        else:
+            try:              
+                file_a_path = os.path.join(self.path,folder,'frame_%06d.tiff' %index_a)
+                file_b_path = os.path.join(self.path,folder,'frame_%06d.tiff' %index_b)
 
-        # img_a = np.array(img_a)
-        # img_b = np.array(img_b)
-
+                img_a = np.array(Image.open(file_a_path))
+                img_b = np.array(Image.open(file_b_path))
+            except:
+                return None
+        
         # crop
         img_a = img_a[ns.crop[0]:-ns.crop[1]-1,ns.crop[2]:-ns.crop[3]-1]
         img_b = img_b[ns.crop[0]:-ns.crop[1]-1,ns.crop[2]:-ns.crop[3]-1]
@@ -161,8 +173,7 @@ class ParticleImage:
                                         kernel_size=3)
         
 
-        #save in the simple ASCII table format
-        # if np.std(u3) < 480:
+        #save in the simple ASCII table format        
         tools.save(x, y, u3, v3, sig2noise,mask, ns.text_export_name)
         
         if ns.image_check == True:
@@ -192,28 +203,22 @@ class ParticleImage:
         print('Std of v: %.3f' %np.std(v3))
 
         output = np.array([np.mean(u3),np.std(u3),np.mean(v3),np.std(v3)])
+        # if np.absolute(np.mean(v3)) < 50:
+        #     output = self.quick_piv(search_dict,index_a = index_a + 1, index_b = index_b + 1)
 
-        if np.absolute(np.mean(v3)) < 50:
-            output = self.quick_piv(search_dict,index_a = index_a + 1, index_b = index_b + 1)
-
-        return output
+        return x,y,u3,v3
 
         # return np.std(u3)    
 
     def stitch_images(self,update = False):
-        entire_image_path = os.path.join('_entire_image.png')        
-        if update == True:
-            try:
-                os.remove(entire_image_path)
-            except:
-                pass
+        entire_image_path = os.path.join('_entire_image.png')                
 
-        try:            
-            im = Image.open(entire_image_path)        
-            im.show(entire_image_path)           
-        except FileNotFoundError:
-            # garo = 1408
-            # sero = (1296)*11
+        try:                                    
+            if update == True:
+                raise FileNotFoundError
+            else:
+                im = Image.open(entire_image_path)        
+        except FileNotFoundError:           
 
             sd_list = self.search_dict_list
             img_a,img_b = self.read_two_images(sd_list[0])
@@ -224,20 +229,25 @@ class ParticleImage:
             [pos_list.append(x['pos']) for x in self.search_dict_list if x['pos'] not in pos_list]
             [voffset_list.append(x['VOFFSET']) for x in self.search_dict_list if x['VOFFSET'] not in voffset_list]
 
+            pos_list.sort()
+            voffset_list.sort()
+
             num_pos = len(pos_list)
             num_voffset = len(voffset_list)
 
-            voffset_unit = int(voffset_list[1])
+            voffset_unit = int(voffset_list[1])            
 
-            entire_image = np.zeros((num_row,voffset_unit*num_pos*num_voffset+(num_col-voffset_unit)))
-            print(entire_image.shape)
+            num_entire_col = voffset_unit*num_voffset*num_pos + (num_col-voffset_unit)
+
+            entire_image = np.zeros((num_row,num_entire_col))
+            print("entire image shape:",entire_image.shape)
 
             for pos in pos_list:
                 for voffset in voffset_list:
                     sd = {'pos': pos, 'VOFFSET': voffset}
                     img_a, img_b = self.read_two_images(sd)
 
-                    xl = int(pos-1) * num_voffset * voffset_unit + int(voffset)
+                    xl = int(pos-pos_list[0]) * num_voffset * voffset_unit + int(voffset)
                     xr = xl + num_col
                     print(xl,xr)
                     print(img_a.T.shape)
@@ -247,6 +257,8 @@ class ParticleImage:
             io.imwrite(entire_image_path,entire_image)
             im = Image.open(entire_image_path)
             # im.show(entire_image_path)
+
+            im.show(entire_image_path)           
 
         return im
 
