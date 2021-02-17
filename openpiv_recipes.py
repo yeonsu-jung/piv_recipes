@@ -15,12 +15,11 @@ import sys
 class ParticleImage:    
     def __init__(self, folder_path, exception_list = None):
         self.path = folder_path
-        self.param_string_list = [x for x in os.listdir(self.path) if os.path.isdir(os.path.join(folder_path,x)) and not x.startswith('_') and not x.startswith('pos')]
+        self.param_string_list = [x for x in os.listdir(self.path) if os.path.isdir(os.path.join(folder_path,x)) and not x.startswith('_')]
         # temporary code here:
         try:
             for x in exception_list:
-                self.param_string_list.remove(x)
-            # self.param_string_list.remove('Blockage_upper_1_1_1_20_(3dp)_motor5.00_pos4_VOFFSET0_ag4_laser10_[02-06]')
+                self.param_string_list.remove(x)            
         except:
             pass
 
@@ -212,14 +211,14 @@ class ParticleImage:
         # return np.std(u3)    
 
     def stitch_images(self,update = False):
-        entire_image_path = os.path.join('_entire_image.png')                
+        entire_image_path = os.path.join('_entire_image.png')
 
-        try:                                    
+        try:
             if update == True:
                 raise FileNotFoundError
             else:
-                im = Image.open(entire_image_path)        
-        except FileNotFoundError:           
+                im = Image.open(entire_image_path)
+        except FileNotFoundError:
 
             sd_list = self.search_dict_list
             img_a,img_b = self.read_two_images(sd_list[0])
