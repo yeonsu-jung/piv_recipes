@@ -13,8 +13,15 @@ import sys
 
 # %%
 class ParticleImage:    
-    def __init__(self, folder_path, exception_list = None):
-        self.path = folder_path
+    def __init__(self, folder_path, results_folder_path, exception_list = None):
+        self.path = os.path.normpath(folder_path)
+        self.results_path = os.path.join(os.path.normpath(results_folder_path),*re.findall("[\d]{4}-[\d]{2}-[\d]{2}.*",folder_path))
+        
+        try:
+            os.makedirs(self.results_path)
+        except FileExistsError:
+            pass
+
         self.param_string_list = [x for x in os.listdir(self.path) if os.path.isdir(os.path.join(folder_path,x)) and not x.startswith('_')]
         # temporary code here:
         try:
@@ -125,21 +132,28 @@ class ParticleImage:
     def show_piv_param(self):
         print("- PIV parameters -")
         for x, y in self.piv_param.items():
-            print(x +":", y)    
+            print(x +":", y)
 
     def quick_piv(self, search_dict, index_a = 100, index_b = 101, folder = None):
-        self.show_piv_param()        
+        self.show_piv_param()
         ns = Namespace(**self.piv_param)
 
         if folder == None:
             img_a, img_b = self.read_two_images(search_dict,index_a=index_a,index_b=index_b)
+
+            location_path = [x['path'] for x in self.piv_dict_list if search_dict.items() <= x.items()]
+            results_path = os.path.join(self.results_path,*location_path)
+            try:
+                os.makedirs(results_path)
+            except FileExistsError:
+                pass
         else:
-            try:              
+            try:
                 file_a_path = os.path.join(self.path,folder,'frame_%06d.tiff' %index_a)
                 file_b_path = os.path.join(self.path,folder,'frame_%06d.tiff' %index_b)
 
                 img_a = np.array(Image.open(file_a_path))
-                img_b = np.array(Image.open(file_b_path))
+                img_b = np.array(Image.open(file_b_path))                
             except:
                 return None
         
@@ -174,24 +188,24 @@ class ParticleImage:
         
 
         #save in the simple ASCII table format        
-        tools.save(x, y, u3, v3, sig2noise,mask, ns.text_export_name)
+        tools.save(x, y, u3, v3, sig2noise,mask, os.path.join(results_path,ns.text_export_name))
         
         if ns.image_check == True:
             fig,ax = plt.subplots(2,1,figsize=(24,12))
             ax[0].imshow(img_a)
             ax[1].imshow(img_b)
 
-        io.imwrite(ns.figure_export_name,img_a)
+        io.imwrite(os.path.join(results_path,ns.figure_export_name),img_a)
 
         if ns.show_result == True:
             fig, ax = plt.subplots(figsize=(24,12))
-            tools.display_vector_field(ns.text_export_name, 
+            tools.display_vector_field(os.path.join(results_path,ns.text_export_name), 
                                         ax=ax, scaling_factor= ns.pixel_density, 
                                         scale=ns.scale_factor, # scale defines here the arrow length
                                         width=ns.arrow_width, # width is the thickness of the arrow
                                         on_img=True, # overlay on the image
-                                        image_name= ns.figure_export_name)
-            fig.savefig(ns.figure_export_name)       
+                                        image_name= os.path.join(results_path,ns.figure_export_name))
+            fig.savefig(os.path.join(results_path,ns.figure_export_name))
 
         if ns.show_vertical_profiles:
             field_shape = pyprocess.get_field_shape(image_size=img_a.shape,search_area_size=ns.searchsize,overlap=ns.overlap)
@@ -264,52 +278,7 @@ class ParticleImage:
 
     def crop_images(img,a,b,c,d):
         # to be implemented to crop images        
-        return img[a:-b,c:-d]
-
-    def piv_upper_region(self,camera_position,sensor_position,index_a = 100, index_b = 101,surface_index = 360):
-        
-        search_dict = {"pos": camera_position,"VOFFSET": (sensor_position - 1)*80 }
-        img_a, img_b = self.read_two_images(search_dict,index_a=index_a,index_b=index_b)                      
-
-        img_a = np.array(img_a)
-        img_b = np.array(img_b)
-        
-        img_a = img_a[:,0:surface_index].T
-        img_b = img_b[:,0:surface_index].T        
-
-        u_std = self.run_piv(img_a,img_b,**self.piv_param)
-        if u_std > 480:
-            img_a, img_b = self.read_two_images(camera_position,sensor_position,index_a=index_a+1,index_b=index_b+1)
-            img_a = np.array(img_a)
-            img_b = np.array(img_b)
-
-            img_a = img_a[:,0:surface_index].T
-            img_b = img_b[:,0:surface_index].T
-            u_std = self.run_piv(img_a,img_b,**self.piv_param)
-
-    def piv_lower_region(self,camera_position,sensor_position,index_a = 100, index_b = 101,surface_index = 360):
-        
-        search_dict = {"pos": camera_position,"VOFFSET": (sensor_position - 1)*80 }
-        img_a, img_b = self.read_two_images(search_dict,index_a=index_a,index_b=index_b)
-
-        # img_a = np.array(img_a.rotate(-1.364))
-        # img_b = np.array(img_b.rotate(-1.364))
-
-        img_a = np.array(img_a)
-        img_b = np.array(img_b)
-
-        img_a = img_a[:,-surface_index:-1].T
-        img_b = img_b[:,-surface_index:-1].T
-
-        u_std = self.run_piv(img_a,img_b,**self.piv_param)
-        if u_std > 480:
-            img_a, img_b = self.read_two_images(camera_position,sensor_position,index_a=index_a+1,index_b=index_b+1)
-            img_a = np.array(img_a)
-            img_b = np.array(img_b)
-
-            img_a = img_a[:,-surface_index:-1].T
-            img_b = img_b[:,-surface_index:-1].T
-            u_std = self.run_piv(img_a,img_b,**self.piv_param)    
+        return img[a:-b,c:-d]    
 
     def get_entire_vector_field(self,first_position=1, last_position = 11,index_a=100,index_b=101):
         self.set_piv_param({"show_result":False})       
@@ -412,8 +381,6 @@ class ParticleImage:
         print('Dynamic pressure difference: %.4f (N)' %A)
         print('m dot: %.8f (kg/s)' %B1)
         print('Force (N): %.4f' %F1)  
-
-
 # %%
 
 # plt.rcParams['animation.ffmpeg_path'] = '/Users/yeonsu/opt/anaconda3/envs/piv/share/ffmpeg'
