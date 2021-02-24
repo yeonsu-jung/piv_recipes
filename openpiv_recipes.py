@@ -401,7 +401,7 @@ def run_piv(
     text_export_name =  "_results.txt",
     scale_factor = 1,
     pixel_density = 36.74,
-    arrow_width = 0.02,
+    arrow_width = 0.001,
     show_result = True,
     ):
            
