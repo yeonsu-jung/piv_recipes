@@ -391,9 +391,9 @@ def dummy(a,b):
 def run_piv(
     frame_a,
     frame_b,
-    winsize = 64, # pixels, interrogation window size in frame A
-    searchsize = 66,  # pixels, search in image B
-    overlap = 32, # pixels, 50% overlap
+    winsize = 16, # pixels, interrogation window size in frame A
+    searchsize = 20,  # pixels, search in image B
+    overlap = 8, # pixels, 50% overlap
     dt = 0.0001, # sec, time interval between pulses
     image_check = False,
     show_vertical_profiles = False,
@@ -403,6 +403,8 @@ def run_piv(
     pixel_density = 36.74,
     arrow_width = 0.001,
     show_result = True,
+    u_bounds = (-100,100),
+    v_bounds = (-100,100)
     ):
            
     u0, v0, sig2noise = pyprocess.extended_search_area_piv(frame_a.astype(np.int32), 
@@ -417,17 +419,21 @@ def run_piv(
                                     search_area_size=searchsize,                                    
                                     overlap=overlap)
 
+    x, y, u0, v0 = scaling.uniform(x, y, u0, v0,
+        scaling_factor = pixel_density) # no. pixel per distance        
+
+    u0, v0, mask = validation.global_val(u0,v0,u_bounds,v_bounds)
+
     u1, v1, mask = validation.sig2noise_val( u0, v0, 
                                             sig2noise, 
                                             threshold = 1.05 )
 
-    u2, v2 = filters.replace_outliers( u1, v1,
+    u3, v3 = filters.replace_outliers( u1, v1,
                                     method='localmean',
                                     max_iter=10,
                                     kernel_size=3)
 
-    x, y, u3, v3 = scaling.uniform(x, y, u2, v2,
-                                scaling_factor = pixel_density) # no. pixel per distance    
+    
 
     #save in the simple ASCII table format    
     if np.std(u3) < 480:
