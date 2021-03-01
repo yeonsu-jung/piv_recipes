@@ -22,7 +22,8 @@ class ParticleImage:
         except FileExistsError:
             pass
 
-        self.param_string_list = [x for x in os.listdir(self.path) if os.path.isdir(os.path.join(folder_path,x)) and not x.startswith('_')]
+        # self.param_string_list = [x for x in os.listdir(self.path) if os.path.isdir(os.path.join(folder_path,x)) and not x.startswith('_')]
+        self.param_string_list = [x for x in os.listdir(self.path) if os.path.isdir(os.path.join(folder_path,x))]
         # temporary code here:
         try:
             for x in exception_list:
@@ -54,6 +55,7 @@ class ParticleImage:
             "v_lower_bound": -2000, # (mm/s)
             "transpose": False,
             "crop": [0,0,0,0],
+            "sn_threshold": 1,
         }
         self.piv_dict_list = self.param_dict_list
         try:
@@ -160,6 +162,8 @@ class ParticleImage:
         # crop
         img_a = img_a[ns.crop[0]:-ns.crop[1]-1,ns.crop[2]:-ns.crop[3]-1]
         img_b = img_b[ns.crop[0]:-ns.crop[1]-1,ns.crop[2]:-ns.crop[3]-1]
+
+
             
         u0, v0, sig2noise = pyprocess.extended_search_area_piv(img_a.astype(np.int32),
                                                             img_b.astype(np.int32),
@@ -179,13 +183,12 @@ class ParticleImage:
 
         u1, v1, mask = validation.sig2noise_val( u0, v0, 
                                                 sig2noise, 
-                                                threshold = 1.01)
+                                                threshold = ns.sn_threshold)
 
         u3, v3 = filters.replace_outliers( u1, v1,
                                         method='localmean',
                                         max_iter=500,
-                                        kernel_size=3)
-        
+                                        kernel_size=3)        
 
         #save in the simple ASCII table format        
         tools.save(x, y, u3, v3, sig2noise,mask, os.path.join(results_path,ns.text_export_name))
