@@ -1,3 +1,7 @@
+# to do
+# - merge dict
+# - sig2noise, image quality, filtering , ...
+
 # %%
 from openpiv import tools, pyprocess, validation, filters, scaling 
 from PIL import Image
@@ -55,7 +59,7 @@ class ParticleImage:
             "v_lower_bound": -2000, # (mm/s)
             "transpose": False,
             "crop": [0,0,0,0],
-            "sn_threshold": 1,
+            "sn_threshold": 1.3,
         }
         self.piv_dict_list = self.param_dict_list
         try:
@@ -223,7 +227,7 @@ class ParticleImage:
         # if np.absolute(np.mean(v3)) < 50:
         #     output = self.quick_piv(search_dict,index_a = index_a + 1, index_b = index_b + 1)
 
-        return x,y,u3,v3
+        return x,y,u3,v3,sig2noise
 
         # return np.std(u3)    
 
