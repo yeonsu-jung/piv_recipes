@@ -10,6 +10,7 @@ from argparse import Namespace
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import matplotlib.cm as cm
 import imageio as io
 import re
 import os
@@ -166,8 +167,6 @@ class ParticleImage:
         # crop
         img_a = img_a[ns.crop[0]:-ns.crop[1]-1,ns.crop[2]:-ns.crop[3]-1]
         img_b = img_b[ns.crop[0]:-ns.crop[1]-1,ns.crop[2]:-ns.crop[3]-1]
-
-
             
         u0, v0, sig2noise = pyprocess.extended_search_area_piv(img_a.astype(np.int32),
                                                             img_b.astype(np.int32),
@@ -191,11 +190,15 @@ class ParticleImage:
 
         u3, v3 = filters.replace_outliers( u1, v1,
                                         method='localmean',
-                                        max_iter=500,
-                                        kernel_size=3)        
+                                        max_iter=50,
+                                        kernel_size=1)        
+
+        # u3,v3 = angle_mean_check(u3,v3)
 
         #save in the simple ASCII table format        
-        tools.save(x, y, u3, v3, sig2noise,mask, os.path.join(results_path,ns.text_export_name))
+        tools.save(x, y, u3, v3, sig2noise,mask, os.path.join(results_path,'Stream_%05d.txt'%index_a))
+
+        self.quiver_and_contour(x,y,u3,v3,index_a,results_path)
         
         if ns.image_check == True:
             fig,ax = plt.subplots(2,1,figsize=(24,12))
@@ -206,7 +209,7 @@ class ParticleImage:
 
         if ns.show_result == True:
             fig, ax = plt.subplots(figsize=(24,12))
-            tools.display_vector_field(os.path.join(results_path,ns.text_export_name), 
+            tools.display_vector_field( os.path.join(results_path,'Stream_%05d.txt'%index_a), 
                                         ax=ax, scaling_factor= ns.pixel_density, 
                                         scale=ns.scale_factor, # scale defines here the arrow length
                                         width=ns.arrow_width, # width is the thickness of the arrow
@@ -230,6 +233,28 @@ class ParticleImage:
         return x,y,u3,v3,sig2noise
 
         # return np.std(u3)    
+
+    def quiver_and_contour(self,x,y,Ux,Vy,img_a_count,results_path):
+        fig = plt.figure(figsize=(15, 3), dpi= 400, constrained_layout=True)
+        ax = fig.add_subplot(1,1,1)
+        CS = ax.contourf(y,x,(Ux**2+Vy**2)**0.5, 50, vmin = 0.00, vmax=np.max(np.absolute(Vy)), cmap = cm.coolwarm)
+        m = plt.cm.ScalarMappable(cmap = cm.coolwarm)
+        m.set_array((Ux**2+Vy**2)**0.5)
+        m.set_clim(0,0.6)
+        ax.set_aspect('auto')
+
+        plt.colorbar(m, orientation = 'vertical')
+        ax.quiver(y,x,-Vy,-Ux, color = 'black',
+                angles='xy', scale_units='xy', scale=5000, width = 0.003,
+                headlength = 2, headwidth = 2, headaxislength = 2, pivot = 'tail')
+
+        ax.set_title('Frame = %0.5f s' %img_a_count)
+
+        pic = 'Stream_%05d.png' %img_a_count
+
+        plt.savefig(os.path.join(results_path,pic), dpi=400, facecolor='w', edgecolor='w')
+        #plt.show()
+        plt.close()
 
     def stitch_images(self,update = False):
         entire_image_path = os.path.join('_entire_image.png')
@@ -411,7 +436,7 @@ def run_piv(
     arrow_width = 0.001,
     show_result = True,
     u_bounds = (-100,100),
-    v_bounds = (-100,100)
+    v_bounds = (-10000,10000)
     ):
            
     u0, v0, sig2noise = pyprocess.extended_search_area_piv(frame_a.astype(np.int32), 
@@ -557,3 +582,55 @@ def negative(image):
 
     """
     return 255 - image
+
+def merge_dicts(*dict_args):
+    """
+    Given any number of dictionaries, shallow copy and merge into a new dict,
+    precedence goes to key-value pairs in latter dictionaries.
+    """
+    result = {}
+    for dictionary in dict_args:
+        result.update(dictionary)
+    return result
+
+
+def angle_mean_check(Ux,Vy):
+    angle = np.arctan(Vy/Ux).to_numpy()*(180/math.pi)
+    Mean_val = np.zeros([angle.shape[0],angle.shape[1]]) 
+    Mean_vel = np.zeros([angle.shape[0],angle.shape[1]])
+    for i in range(0,angle.shape[0]):
+        for j in range(0,angle.shape[1]):
+            if (j == 0 and i != 0 and i != angle.shape[0]-1):
+                Mean_val[i,j] = (angle[i-1,j]+angle[i+1,j]+angle[i,j+1])/4
+                if abs(Mean_val[i,j]/angle[i,j]-1) >0.25:
+                    Ux.set_value(i,j, (Ux.loc[i,j+1]+Ux.loc[i-1,j]+Ux.loc[i+1,j])/4)
+                    Vy.set_value(i,j,  (Vy.loc[i,j+1]+Vy.loc[i-1,j]+Vy.loc[i+1,j])/4)
+            elif (i == 0 and j != 0 and j != angle.shape[1]-1):
+                Mean_val[i,j] = (angle[i,j-1]+angle[i+1,j]+angle[i,j+1])/4
+                if abs(Mean_val[i,j]/angle[i,j]-1) >0.25:
+                    Ux.set_value(i,j, (Ux.loc[i,j+1]+Ux.loc[i,j-1]+Ux.loc[i+1,j])/4)
+                    Vy.set_value(i,j,  (Vy.loc[i,j+1]+Vy.loc[i,j-1]+Vy.loc[i+1,j])/4)
+            elif j == angle.shape[1]-1 and i != angle.shape[0]-1 and i != 0 :
+                Mean_val[i,j] = (angle[i-1,j]+angle[i+1,j]+angle[i,j-1])/4
+                if abs(Mean_val[i,j]/angle[i,j]-1) >0.25:
+                    Ux.set_value(i,j, (Ux.loc[i,j-1]+Ux.loc[i-1,j]+Ux.loc[i+1,j])/4)
+                    Vy.set_value(i,j,  (Vy.loc[i,j-1]+Vy.loc[i-1,j]+Vy.loc[i+1,j])/4)
+            elif i == angle.shape[0]-1 and j != angle.shape[1]-1 and j != 0:
+                Mean_val[i,j] = (angle[i-1,j]+angle[i,j+1]+angle[i,j-1])/4
+                if abs(Mean_val[i,j]/angle[i,j]-1) >0.25:
+                    Ux.set_value(i,j, (Ux.loc[i,j-1]+Ux.loc[i-1,j]+Ux.loc[i,j+1])/4)
+                    Vy.set_value(i,j,  (Vy.loc[i,j-1]+Vy.loc[i-1,j]+Vy.loc[i,j+1])/4)
+            elif (i>0 and i<angle.shape[0]-1 and j>0 and j<angle.shape[1]-1):
+                Mean_val[i,j] = (angle[i-1,j]+angle[i,j-1]+angle[i+1,j]+angle[i,j+1])/4
+                if abs(Mean_val[i,j]/angle[i,j]-1) >0.25:
+                    Ux.set_value(i,j, (Ux.loc[i,j-1]+Ux.loc[i,j+1]+Ux.loc[i-1,j]+Ux.loc[i+1,j])/4)
+                    Vy.set_value(i,j,  (Vy.loc[i,j-1]+Vy.loc[i,j+1]+Vy.loc[i-1,j]+Vy.loc[i+1,j])/4)
+    angle_new = np.arctan(Vy/Ux).to_numpy()*(180/math.pi)
+    vel = (Ux.to_numpy()**2+Vy.to_numpy()**2)**0.5
+    for i in range(1,vel.shape[0]-1):
+        for j in range(1,vel.shape[1]-1):
+            Mean_vel[i,j] = (vel[i-1,j]+vel[i+1,j]+vel[i,j-1]+vel[i,j+1])/4
+            if abs(Mean_vel[i,j]/vel[i,j]-1)>0.1:
+                Ux.set_value(i,j, (Ux.loc[i,j-1]+Ux.loc[i,j+1]+Ux.loc[i-1,j]+Ux.loc[i+1,j])/4)
+                Vy.set_value(i,j,  (Vy.loc[i,j-1]+Vy.loc[i,j+1]+Vy.loc[i-1,j]+Vy.loc[i+1,j])/4)
+    return Ux, Vy
