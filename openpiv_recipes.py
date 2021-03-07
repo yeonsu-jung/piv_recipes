@@ -1,7 +1,9 @@
 # %%
-from openpiv import tools, pyprocess, validation, filters, scaling 
+from openpiv import tools, process, validation, filters, scaling 
 from PIL import Image
 from argparse import Namespace
+import matplotlib.cm as cm
+
 
 import numpy as np
 import pandas as pd
@@ -10,6 +12,7 @@ import imageio as io
 import re
 import os
 import sys
+
 
 # %%
 class ParticleImage:    
@@ -48,10 +51,8 @@ class ParticleImage:
             "pixel_density": 36.74,
             "arrow_width": 0.02,
             "show_result": True,        
-            "u_upper_bound": 2000, # (mm/s)
-            "u_lower_bound": -2000, # (mm/s)
-            "v_upper_bound": 2000, # (mm/s)
-            "v_lower_bound": -2000, # (mm/s)
+            "u_bound": [-2000,2000], # (mm/s)            
+            "v_bound": [-2000,2000], # (mm/s)            
             "transpose": False,
             "crop": [0,0,0,0],
         }
@@ -161,7 +162,7 @@ class ParticleImage:
         img_a = img_a[ns.crop[0]:-ns.crop[1]-1,ns.crop[2]:-ns.crop[3]-1]
         img_b = img_b[ns.crop[0]:-ns.crop[1]-1,ns.crop[2]:-ns.crop[3]-1]
             
-        u0, v0, sig2noise = pyprocess.extended_search_area_piv(img_a.astype(np.int32),
+        u0, v0, sig2noise = process.extended_search_area_piv(img_a.astype(np.int32),
                                                             img_b.astype(np.int32),
                                                             window_size=ns.winsize,
                                                             overlap=ns.overlap, 
@@ -169,26 +170,31 @@ class ParticleImage:
                                                             search_area_size=ns.searchsize, 
                                                             sig2noise_method='peak2peak')
 
-        x, y = pyprocess.get_coordinates(image_size=img_a.shape, 
-                                        search_area_size=ns.searchsize,                                    
+        x, y = process.get_coordinates(image_size=img_a.shape, 
+                                        window_size=ns.winsize,                                    
                                         overlap=ns.overlap)
 
         x, y, u0, v0 = scaling.uniform(x, y, u0, v0, scaling_factor = ns.pixel_density) # no. pixel per distance
 
-        u0, v0, mask = validation.global_val(u0,v0,(ns.u_lower_bound,ns.u_upper_bound),(ns.v_lower_bound,ns.v_upper_bound))
+        u0, v0, mask = validation.global_val(u0,v0,ns.u_bound,ns.v_bound)
+
+        print('Number of invalid vectors:',np.sum(np.isnan(mask)))
 
         u1, v1, mask = validation.sig2noise_val( u0, v0, 
                                                 sig2noise, 
-                                                threshold = 1.01)
+                                                threshold = 1.0001)
 
         u3, v3 = filters.replace_outliers( u1, v1,
                                         method='localmean',
-                                        max_iter=500,
-                                        kernel_size=3)
+                                        max_iter=50,
+                                        kernel_size=1)
         
+        u3, v3 = angle_mean_check(u3,v3)
 
         #save in the simple ASCII table format        
-        tools.save(x, y, u3, v3, sig2noise,mask, os.path.join(results_path,ns.text_export_name))
+        tools.save(x, y, u3, v3, mask, os.path.join(results_path,ns.text_export_name))
+
+        quiver_and_contour(x,y,u3,v3,index_a,results_path)
         
         if ns.image_check == True:
             fig,ax = plt.subplots(2,1,figsize=(24,12))
@@ -208,7 +214,7 @@ class ParticleImage:
             fig.savefig(os.path.join(results_path,ns.figure_export_name))
 
         if ns.show_vertical_profiles:
-            field_shape = pyprocess.get_field_shape(image_size=img_a.shape,search_area_size=ns.searchsize,overlap=ns.overlap)
+            field_shape = process.get_field_shape(image_size=img_a.shape,search_area_size=ns.searchsize,overlap=ns.overlap)
             vertical_profiles(ns.text_export_name,field_shape)
         
         print('Mean of u: %.3f' %np.mean(u3))
@@ -407,7 +413,7 @@ def run_piv(
     v_bounds = (-100,100)
     ):
            
-    u0, v0, sig2noise = pyprocess.extended_search_area_piv(frame_a.astype(np.int32), 
+    u0, v0, sig2noise = process.extended_search_area_piv(frame_a.astype(np.int32), 
                                                         frame_b.astype(np.int32), 
                                                         window_size=winsize, 
                                                         overlap=overlap, 
@@ -415,7 +421,7 @@ def run_piv(
                                                         search_area_size=searchsize, 
                                                         sig2noise_method='peak2peak')
 
-    x, y = pyprocess.get_coordinates(image_size=frame_a.shape, 
+    x, y = process.get_coordinates(image_size=frame_a.shape, 
                                     search_area_size=searchsize,                                    
                                     overlap=overlap)
 
@@ -457,7 +463,7 @@ def run_piv(
         fig.savefig(figure_export_name)       
 
     if show_vertical_profiles:
-        field_shape = pyprocess.get_field_shape(image_size=frame_a.shape,search_area_size=searchsize,overlap=overlap)
+        field_shape = process.get_field_shape(image_size=frame_a.shape,search_area_size=searchsize,overlap=overlap)
         vertical_profiles(text_export_name,field_shape)
     
     print('Std of u3: %.3f' %np.std(u3))
@@ -550,3 +556,67 @@ def negative(image):
 
     """
     return 255 - image
+
+def quiver_and_contour(x,y,Ux,Vy,img_a_count,results_path):
+    fig = plt.figure(figsize=(15, 3), dpi= 400, constrained_layout=True)
+    ax = fig.add_subplot(1,1,1)
+    CS = ax.contourf(y,x,(Ux**2+Vy**2)**0.5, 50, vmin = 0.00, vmax=np.max(np.absolute(Vy)), cmap = cm.coolwarm)
+    m = plt.cm.ScalarMappable(cmap = cm.coolwarm)
+    m.set_array((Ux**2+Vy**2)**0.5)
+    m.set_clim(0,np.max(np.absolute(Vy)))
+    ax.set_aspect('auto')
+
+    plt.colorbar(m, orientation = 'vertical')
+    ax.quiver(y,x,-Vy,-Ux, color = 'black',
+            angles='xy', scale_units='xy', scale=5000, width = 0.003,
+            headlength = 2, headwidth = 2, headaxislength = 2, pivot = 'tail')
+
+    ax.set_title('Frame = %0.5f s' %img_a_count)
+
+    pic = 'Stream_%05d.png' %img_a_count
+
+    plt.savefig(os.path.join(results_path,pic), dpi=400, facecolor='w', edgecolor='w')
+    #plt.show()
+    plt.close()
+
+def angle_mean_check(Ux,Vy):
+    angle = np.arctan(Vy/Ux)*(180/np.pi)
+    Mean_val = np.zeros([angle.shape[0],angle.shape[1]]) 
+    Mean_vel = np.zeros([angle.shape[0],angle.shape[1]])
+    for i in range(0,angle.shape[0]):
+        for j in range(0,angle.shape[1]):
+            if (j == 0 and i != 0 and i != angle.shape[0]-1):
+                Mean_val[i,j] = (angle[i-1,j]+angle[i+1,j]+angle[i,j+1])/4
+                if abs(Mean_val[i,j]/angle[i,j]-1) >0.25:
+                    Ux[i,j] = (Ux[i,j+1]+Ux[i-1,j]+Ux[i+1,j])/4
+                    Vy[i,j] = (Vy[i,j+1]+Vy[i-1,j]+Vy[i+1,j])/4
+            elif (i == 0 and j != 0 and j != angle.shape[1]-1):
+                Mean_val[i,j] = (angle[i,j-1]+angle[i+1,j]+angle[i,j+1])/4
+                if abs(Mean_val[i,j]/angle[i,j]-1) >0.25:
+                    Ux[i,j] = (Ux[i,j+1]+Ux[i,j-1]+Ux[i+1,j])/4
+                    Vy[i,j] =  (Vy[i,j+1]+Vy[i,j-1]+Vy[i+1,j])/4
+            elif j == angle.shape[1]-1 and i != angle.shape[0]-1 and i != 0 :
+                Mean_val[i,j] = (angle[i-1,j]+angle[i+1,j]+angle[i,j-1])/4
+                if abs(Mean_val[i,j]/angle[i,j]-1) >0.25:
+                    Ux[i,j] = (Ux[i,j-1]+Ux[i-1,j]+Ux[i+1,j])/4
+                    Vy[i,j] = (Vy[i,j-1]+Vy[i-1,j]+Vy[i+1,j])/4
+            elif i == angle.shape[0]-1 and j != angle.shape[1]-1 and j != 0:
+                Mean_val[i,j] = (angle[i-1,j]+angle[i,j+1]+angle[i,j-1])/4
+                if abs(Mean_val[i,j]/angle[i,j]-1) >0.25:
+                    Ux[i,j] = (Ux[i,j-1]+Ux[i-1,j]+Ux[i,j+1])/4
+                    Vy[i,j] = (Vy[i,j-1]+Vy[i-1,j]+Vy[i,j+1])/4
+            elif (i>0 and i<angle.shape[0]-1 and j>0 and j<angle.shape[1]-1):
+                Mean_val[i,j] = (angle[i-1,j]+angle[i,j-1]+angle[i+1,j]+angle[i,j+1])/4
+                if abs(Mean_val[i,j]/angle[i,j]-1) >0.25:
+                    Ux[i,j] = (Ux[i,j-1]+Ux[i,j+1]+Ux[i-1,j]+Ux[i+1,j])/4
+                    Vy[i,j] = (Vy[i,j-1]+Vy[i,j+1]+Vy[i-1,j]+Vy[i+1,j])/4
+    angle_new = np.arctan(Vy/Ux)*(180/np.pi)
+    vel = (Ux**2+Vy**2)**0.5
+    for i in range(1,vel.shape[0]-1):
+        for j in range(1,vel.shape[1]-1):
+            Mean_vel[i,j] = (vel[i-1,j]+vel[i+1,j]+vel[i,j-1]+vel[i,j+1])/4
+            if abs(Mean_vel[i,j]/vel[i,j]-1)>0.1:
+                Ux[i,j] = (Ux[i,j-1]+Ux[i,j+1]+Ux[i-1,j]+Ux[i+1,j])/4
+                Vy[i,j] = (Vy[i,j-1]+Vy[i,j+1]+Vy[i-1,j]+Vy[i+1,j])/4
+    return Ux, Vy
+
