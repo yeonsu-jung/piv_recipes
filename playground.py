@@ -5,6 +5,9 @@ importlib.reload(piv)
 
 import imageio as io
 # %%
+import numpy as np
+np.__version__
+# %%
 
 img_a = io.imread('C:\\Users\\yj\\Downloads\\_test_ag1_dg1_laser5_motor0_frame_000011.tiff')
 img_b = io.imread('C:\\Users\\yj\\Downloads\\_test_ag1_dg1_laser5_motor0_frame_000013.tiff')

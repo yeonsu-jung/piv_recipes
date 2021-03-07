@@ -11,6 +11,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
+from scipy import ndimage
 import imageio as io
 import re
 import os
@@ -167,6 +168,9 @@ class ParticleImage:
         # crop
         img_a = img_a[ns.crop[0]:-ns.crop[1]-1,ns.crop[2]:-ns.crop[3]-1]
         img_b = img_b[ns.crop[0]:-ns.crop[1]-1,ns.crop[2]:-ns.crop[3]-1]
+        
+        img_a = ndimage.rotate(img_a, ns.rotate)
+        img_b = ndimage.rotate(img_b, ns.rotate)
             
         u0, v0, sig2noise = pyprocess.extended_search_area_piv(img_a.astype(np.int32),
                                                             img_b.astype(np.int32),
@@ -182,7 +186,7 @@ class ParticleImage:
 
         x, y, u0, v0 = scaling.uniform(x, y, u0, v0, scaling_factor = ns.pixel_density) # no. pixel per distance
 
-        u0, v0, mask = validation.global_val(u0,v0,(ns.u_lower_bound,ns.u_upper_bound),(ns.v_lower_bound,ns.v_upper_bound))
+        u0, v0, mask = validation.global_val(u0,v0,ns.u_bound,ns.v_bound)
 
         u1, v1, mask = validation.sig2noise_val( u0, v0, 
                                                 sig2noise, 
@@ -195,10 +199,14 @@ class ParticleImage:
 
         # u3,v3 = angle_mean_check(u3,v3)
 
-        #save in the simple ASCII table format        
-        tools.save(x, y, u3, v3, sig2noise,mask, os.path.join(results_path,'Stream_%05d.txt'%index_a))
+        # u3,v3 = correct_by_angle(u3,v3)
 
-        self.quiver_and_contour(x,y,u3,v3,index_a,results_path)
+        u3,v3 = angle_mean_check(u3,v3)
+
+        #save in the simple ASCII table format        
+        tools.save(x, y, u3, v3, sig2noise,mask, os.path.join(results_path,'Stream_%05d.txt'%index_a))        
+
+        quiver_and_contour(x,y,u3,v3,index_a,results_path)
         
         if ns.image_check == True:
             fig,ax = plt.subplots(2,1,figsize=(24,12))
@@ -232,29 +240,7 @@ class ParticleImage:
 
         return x,y,u3,v3,sig2noise
 
-        # return np.std(u3)    
-
-    def quiver_and_contour(self,x,y,Ux,Vy,img_a_count,results_path):
-        fig = plt.figure(figsize=(15, 3), dpi= 400, constrained_layout=True)
-        ax = fig.add_subplot(1,1,1)
-        CS = ax.contourf(y,x,(Ux**2+Vy**2)**0.5, 50, vmin = 0.00, vmax=np.max(np.absolute(Vy)), cmap = cm.coolwarm)
-        m = plt.cm.ScalarMappable(cmap = cm.coolwarm)
-        m.set_array((Ux**2+Vy**2)**0.5)
-        m.set_clim(0,0.6)
-        ax.set_aspect('auto')
-
-        plt.colorbar(m, orientation = 'vertical')
-        ax.quiver(y,x,-Vy,-Ux, color = 'black',
-                angles='xy', scale_units='xy', scale=5000, width = 0.003,
-                headlength = 2, headwidth = 2, headaxislength = 2, pivot = 'tail')
-
-        ax.set_title('Frame = %0.5f s' %img_a_count)
-
-        pic = 'Stream_%05d.png' %img_a_count
-
-        plt.savefig(os.path.join(results_path,pic), dpi=400, facecolor='w', edgecolor='w')
-        #plt.show()
-        plt.close()
+        # return np.std(u3)        
 
     def stitch_images(self,update = False):
         entire_image_path = os.path.join('_entire_image.png')
@@ -593,9 +579,8 @@ def merge_dicts(*dict_args):
         result.update(dictionary)
     return result
 
-
 def angle_mean_check(Ux,Vy):
-    angle = np.arctan(Vy/Ux).to_numpy()*(180/math.pi)
+    angle = np.arctan(Vy/Ux)*(180/np.pi)
     Mean_val = np.zeros([angle.shape[0],angle.shape[1]]) 
     Mean_vel = np.zeros([angle.shape[0],angle.shape[1]])
     for i in range(0,angle.shape[0]):
@@ -603,34 +588,125 @@ def angle_mean_check(Ux,Vy):
             if (j == 0 and i != 0 and i != angle.shape[0]-1):
                 Mean_val[i,j] = (angle[i-1,j]+angle[i+1,j]+angle[i,j+1])/4
                 if abs(Mean_val[i,j]/angle[i,j]-1) >0.25:
-                    Ux.set_value(i,j, (Ux.loc[i,j+1]+Ux.loc[i-1,j]+Ux.loc[i+1,j])/4)
-                    Vy.set_value(i,j,  (Vy.loc[i,j+1]+Vy.loc[i-1,j]+Vy.loc[i+1,j])/4)
+                    Ux[i,j] = (Ux[i,j+1]+Ux[i-1,j]+Ux[i+1,j])/4
+                    Vy[i,j] = (Vy[i,j+1]+Vy[i-1,j]+Vy[i+1,j])/4
             elif (i == 0 and j != 0 and j != angle.shape[1]-1):
                 Mean_val[i,j] = (angle[i,j-1]+angle[i+1,j]+angle[i,j+1])/4
                 if abs(Mean_val[i,j]/angle[i,j]-1) >0.25:
-                    Ux.set_value(i,j, (Ux.loc[i,j+1]+Ux.loc[i,j-1]+Ux.loc[i+1,j])/4)
-                    Vy.set_value(i,j,  (Vy.loc[i,j+1]+Vy.loc[i,j-1]+Vy.loc[i+1,j])/4)
+                    Ux[i,j] = (Ux[i,j+1]+Ux[i,j-1]+Ux[i+1,j])/4
+                    Vy[i,j] =  (Vy[i,j+1]+Vy[i,j-1]+Vy[i+1,j])/4
             elif j == angle.shape[1]-1 and i != angle.shape[0]-1 and i != 0 :
                 Mean_val[i,j] = (angle[i-1,j]+angle[i+1,j]+angle[i,j-1])/4
                 if abs(Mean_val[i,j]/angle[i,j]-1) >0.25:
-                    Ux.set_value(i,j, (Ux.loc[i,j-1]+Ux.loc[i-1,j]+Ux.loc[i+1,j])/4)
-                    Vy.set_value(i,j,  (Vy.loc[i,j-1]+Vy.loc[i-1,j]+Vy.loc[i+1,j])/4)
+                    Ux[i,j] = (Ux[i,j-1]+Ux[i-1,j]+Ux[i+1,j])/4
+                    Vy[i,j] = (Vy[i,j-1]+Vy[i-1,j]+Vy[i+1,j])/4
             elif i == angle.shape[0]-1 and j != angle.shape[1]-1 and j != 0:
                 Mean_val[i,j] = (angle[i-1,j]+angle[i,j+1]+angle[i,j-1])/4
                 if abs(Mean_val[i,j]/angle[i,j]-1) >0.25:
-                    Ux.set_value(i,j, (Ux.loc[i,j-1]+Ux.loc[i-1,j]+Ux.loc[i,j+1])/4)
-                    Vy.set_value(i,j,  (Vy.loc[i,j-1]+Vy.loc[i-1,j]+Vy.loc[i,j+1])/4)
+                    Ux[i,j] = (Ux[i,j-1]+Ux[i-1,j]+Ux[i,j+1])/4
+                    Vy[i,j] = (Vy[i,j-1]+Vy[i-1,j]+Vy[i,j+1])/4
             elif (i>0 and i<angle.shape[0]-1 and j>0 and j<angle.shape[1]-1):
                 Mean_val[i,j] = (angle[i-1,j]+angle[i,j-1]+angle[i+1,j]+angle[i,j+1])/4
                 if abs(Mean_val[i,j]/angle[i,j]-1) >0.25:
-                    Ux.set_value(i,j, (Ux.loc[i,j-1]+Ux.loc[i,j+1]+Ux.loc[i-1,j]+Ux.loc[i+1,j])/4)
-                    Vy.set_value(i,j,  (Vy.loc[i,j-1]+Vy.loc[i,j+1]+Vy.loc[i-1,j]+Vy.loc[i+1,j])/4)
-    angle_new = np.arctan(Vy/Ux).to_numpy()*(180/math.pi)
-    vel = (Ux.to_numpy()**2+Vy.to_numpy()**2)**0.5
+                    Ux[i,j] = (Ux[i,j-1]+Ux[i,j+1]+Ux[i-1,j]+Ux[i+1,j])/4
+                    Vy[i,j] = (Vy[i,j-1]+Vy[i,j+1]+Vy[i-1,j]+Vy[i+1,j])/4
+    angle_new = np.arctan(Vy/Ux)*(180/np.pi)
+    vel = (Ux**2+Vy**2)**0.5
     for i in range(1,vel.shape[0]-1):
         for j in range(1,vel.shape[1]-1):
             Mean_vel[i,j] = (vel[i-1,j]+vel[i+1,j]+vel[i,j-1]+vel[i,j+1])/4
             if abs(Mean_vel[i,j]/vel[i,j]-1)>0.1:
-                Ux.set_value(i,j, (Ux.loc[i,j-1]+Ux.loc[i,j+1]+Ux.loc[i-1,j]+Ux.loc[i+1,j])/4)
-                Vy.set_value(i,j,  (Vy.loc[i,j-1]+Vy.loc[i,j+1]+Vy.loc[i-1,j]+Vy.loc[i+1,j])/4)
+                Ux[i,j] = (Ux[i,j-1]+Ux[i,j+1]+Ux[i-1,j]+Ux[i+1,j])/4
+                Vy[i,j] = (Vy[i,j-1]+Vy[i,j+1]+Vy[i-1,j]+Vy[i+1,j])/4
     return Ux, Vy
+
+def get_adjacent_indices(i, j, m, n):
+    adjacent_indices = []
+    if i > 0:
+        adjacent_indices.append((i-1,j))
+    if i+1 < m:
+        adjacent_indices.append((i+1,j))
+    if j > 0:
+        adjacent_indices.append((i,j-1))
+    if j+1 < n:
+        adjacent_indices.append((i,j+1))
+    return adjacent_indices
+
+def get_adjacent_mag_angle(i,j,u,v):
+    if u.shape != v.shape:
+        raise Exception('u and v should be in the same shape.')
+    m,n = u.shape
+    indices = get_adjacent_indices(i,j,m,n)
+    mag = []
+    ang = []
+    for k in indices:
+        u_k = u[k]
+        v_k = v[k]
+        mag.append(np.sqrt(u_k**2+v**2))
+        ang.append(np.arctan(u_k/v_k)*180/np.pi)
+    return mag,ang
+
+def get_adjacent_uv(i,j,u,v):
+    if u.shape != v.shape:
+        raise Exception('u and v should be in the same shape.')
+    m,n = u.shape
+    indices = get_adjacent_indices(i,j,m,n)
+    u2 = []
+    v2 = []
+    for k in indices:
+        u2.append(u[k])
+        v2.append(v[k])
+        
+    return u2,v2
+       
+def correct_by_angle(u,v):
+    if u.shape != v.shape:
+        raise Exception('u and v should be in the same shape.')
+    
+    N_i,N_j = u.shape
+
+    for i in range(N_i):
+        for j in range(N_j):
+            u_ij = u[i,j]
+            v_ij = v[i,j]
+
+            mag_ij = np.sqrt(u_ij**2+v_ij**2)
+            ang_ij = np.arctan(u_ij/v_ij)
+
+            mag,ang = get_adjacent_mag_angle(i,j,u,v)
+            u_adj,v_adj = get_adjacent_uv(i,j,u,v)
+
+            if np.abs(np.mean(ang)/ang_ij-1) > 0.1:
+                u[i,j] = np.mean(u_adj)
+                v[i,j] = np.mean(v_adj)            
+
+            # mag,ang = get_adjacent_mag_angle(i,j,u,v)
+            # u_adj,v_adj = get_adjacent_uv(i,j,u,v)
+
+            # if np.abs(np.mean(mag)/mag_ij - 1) > 0.1:
+            #     u[i,j] = np.mean(u_adj)
+            #     v[i,j] = np.mean(v_adj)
+            
+    return u,v
+
+def quiver_and_contour(x,y,Ux,Vy,img_a_count,results_path):
+        fig = plt.figure(figsize=(15, 3), dpi= 400, constrained_layout=True)
+        ax = fig.add_subplot(1,1,1)
+        CS = ax.contourf(y,x,(Ux**2+Vy**2)**0.5, 50, vmin = 0.00, vmax=np.max(np.absolute(Vy)), cmap = cm.coolwarm)
+        m = plt.cm.ScalarMappable(cmap = cm.coolwarm)
+        m.set_array((Ux**2+Vy**2)**0.5)
+        m.set_clim(0,0.6)
+        ax.set_aspect('auto')
+
+        plt.colorbar(m, orientation = 'vertical')
+        ax.quiver(y,x,-Vy,-Ux, color = 'black',
+                angles='xy', scale_units='xy', scale=5000, width = 0.003,
+                headlength = 2, headwidth = 2, headaxislength = 2, pivot = 'tail')
+
+        ax.set_title('Frame = %0.5f s' %img_a_count)
+
+        pic = 'Stream_%05d.png' %img_a_count
+
+        plt.savefig(os.path.join(results_path,pic), dpi=400, facecolor='w', edgecolor='w')
+        #plt.show()
+        plt.close()
