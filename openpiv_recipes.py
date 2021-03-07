@@ -1,3 +1,7 @@
+# to do
+# - merge dict
+# - sig2noise, image quality, filtering , ...
+
 # %%
 from openpiv import tools, process, validation, filters, scaling 
 from PIL import Image
@@ -8,6 +12,8 @@ import matplotlib.cm as cm
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import matplotlib.cm as cm
+from scipy import ndimage
 import imageio as io
 import re
 import os
@@ -25,7 +31,8 @@ class ParticleImage:
         except FileExistsError:
             pass
 
-        self.param_string_list = [x for x in os.listdir(self.path) if os.path.isdir(os.path.join(folder_path,x)) and not x.startswith('_')]
+        # self.param_string_list = [x for x in os.listdir(self.path) if os.path.isdir(os.path.join(folder_path,x)) and not x.startswith('_')]
+        self.param_string_list = [x for x in os.listdir(self.path) if os.path.isdir(os.path.join(folder_path,x))]
         # temporary code here:
         try:
             for x in exception_list:
@@ -55,6 +62,7 @@ class ParticleImage:
             "v_bound": [-2000,2000], # (mm/s)            
             "transpose": False,
             "crop": [0,0,0,0],
+            "sn_threshold": 1.3,
         }
         self.piv_dict_list = self.param_dict_list
         try:
@@ -161,6 +169,9 @@ class ParticleImage:
         # crop
         img_a = img_a[ns.crop[0]:-ns.crop[1]-1,ns.crop[2]:-ns.crop[3]-1]
         img_b = img_b[ns.crop[0]:-ns.crop[1]-1,ns.crop[2]:-ns.crop[3]-1]
+        
+        img_a = ndimage.rotate(img_a, ns.rotate)
+        img_b = ndimage.rotate(img_b, ns.rotate)
             
         u0, v0, sig2noise = process.extended_search_area_piv(img_a.astype(np.int32),
                                                             img_b.astype(np.int32),
@@ -182,7 +193,7 @@ class ParticleImage:
 
         u1, v1, mask = validation.sig2noise_val( u0, v0, 
                                                 sig2noise, 
-                                                threshold = 1.0001)
+                                                threshold = ns.sn_threshold)
 
         u3, v3 = filters.replace_outliers( u1, v1,
                                         method='localmean',
@@ -205,7 +216,7 @@ class ParticleImage:
 
         if ns.show_result == True:
             fig, ax = plt.subplots(figsize=(24,12))
-            tools.display_vector_field(os.path.join(results_path,ns.text_export_name), 
+            tools.display_vector_field( os.path.join(results_path,'Stream_%05d.txt'%index_a), 
                                         ax=ax, scaling_factor= ns.pixel_density, 
                                         scale=ns.scale_factor, # scale defines here the arrow length
                                         width=ns.arrow_width, # width is the thickness of the arrow
@@ -226,9 +237,9 @@ class ParticleImage:
         # if np.absolute(np.mean(v3)) < 50:
         #     output = self.quick_piv(search_dict,index_a = index_a + 1, index_b = index_b + 1)
 
-        return x,y,u3,v3
+        return x,y,u3,v3,sig2noise
 
-        # return np.std(u3)    
+        # return np.std(u3)        
 
     def stitch_images(self,update = False):
         entire_image_path = os.path.join('_entire_image.png')
@@ -410,7 +421,7 @@ def run_piv(
     arrow_width = 0.001,
     show_result = True,
     u_bounds = (-100,100),
-    v_bounds = (-100,100)
+    v_bounds = (-10000,10000)
     ):
            
     u0, v0, sig2noise = process.extended_search_area_piv(frame_a.astype(np.int32), 
@@ -578,6 +589,15 @@ def quiver_and_contour(x,y,Ux,Vy,img_a_count,results_path):
     plt.savefig(os.path.join(results_path,pic), dpi=400, facecolor='w', edgecolor='w')
     #plt.show()
     plt.close()
+def merge_dicts(*dict_args):
+    """
+    Given any number of dictionaries, shallow copy and merge into a new dict,
+    precedence goes to key-value pairs in latter dictionaries.
+    """
+    result = {}
+    for dictionary in dict_args:
+        result.update(dictionary)
+    return result
 
 def angle_mean_check(Ux,Vy):
     angle = np.arctan(Vy/Ux)*(180/np.pi)
@@ -620,3 +640,93 @@ def angle_mean_check(Ux,Vy):
                 Vy[i,j] = (Vy[i,j-1]+Vy[i,j+1]+Vy[i-1,j]+Vy[i+1,j])/4
     return Ux, Vy
 
+def get_adjacent_indices(i, j, m, n):
+    adjacent_indices = []
+    if i > 0:
+        adjacent_indices.append((i-1,j))
+    if i+1 < m:
+        adjacent_indices.append((i+1,j))
+    if j > 0:
+        adjacent_indices.append((i,j-1))
+    if j+1 < n:
+        adjacent_indices.append((i,j+1))
+    return adjacent_indices
+
+def get_adjacent_mag_angle(i,j,u,v):
+    if u.shape != v.shape:
+        raise Exception('u and v should be in the same shape.')
+    m,n = u.shape
+    indices = get_adjacent_indices(i,j,m,n)
+    mag = []
+    ang = []
+    for k in indices:
+        u_k = u[k]
+        v_k = v[k]
+        mag.append(np.sqrt(u_k**2+v**2))
+        ang.append(np.arctan(u_k/v_k)*180/np.pi)
+    return mag,ang
+
+def get_adjacent_uv(i,j,u,v):
+    if u.shape != v.shape:
+        raise Exception('u and v should be in the same shape.')
+    m,n = u.shape
+    indices = get_adjacent_indices(i,j,m,n)
+    u2 = []
+    v2 = []
+    for k in indices:
+        u2.append(u[k])
+        v2.append(v[k])
+        
+    return u2,v2
+       
+def correct_by_angle(u,v):
+    if u.shape != v.shape:
+        raise Exception('u and v should be in the same shape.')
+    
+    N_i,N_j = u.shape
+
+    for i in range(N_i):
+        for j in range(N_j):
+            u_ij = u[i,j]
+            v_ij = v[i,j]
+
+            mag_ij = np.sqrt(u_ij**2+v_ij**2)
+            ang_ij = np.arctan(u_ij/v_ij)
+
+            mag,ang = get_adjacent_mag_angle(i,j,u,v)
+            u_adj,v_adj = get_adjacent_uv(i,j,u,v)
+
+            if np.abs(np.mean(ang)/ang_ij-1) > 0.1:
+                u[i,j] = np.mean(u_adj)
+                v[i,j] = np.mean(v_adj)            
+
+            # mag,ang = get_adjacent_mag_angle(i,j,u,v)
+            # u_adj,v_adj = get_adjacent_uv(i,j,u,v)
+
+            # if np.abs(np.mean(mag)/mag_ij - 1) > 0.1:
+            #     u[i,j] = np.mean(u_adj)
+            #     v[i,j] = np.mean(v_adj)
+            
+    return u,v
+
+def quiver_and_contour(x,y,Ux,Vy,img_a_count,results_path):
+        fig = plt.figure(figsize=(15, 3), dpi= 400, constrained_layout=True)
+        ax = fig.add_subplot(1,1,1)
+        CS = ax.contourf(y,x,(Ux**2+Vy**2)**0.5, 50, vmin = 0.00, vmax=np.max(np.absolute(Vy)), cmap = cm.coolwarm)
+        m = plt.cm.ScalarMappable(cmap = cm.coolwarm)
+        m.set_array((Ux**2+Vy**2)**0.5)
+        m.set_clim(0,0.6)
+        ax.set_aspect('auto')
+
+        plt.colorbar(m, orientation = 'vertical')
+        ax.quiver(y,x,-Vy,-Ux, color = 'black',
+                angles='xy', scale_units='xy', scale=5000, width = 0.003,
+                headlength = 2, headwidth = 2, headaxislength = 2, pivot = 'tail')
+
+        ax.set_title('Frame = %0.5f s' %img_a_count)
+
+        pic = 'Stream_%05d.png' %img_a_count
+
+        plt.savefig(os.path.join(results_path,pic), dpi=400, facecolor='w', edgecolor='w')
+        #plt.show()
+        plt.close()
