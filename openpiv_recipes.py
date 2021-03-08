@@ -150,7 +150,7 @@ class ParticleImage:
         img_b, img_c = self.read_two_images(search_dict,index_a=index_a+1,index_b=index_a+2)        
         
         corr1 = pyprocess.correlate_windows(img_a,img_b)
-        corr2 = pyprocess.correlate_windows(img_a,img_b)
+        corr2 = pyprocess.correlate_windows(img_b,img_c)
 
         if np.max(corr1) > np.max(corr2):
             out = index_a
@@ -219,7 +219,7 @@ class ParticleImage:
 
         #save in the simple ASCII table format        
         if ns.save_result is True:
-            tools.save(x, y, u3, v3, mask, os.path.join(results_path,ns.text_export_name))
+            tools.save(x, y, u3, v3, mask, os.path.join(results_path,'Stream_%05d.txt'%index_a))
             quiver_and_contour(x,y,u3,v3,index_a,results_path)
             io.imwrite(os.path.join(results_path,ns.figure_export_name),img_a)
         
@@ -872,7 +872,9 @@ def point_statistics(entire_U,entire_V,ind_x,ind_y,dt = 0.1):
     ax[1].hist(vv,bins = 20)
     ax[0].set_xlabel('u (mm/s)')
     ax[1].set_xlabel('v (mm/s)')
-    ax[0].set_ylabel('Frequency (no. samples in a bin)')    
+    ax[0].set_ylabel('Frequency (no. samples in a bin)')   
+
+
     
 def ensemble_statistics(uu,vv):
     fig, ax = plt.subplots(1,2,figsize = (10,4))
