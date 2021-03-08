@@ -3,7 +3,7 @@
 # - sig2noise, image quality, filtering , ...
 
 # %%
-from openpiv import tools, process, validation, filters, scaling 
+from openpiv import tools, process, validation, filters, scaling, pyprocess
 from PIL import Image
 from argparse import Namespace
 import matplotlib.cm as cm
@@ -63,6 +63,8 @@ class ParticleImage:
             "transpose": False,
             "crop": [0,0,0,0],
             "sn_threshold": 1.3,
+            "rotate": 0,
+            "save_result": True,
         }
         self.piv_dict_list = self.param_dict_list
         try:
@@ -143,6 +145,19 @@ class ParticleImage:
         for x, y in self.piv_param.items():
             print(x +":", y)
 
+    def check_proper_index(self,search_dict,index_a):
+        img_a, img_b = self.read_two_images(search_dict,index_a=index_a,index_b=index_a+1)
+        img_b, img_c = self.read_two_images(search_dict,index_a=index_a+1,index_b=index_a+2)        
+        
+        corr1 = pyprocess.correlate_windows(img_a,img_b)
+        corr2 = pyprocess.correlate_windows(img_a,img_b)
+
+        if np.max(corr1) > np.max(corr2):
+            out = index_a
+        else:
+            out = index_a + 1
+        return out
+
     def quick_piv(self, search_dict, index_a = 100, index_b = 101, folder = None):
         self.show_piv_param()
         ns = Namespace(**self.piv_param)
@@ -203,16 +218,15 @@ class ParticleImage:
         u3, v3 = angle_mean_check(u3,v3)
 
         #save in the simple ASCII table format        
-        tools.save(x, y, u3, v3, mask, os.path.join(results_path,ns.text_export_name))
-
-        quiver_and_contour(x,y,u3,v3,index_a,results_path)
+        if ns.save_result is True:
+            tools.save(x, y, u3, v3, mask, os.path.join(results_path,ns.text_export_name))
+            quiver_and_contour(x,y,u3,v3,index_a,results_path)
+            io.imwrite(os.path.join(results_path,ns.figure_export_name),img_a)
         
         if ns.image_check == True:
             fig,ax = plt.subplots(2,1,figsize=(24,12))
             ax[0].imshow(img_a)
-            ax[1].imshow(img_b)
-
-        io.imwrite(os.path.join(results_path,ns.figure_export_name),img_a)
+            ax[1].imshow(img_b)       
 
         if ns.show_result == True:
             fig, ax = plt.subplots(figsize=(24,12))
@@ -237,9 +251,102 @@ class ParticleImage:
         # if np.absolute(np.mean(v3)) < 50:
         #     output = self.quick_piv(search_dict,index_a = index_a + 1, index_b = index_b + 1)
 
-        return x,y,u3,v3,sig2noise
+        return x,y,u3,v3
 
         # return np.std(u3)        
+
+    def piv_over_time(self,search_dict,start_index=1,N=100):
+        ind = start_index
+
+        location_path = [x['path'] for x in self.piv_dict_list if search_dict.items() <= x.items()]
+        results_path = os.path.join(self.results_path,*location_path)
+
+        entire_U = []
+        entire_V = []
+
+        for i in range(N):
+            x,y,U,V = self.quick_piv(search_dict,index_a = ind,index_b = ind+1)
+            entire_U.append(U)
+            entire_V.append(V)
+            ind = ind + 2        
+
+        u_path = os.path.join(results_path, 'entire_U.txt')
+        v_path = os.path.join(results_path, 'entire_V.txt')        
+
+        with open(u_path, 'w') as ufile, open(v_path,'w') as vfile:
+            # I'm writing a header here just for the sake of readability
+            # Any line starting with "#" will be ignored by numpy.loadtxt
+            ufile.write('# Array shape: {0}\n'.format(U.shape))
+            vfile.write('# Array shape: {0}\n'.format(U.shape))
+
+            # Iterating through a ndimensional array produces slices along
+            # the last axis. This is equivalent to data[i,:,:] in this case
+            for U_slice,V_slice in zip(entire_U,entire_V):
+
+                # The formatting string indicates that I'm writing out
+                # the values in left-justified columns 7 characters in width
+                # with 2 decimal places.  
+                np.savetxt(ufile, U_slice, fmt='%-7.5f')
+                np.savetxt(vfile, V_slice, fmt='%-7.5f')
+
+                # Writing out a break to indicate different slices...
+                ufile.write('# New slice\n')     
+                vfile.write('# New slice\n')     
+
+    def point_statistics(self,search_dict,ind_x,ind_y,dt):
+        location_path = [x['path'] for x in self.piv_dict_list if search_dict.items() <= x.items()]
+        results_path = os.path.join(self.results_path,*location_path)
+
+        u_path = os.path.join(results_path,'entire_U.txt')
+        v_path = os.path.join(results_path,'entire_V.txt')
+        print(u_path)
+
+        with open(u_path, 'r') as ufile:
+            temp = ufile.readline()
+            print(temp)
+            a = re.findall("\d+",temp)            
+
+        entire_U = np.loadtxt(u_path)
+        entire_V = np.loadtxt(v_path)       
+
+        no_slices = entire_U.shape[0]//int(a[0])
+        field_shape = (no_slices,int(a[0]),int(a[1]))
+        
+        entire_U = entire_U.reshape(field_shape)
+        entire_V = entire_V.reshape(field_shape)
+
+        uu = []
+        vv = []
+        for x,y in zip(entire_U,entire_V):
+            uu.append(x[ind_x,ind_y])
+            vv.append(y[ind_x,ind_y])        
+
+        delta_t = dt*len(uu)
+        time = np.linspace(0,delta_t,len(uu))
+
+        fig, ax = plt.subplots(2,2,figsize=(10,10))
+        ax[0,0].plot(time,uu)
+        ax[0,1].plot(time,vv)
+
+        ax[0,0].set_ylabel('$u$ (mm/s)')
+        ax[0,1].set_ylabel('$v$ (mm/s)')
+        ax[0,0].set_xlabel('time (ms)')
+        ax[0,1].set_xlabel('time (ms)')
+
+        ax[0,0].set_title('$u = %.2f \pm %.2f$, $v = %.2f \pm %.2f$' %(np.mean(uu),np.std(vv),np.mean(vv),np.std(vv)))                    
+        
+        ax[1,0].hist(uu,bins = 20)
+        ax[1,1].hist(vv,bins = 20)
+        ax[1,0].set_xlabel('u (mm/s)')
+        ax[1,1].set_xlabel('v (mm/s)')
+        ax[1,0].set_ylabel('Frequency (no. samples in a bin)')    
+
+        fig.savefig(os.path.join(results_path,'point_statistics_%d_%d.png')%(ind_x,ind_y))
+
+
+
+
+
 
     def stitch_images(self,update = False):
         entire_image_path = os.path.join('_entire_image.png')
@@ -589,6 +696,7 @@ def quiver_and_contour(x,y,Ux,Vy,img_a_count,results_path):
     plt.savefig(os.path.join(results_path,pic), dpi=400, facecolor='w', edgecolor='w')
     #plt.show()
     plt.close()
+
 def merge_dicts(*dict_args):
     """
     Given any number of dictionaries, shallow copy and merge into a new dict,
@@ -601,7 +709,7 @@ def merge_dicts(*dict_args):
 
 def angle_mean_check(Ux,Vy):
     angle = np.arctan(Vy/Ux)*(180/np.pi)
-    Mean_val = np.zeros([angle.shape[0],angle.shape[1]]) 
+    Mean_val = np.zeros([angle.shape[0],angle.shape[1]])
     Mean_vel = np.zeros([angle.shape[0],angle.shape[1]])
     for i in range(0,angle.shape[0]):
         for j in range(0,angle.shape[1]):
@@ -730,3 +838,46 @@ def quiver_and_contour(x,y,Ux,Vy,img_a_count,results_path):
         plt.savefig(os.path.join(results_path,pic), dpi=400, facecolor='w', edgecolor='w')
         #plt.show()
         plt.close()
+
+def peel_off_edges(xyuv):
+    field_shape = xyuv[0].shape    
+    out = []
+    for x in xyuv:        
+        out.append(x[1:-1,1:-1])
+    x[1:-2,1:-2].shape
+    return out
+
+def point_statistics(entire_U,entire_V,ind_x,ind_y,dt = 0.1):
+    uu = []
+    vv = []
+    for x,y in zip(entire_U,entire_V):
+        uu.append(x[ind_x,ind_y])
+        vv.append(y[ind_x,ind_y])        
+
+    delta_t = dt*len(uu)
+    time = np.linspace(0,delta_t,len(uu))
+
+    fig, ax = plt.subplots(2,figsize=(8,3))
+    ax[0].plot(time,uu)
+    ax[1].plot(time,vv)
+
+    ax[0].set_ylabel('$u$ (mm/s)')
+    ax[1].set_ylabel('$v$ (mm/s)')
+    ax[1].set_xlabel('time (ms)')
+
+    ax[0].set_title('$u = %.2f \pm %.2f$, $v = %.2f \pm %.2f$' %(np.mean(uu),np.std(vv),np.mean(vv),np.std(vv)))    
+    
+    fig, ax = plt.subplots(1,2,figsize = (10,4))
+    ax[0].hist(uu,bins = 20)
+    ax[1].hist(vv,bins = 20)
+    ax[0].set_xlabel('u (mm/s)')
+    ax[1].set_xlabel('v (mm/s)')
+    ax[0].set_ylabel('Frequency (no. samples in a bin)')    
+    
+def ensemble_statistics(uu,vv):
+    fig, ax = plt.subplots(1,2,figsize = (10,4))
+    ax[0].hist(uu.flatten(),bins = 20)
+    ax[1].hist(vv.flatten(),bins = 20)
+    ax[0].set_xlabel('u (mm/s)')
+    ax[1].set_xlabel('v (mm/s)')
+    ax[0].set_ylabel('Frequency (no. samples in a bin)')    

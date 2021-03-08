@@ -484,6 +484,10 @@ piv.run_piv(img_a,img_b,
 
 check_windows(img_a,img_b,15)
 # %%
+import openpiv_recipes as piv
+import importlib
+importlib.reload(piv)
+
 from openpiv import pyprocess
 
 folder_path = '/Volumes/Backup Plus /ROWLAND/piv-data/2021-02-23/'
