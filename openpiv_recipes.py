@@ -324,6 +324,15 @@ class ParticleImage:
         delta_t = dt*len(uu)
         time = np.linspace(0,delta_t,len(uu))
 
+        mean_u = np.mean(uu)
+        mean_v = np.mean(vv)
+
+        std_u = np.std(uu,ddof=1)
+        std_v = np.std(vv,ddof=1)
+
+        se_u = std_u/len(uu)
+        se_v = std_v/len(uu)    
+
         fig, ax = plt.subplots(2,2,figsize=(10,10))
         ax[0,0].plot(time,uu)
         ax[0,1].plot(time,vv)
@@ -333,7 +342,8 @@ class ParticleImage:
         ax[0,0].set_xlabel('time (ms)')
         ax[0,1].set_xlabel('time (ms)')
 
-        ax[0,0].set_title('$u = %.2f \pm %.2f$, $v = %.2f \pm %.2f$' %(np.mean(uu),np.std(vv),np.mean(vv),np.std(vv)))                    
+        ax[0,0].set_title('$u = %.2f \pm %.2f$, $v = %.2f \pm %.2f$' %(mean_u,se_u,mean_v,se_v))
+        ax[0,1].set_title('std of u = %.2f , std of v = %.2f' %(std_u,std_v))
         
         ax[1,0].hist(uu,bins = 20)
         ax[1,1].hist(vv,bins = 20)
@@ -854,8 +864,12 @@ def point_statistics(entire_U,entire_V,ind_x,ind_y,dt = 0.1):
         uu.append(x[ind_x,ind_y])
         vv.append(y[ind_x,ind_y])        
 
+    
+
     delta_t = dt*len(uu)
     time = np.linspace(0,delta_t,len(uu))
+
+    
 
     fig, ax = plt.subplots(2,figsize=(8,3))
     ax[0].plot(time,uu)
@@ -864,15 +878,16 @@ def point_statistics(entire_U,entire_V,ind_x,ind_y,dt = 0.1):
     ax[0].set_ylabel('$u$ (mm/s)')
     ax[1].set_ylabel('$v$ (mm/s)')
     ax[1].set_xlabel('time (ms)')
-
-    ax[0].set_title('$u = %.2f \pm %.2f$, $v = %.2f \pm %.2f$' %(np.mean(uu),np.std(vv),np.mean(vv),np.std(vv)))    
+    ax[0].set_title('$u = %.2f \pm %.2f$, $v = %.2f \pm %.2f$' %(mean_u,mean_v,se_u,se_v))
     
     fig, ax = plt.subplots(1,2,figsize = (10,4))
     ax[0].hist(uu,bins = 20)
     ax[1].hist(vv,bins = 20)
     ax[0].set_xlabel('u (mm/s)')
     ax[1].set_xlabel('v (mm/s)')
-    ax[0].set_ylabel('Frequency (no. samples in a bin)')   
+    ax[0].set_ylabel('Frequency (no. samples in a bin)')
+
+
 
 
     
