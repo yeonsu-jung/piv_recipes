@@ -525,20 +525,20 @@ def dummy(a,b):
 def run_piv(
     frame_a,
     frame_b,
-    winsize = 16, # pixels, interrogation window size in frame A
-    searchsize = 20,  # pixels, search in image B
-    overlap = 8, # pixels, 50% overlap
+    winsize = 28, # pixels, interrogation window size in frame A
+    searchsize = 34,  # pixels, search in image B
+    overlap = 24, # pixels, 50% overlap
     dt = 0.0001, # sec, time interval between pulses
     image_check = False,
     show_vertical_profiles = False,
     figure_export_name = '_results.png',
     text_export_name =  "_results.txt",
     scale_factor = 1,
-    pixel_density = 36.74,
+    pixel_density = 40,
     arrow_width = 0.001,
     show_result = True,
     u_bounds = (-100,100),
-    v_bounds = (-10000,10000)
+    v_bounds = (-1000,0)
     ):
            
     u0, v0, sig2noise = process.extended_search_area_piv(frame_a.astype(np.int32), 
@@ -550,7 +550,7 @@ def run_piv(
                                                         sig2noise_method='peak2peak')
 
     x, y = process.get_coordinates(image_size=frame_a.shape, 
-                                    search_area_size=searchsize,                                    
+                                    window_size=winsize,
                                     overlap=overlap)
 
     x, y, u0, v0 = scaling.uniform(x, y, u0, v0,
@@ -567,11 +567,10 @@ def run_piv(
                                     max_iter=10,
                                     kernel_size=3)
 
-    
+    print('Number of nan elements',np.sum(np.isnan(mask)))
 
     #save in the simple ASCII table format    
-    if np.std(u3) < 480:
-        tools.save(x, y, u3, v3, sig2noise,mask, text_export_name)
+    tools.save(x, y, u3, v3, mask, text_export_name)
     
     if image_check == True:
         fig,ax = plt.subplots(2,1,figsize=(24,12))
@@ -588,16 +587,14 @@ def run_piv(
                                     width=arrow_width, # width is the thickness of the arrow
                                     on_img=True, # overlay on the image
                                     image_name= figure_export_name)
-        fig.savefig(figure_export_name)       
-
-    if show_vertical_profiles:
-        field_shape = process.get_field_shape(image_size=frame_a.shape,search_area_size=searchsize,overlap=overlap)
-        vertical_profiles(text_export_name,field_shape)
+        fig.savefig(figure_export_name)
     
-    print('Std of u3: %.3f' %np.std(u3))
-    print('Mean of u3: %.3f' %np.mean(u3))
+    print('Mean of u: %.3f' %np.mean(u3))
+    print('Std of u: %.3f' %np.std(u3))
+    print('Mean of v: %.3f' %np.mean(v3))
+    print('Std of v: %.3f' %np.std(v3))
 
-    return np.std(u3)
+    return x,y,u3,v3
 
 
 def vertical_profiles(text_export_name,field_shape):

@@ -5,18 +5,72 @@ importlib.reload(piv)
 
 import imageio as io
 # %%
-import numpy as np
-np.__version__
-# %%
-
-img_a = io.imread('C:\\Users\\yj\\Downloads\\_test_ag1_dg1_laser5_motor0_frame_000011.tiff')
-img_b = io.imread('C:\\Users\\yj\\Downloads\\_test_ag1_dg1_laser5_motor0_frame_000013.tiff')
+img_a = io.imread('C:\\Users\\yj\\Downloads\\_test_frame_000007.tiff')
+img_b = io.imread('C:\\Users\\yj\\Downloads\\_test_frame_000008.tiff')
 
 piv.run_piv(img_a,img_b,
     winsize = 16, # pixels, interrogation window size in frame A
     searchsize = 20,  # pixels, search in image B
     overlap = 8,
     scale_factor=1e4),
+
+# %%
+img_a = io.imread('C:\\Users\\yj\\Downloads\\0309_Exp01_frame_000021.tiff')
+img_b = io.imread('C:\\Users\\yj\\Downloads\\0309_Exp01_frame_000022.tiff')
+
+img_a = img_a[:,250:]
+img_b = img_b[:,250:]
+
+piv.run_piv(img_a,img_b,
+    winsize = 28, # pixels, interrogation window size in frame A
+    searchsize = 34,  # pixels, search in image B
+    overlap = 24,
+    scale_factor=1e4)
+# %%
+
+img_a = io.imread('C:\\Users\\yj\\Downloads\\0309_Exp03_frame_000020.tiff')
+img_b = io.imread('C:\\Users\\yj\\Downloads\\0309_Exp03_frame_000021.tiff')
+
+img_a = img_a[:,250:]
+img_b = img_b[:,250:]
+
+dummy = piv.run_piv(img_a,img_b,
+    winsize = 28, # pixels, interrogation window size in frame A
+    searchsize = 34,  # pixels, search in image B
+    overlap = 24,
+    scale_factor=1e4,
+    pixel_density=40.3676),
+
+# %%
+img_a = io.imread('C:\\Users\\yj\\Downloads\\0309_Exp04_frame_000021.tiff')
+img_b = io.imread('C:\\Users\\yj\\Downloads\\0309_Exp04_frame_000022.tiff')
+
+img_a = img_a[:,250:]
+img_b = img_b[:,250:]
+
+dummy = piv.run_piv(img_a,img_b,
+    winsize = 28, # pixels, interrogation window size in frame A
+    searchsize = 34,  # pixels, search in image B
+    overlap = 24,
+    scale_factor=1e4,
+    pixel_density=40.3676),
+
+# %%
+
+img_a = io.imread('C:\\Users\\yj\\Downloads\\0309_Exp15_frame_000021.tiff')
+img_b = io.imread('C:\\Users\\yj\\Downloads\\0309_Exp15_frame_000022.tiff')
+
+img_a = img_a[:,250:]
+img_b = img_b[:,250:]
+
+dummy = piv.run_piv(img_a,img_b,
+    winsize = 28, # pixels, interrogation window size in frame A
+    searchsize = 34,  # pixels, search in image B
+    overlap = 24,
+    scale_factor=1e4,
+    pixel_density=40.3676),
+
+
 
 
 # %%
@@ -490,11 +544,11 @@ importlib.reload(piv)
 
 from openpiv import pyprocess
 
-folder_path = '/Volumes/Backup Plus /ROWLAND/piv-data/2021-02-23/'
-results_folder_path = '/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-results'
+# folder_path = '/Volumes/Backup Plus /ROWLAND/piv-data/2021-02-23/'
+# results_folder_path = '/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-results'
 
-# folder_path = "C:\\Users\\yj\\Documents\\Chronos\\2021-02-22\\1_1_-1 (3dp)"
-# results_folder_path = 'C:\\Users\\yj\\Dropbox (Harvard University)\\Riblet\\data\\piv-results'
+folder_path = "C:\\Users\\yj\\Documents\\Chronos\\2021-02-22\\1_1_-1 (3dp)"
+results_folder_path = 'C:\\Users\\yj\\Dropbox (Harvard University)\\Riblet\\data\\piv-results'
 
 pi = piv.ParticleImage(folder_path,results_folder_path)
 
@@ -540,3 +594,12 @@ print(corr.shape)
 
 # a,b = pyprocess.find_first_peak(corr)
 s2n =  pyprocess.sig2noise_ratio(corr,sig2noise_method="peak2peak",width=2)
+
+# %%
+import re
+
+temp = '# Array shape: (54, 52)'
+a = re.findall("\d+",temp)
+a[0]
+
+# %%
