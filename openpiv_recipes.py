@@ -202,7 +202,9 @@ class ParticleImage:
 
         x, y, u0, v0 = scaling.uniform(x, y, u0, v0, scaling_factor = ns.pixel_density) # no. pixel per distance
 
-        u0, v0, mask = validation.global_val(u0,v0,ns.u_bound,ns.v_bound)
+        u0, v0, mask = validation.global_val(u0,v0,ns.u_bound,ns.v_bound)        
+
+        x,y,u0,v0,mask,sig2noise = peel_off_edges((x,y,u0,v0,mask,sig2noise))       
 
         print('Number of invalid vectors:',np.sum(np.isnan(mask)))
 
@@ -215,7 +217,8 @@ class ParticleImage:
                                         max_iter=50,
                                         kernel_size=1)
         
-        u3, v3 = angle_mean_check(u3,v3)
+        u3, v3 = angle_mean_check(u3,v3)       
+
 
         #save in the simple ASCII table format        
         if ns.save_result is True:
@@ -229,9 +232,9 @@ class ParticleImage:
             ax[1].imshow(img_b)       
 
         if ns.show_result == True:
-            fig, ax = plt.subplots(figsize=(24,12))
+            fig, ax2 = plt.subplots(figsize=(24,12))
             tools.display_vector_field( os.path.join(results_path,'Stream_%05d.txt'%index_a), 
-                                        ax=ax, scaling_factor= ns.pixel_density, 
+                                        ax=ax2, scaling_factor= ns.pixel_density, 
                                         scale=ns.scale_factor, # scale defines here the arrow length
                                         width=ns.arrow_width, # width is the thickness of the arrow
                                         on_img=True, # overlay on the image
@@ -682,28 +685,6 @@ def negative(image):
     """
     return 255 - image
 
-def quiver_and_contour(x,y,Ux,Vy,img_a_count,results_path):
-    fig = plt.figure(figsize=(15, 3), dpi= 400, constrained_layout=True)
-    ax = fig.add_subplot(1,1,1)
-    CS = ax.contourf(y,x,(Ux**2+Vy**2)**0.5, 50, vmin = 0.00, vmax=np.max(np.absolute(Vy)), cmap = cm.coolwarm)
-    m = plt.cm.ScalarMappable(cmap = cm.coolwarm)
-    m.set_array((Ux**2+Vy**2)**0.5)
-    m.set_clim(0,np.max(np.absolute(Vy)))
-    ax.set_aspect('auto')
-
-    plt.colorbar(m, orientation = 'vertical')
-    ax.quiver(y,x,-Vy,-Ux, color = 'black',
-            angles='xy', scale_units='xy', scale=5000, width = 0.003,
-            headlength = 2, headwidth = 2, headaxislength = 2, pivot = 'tail')
-
-    ax.set_title('Frame = %0.5f s' %img_a_count)
-
-    pic = 'Stream_%05d.png' %img_a_count
-
-    plt.savefig(os.path.join(results_path,pic), dpi=400, facecolor='w', edgecolor='w')
-    #plt.show()
-    plt.close()
-
 def merge_dicts(*dict_args):
     """
     Given any number of dictionaries, shallow copy and merge into a new dict,
@@ -825,33 +806,33 @@ def correct_by_angle(u,v):
     return u,v
 
 def quiver_and_contour(x,y,Ux,Vy,img_a_count,results_path):
-        fig = plt.figure(figsize=(15, 3), dpi= 400, constrained_layout=True)
-        ax = fig.add_subplot(1,1,1)
-        CS = ax.contourf(y,x,(Ux**2+Vy**2)**0.5, 50, vmin = 0.00, vmax=np.max(np.absolute(Vy)), cmap = cm.coolwarm)
-        m = plt.cm.ScalarMappable(cmap = cm.coolwarm)
-        m.set_array((Ux**2+Vy**2)**0.5)
-        m.set_clim(0,0.6)
-        ax.set_aspect('auto')
+    fig = plt.figure(figsize=(15, 3), dpi= 400, constrained_layout=True)
+    ax = fig.add_subplot(1,1,1)
+    CS = ax.contourf(y,x,(Ux**2+Vy**2)**0.5, 50, vmin = 0.00, vmax=np.max(np.absolute(Vy)), cmap = cm.coolwarm)
+    m = plt.cm.ScalarMappable(cmap = cm.coolwarm)
+    m.set_array((Ux**2+Vy**2)**0.5)
+    m.set_clim(0,np.max(np.absolute(Vy)))
+    ax.set_aspect('auto')
 
-        plt.colorbar(m, orientation = 'vertical')
-        ax.quiver(y,x,-Vy,-Ux, color = 'black',
-                angles='xy', scale_units='xy', scale=5000, width = 0.003,
-                headlength = 2, headwidth = 2, headaxislength = 2, pivot = 'tail')
+    plt.colorbar(m, orientation = 'vertical')
+    ax.quiver(y,x,-Vy,-Ux, color = 'black',
+            angles='xy', scale_units='xy', #scale=5000, width = 0.003,
+            headlength = 2, headwidth = 2, headaxislength = 2, pivot = 'tail')
 
-        ax.set_title('Frame = %0.5f s' %img_a_count)
+    ax.set_title('Frame = %0.5f s' %img_a_count)
 
-        pic = 'Stream_%05d.png' %img_a_count
+    pic = 'Stream_%05d.png' %img_a_count
 
-        plt.savefig(os.path.join(results_path,pic), dpi=400, facecolor='w', edgecolor='w')
-        #plt.show()
-        plt.close()
+    plt.savefig(os.path.join(results_path,pic), dpi=400, facecolor='w', edgecolor='w')
+    #plt.show()
+    plt.close()
 
 def peel_off_edges(xyuv):
     field_shape = xyuv[0].shape    
     out = []
     for x in xyuv:        
         out.append(x[1:-1,1:-1])
-    x[1:-2,1:-2].shape
+    out = tuple(out)
     return out
 
 def point_statistics(entire_U,entire_V,ind_x,ind_y,dt = 0.1):
