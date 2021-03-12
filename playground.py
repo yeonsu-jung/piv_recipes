@@ -5,14 +5,17 @@ importlib.reload(piv)
 
 import imageio as io
 # %%
-img_a = io.imread('C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-10/framerate=60_timing=min/frame_000004.tiff')
-img_b = io.imread('C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-10/framerate=60_timing=min/frame_000005.tiff')
+img_a = io.imread('C:\\Users\\yj\\Downloads\\0311_Exp05_frame_000021.tiff')
+img_b = io.imread('C:\\Users\\yj\\Downloads\\0311_Exp05_frame_000022.tiff')
 
 piv.run_piv(img_a,img_b,
-    winsize = 16, # pixels, interrogation window size in frame A
-    searchsize = 20,  # pixels, search in image B
-    overlap = 8,
-    scale_factor=1e4),
+    winsize = 28, # pixels, interrogation window size in frame A
+    searchsize = 34,  # pixels, search in image B
+    overlap = 20,
+    scale_factor=1e4,
+    u_bounds=(-15,15),
+    v_bounds=(-1000,0),
+    dt=236e-6)
 
 # %%
 
