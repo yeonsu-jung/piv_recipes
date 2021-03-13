@@ -40,10 +40,7 @@ class ParticleImage:
         except:
             pass
 
-        self.param_dict_list = []
-
-        for x in self.param_string_list:
-            self.param_dict_list.append(self.param_string_to_dictionary(x))
+        self.set_param_string_list(self.param_string_list)        
         
         self.piv_param = {
             "winsize": 48,
@@ -55,7 +52,7 @@ class ParticleImage:
             "figure_export_name": '_quick_piv.tiff',
             "text_export_name": '_quick_piv.txt',
             "scale_factor": 1,            
-            "pixel_density": 36.74,
+            "pixel_density": 40,
             "arrow_width": 0.02,
             "show_result": True,        
             "u_bound": [-2000,2000], # (mm/s)            
@@ -67,11 +64,19 @@ class ParticleImage:
             "save_result": True,
             "check_angle": False,
         }
+
         self.piv_dict_list = self.param_dict_list
         try:
             self.search_dict_list = self.check_piv_dict_list()
         except:
             pass
+
+    def set_param_string_list(self,new_param_string_list):
+        self.param_string_list = new_param_string_list        
+        self.param_dict_list = []
+
+        for x in self.param_string_list:
+            self.param_dict_list.append(self.param_string_to_dictionary(x))       
 
     def set_piv_list(self,exp_cond_dict):        
         self.piv_dict_list = [x for x in self.param_dict_list if exp_cond_dict.items() <= x.items()]
@@ -127,10 +132,6 @@ class ParticleImage:
             img_b_array = np.array(img_b)        
 
         return img_a_array, img_b_array
-
-    def check_image_pair():
-        # to be implemented to check if PIV result is successful or not
-        return True
 
     def check_piv_dict_list(self):
         lis = self.piv_dict_list
@@ -355,9 +356,8 @@ class ParticleImage:
 
         fig.savefig(os.path.join(results_path,'point_statistics_%d_%d.png')%(ind_x,ind_y))
 
-    def stitch_images(self,update = False):
-        entire_image_path = os.path.join('_entire_image.png')
-
+    def stitch_images(self,step,update = False):
+        entire_image_path = os.path.join(self.results_path,'_entire_image.png')        
         try:
             if update == True:
                 raise FileNotFoundError
@@ -382,7 +382,10 @@ class ParticleImage:
 
             voffset_unit = int(voffset_list[1])            
 
-            num_entire_col = voffset_unit*num_voffset*num_pos + (num_col-voffset_unit)
+            used_sensor_size = num_voffset * num_col - (num_voffset - 1) * (num_col - voffset_unit)
+            overlap = used_sensor_size - step * self.piv_param["pixel_density"]           
+
+            num_entire_col = voffset_unit*num_voffset*num_pos + (num_col-voffset_unit) - overlap * (num_pos - 1)
 
             entire_image = np.zeros((num_row,num_entire_col))
             print("entire image shape:",entire_image.shape)
@@ -392,8 +395,9 @@ class ParticleImage:
                     sd = {'pos': pos, 'VOFFSET': voffset}
                     img_a, img_b = self.read_two_images(sd)
 
-                    xl = int(pos-pos_list[0]) * num_voffset * voffset_unit + int(voffset)
+                    xl = int(pos-pos_list[0]) * num_voffset * voffset_unit + int(voffset) - overlap * (int(pos) - 1)
                     xr = xl + num_col
+
                     print(xl,xr)
                     print(img_a.T.shape)
                     print(entire_image[:,xl:xr].shape)
@@ -811,7 +815,7 @@ def quiver_and_contour(x,y,Ux,Vy,img_a_count,results_path):
 
     plt.colorbar(m, orientation = 'vertical')
     ax.quiver(y,x,-Vy,-Ux, color = 'black',
-            angles='uv', scale_units='xy', #scale=5000, width = 0.003,
+            angles='xy', scale_units='xy', #scale=5000, width = 0.003,
             headlength = 2, headwidth = 2, headaxislength = 2, pivot = 'tail')
 
     ax.set_title('Frame = %0.5f s' %img_a_count)
