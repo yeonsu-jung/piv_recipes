@@ -65,6 +65,7 @@ class ParticleImage:
             "sn_threshold": 1.3,
             "rotate": 0,
             "save_result": True,
+            "check_angle": False,
         }
         self.piv_dict_list = self.param_dict_list
         try:
@@ -217,8 +218,9 @@ class ParticleImage:
                                         max_iter=50,
                                         kernel_size=1)
         
-        u3, v3 = angle_mean_check(u3,v3)       
-
+        if ns.check_angle:
+            # u3, v3 = angle_mean_check(u3,v3)           
+            u3, v3 = correct_by_angle(u3,v3)
 
         #save in the simple ASCII table format        
         if ns.save_result is True:
@@ -232,18 +234,15 @@ class ParticleImage:
             ax[1].imshow(img_b)       
 
         if ns.show_result == True:
-            fig, ax2 = plt.subplots(figsize=(24,12))
+            fig, ax = plt.subplots(figsize=(24,12))
             tools.display_vector_field( os.path.join(results_path,'Stream_%05d.txt'%index_a), 
-                                        ax=ax2, scaling_factor= ns.pixel_density, 
+                                        ax=ax,
+                                        scaling_factor= ns.pixel_density, 
                                         scale=ns.scale_factor, # scale defines here the arrow length
                                         width=ns.arrow_width, # width is the thickness of the arrow
                                         on_img=True, # overlay on the image
                                         image_name= os.path.join(results_path,ns.figure_export_name))
-            fig.savefig(os.path.join(results_path,ns.figure_export_name))
-
-        if ns.show_vertical_profiles:
-            field_shape = process.get_field_shape(image_size=img_a.shape,search_area_size=ns.searchsize,overlap=ns.overlap)
-            vertical_profiles(ns.text_export_name,field_shape)
+            fig.savefig(os.path.join(results_path,ns.figure_export_name))        
         
         print('Mean of u: %.3f' %np.mean(u3))
         print('Std of u: %.3f' %np.std(u3))        
@@ -355,11 +354,6 @@ class ParticleImage:
         ax[1,0].set_ylabel('Frequency (no. samples in a bin)')    
 
         fig.savefig(os.path.join(results_path,'point_statistics_%d_%d.png')%(ind_x,ind_y))
-
-
-
-
-
 
     def stitch_images(self,update = False):
         entire_image_path = os.path.join('_entire_image.png')
@@ -585,7 +579,8 @@ def run_piv(
     if show_result == True:
         fig, ax = plt.subplots(figsize=(24,12))
         tools.display_vector_field(text_export_name, 
-                                    ax=ax, scaling_factor= pixel_density, 
+                                    # ax=ax,
+                                    scaling_factor= pixel_density, 
                                     scale=scale_factor, # scale defines here the arrow length
                                     width=arrow_width, # width is the thickness of the arrow
                                     on_img=True, # overlay on the image
@@ -731,7 +726,7 @@ def angle_mean_check(Ux,Vy):
     for i in range(1,vel.shape[0]-1):
         for j in range(1,vel.shape[1]-1):
             Mean_vel[i,j] = (vel[i-1,j]+vel[i+1,j]+vel[i,j-1]+vel[i,j+1])/4
-            if abs(Mean_vel[i,j]/vel[i,j]-1)>0.1:
+            if abs(Mean_vel[i,j]/vel[i,j]-1)>0.5:
                 Ux[i,j] = (Ux[i,j-1]+Ux[i,j+1]+Ux[i-1,j]+Ux[i+1,j])/4
                 Vy[i,j] = (Vy[i,j-1]+Vy[i,j+1]+Vy[i-1,j]+Vy[i+1,j])/4
     return Ux, Vy
@@ -816,7 +811,7 @@ def quiver_and_contour(x,y,Ux,Vy,img_a_count,results_path):
 
     plt.colorbar(m, orientation = 'vertical')
     ax.quiver(y,x,-Vy,-Ux, color = 'black',
-            angles='xy', scale_units='xy', #scale=5000, width = 0.003,
+            angles='uv', scale_units='xy', #scale=5000, width = 0.003,
             headlength = 2, headwidth = 2, headaxislength = 2, pivot = 'tail')
 
     ax.set_title('Frame = %0.5f s' %img_a_count)
@@ -824,8 +819,8 @@ def quiver_and_contour(x,y,Ux,Vy,img_a_count,results_path):
     pic = 'Stream_%05d.png' %img_a_count
 
     plt.savefig(os.path.join(results_path,pic), dpi=400, facecolor='w', edgecolor='w')
-    #plt.show()
-    plt.close()
+    plt.show()
+    # plt.close()
 
 def peel_off_edges(xyuv):
     field_shape = xyuv[0].shape    
