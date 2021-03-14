@@ -133,14 +133,14 @@ class ParticleImage:
 
         return img_a_array, img_b_array
 
-    def check_piv_dict_list(self):
-        lis = self.piv_dict_list
+    def check_piv_dict_list(self):      
+        lis = self.piv_dict_list        
         search_dict_list = []
         for x in lis:
             search_dict = {'pos': x['pos'], 'VOFFSET': x['VOFFSET']}
             search_dict_list.append(search_dict)
 
-        return search_dict_list
+        self.search_dict_list = sorted(search_dict_list, key=lambda e: (e['pos'],e['VOFFSET']))        
 
     def show_piv_param(self):
         print("- PIV parameters -")
@@ -225,9 +225,9 @@ class ParticleImage:
 
         #save in the simple ASCII table format        
         if ns.save_result is True:
-            tools.save(x, y, u3, v3, mask, os.path.join(results_path,'Stream_%05d.txt'%index_a))
-            quiver_and_contour(x,y,u3,v3,index_a,results_path)
+            tools.save(x, y, u3, v3, mask, os.path.join(results_path,'Stream_%05d.txt'%index_a))            
             io.imwrite(os.path.join(results_path,ns.figure_export_name),img_a)
+            quiver_and_contour(x,y,u3,v3,index_a,results_path,show_result = ns.show_result)
         
         if ns.image_check == True:
             fig,ax = plt.subplots(2,1,figsize=(24,12))
@@ -243,7 +243,7 @@ class ParticleImage:
                                         width=ns.arrow_width, # width is the thickness of the arrow
                                         on_img=True, # overlay on the image
                                         image_name= os.path.join(results_path,ns.figure_export_name))
-            fig.savefig(os.path.join(results_path,ns.figure_export_name))        
+            fig.savefig(os.path.join(results_path,ns.figure_export_name))                    
         
         print('Mean of u: %.3f' %np.mean(u3))
         print('Std of u: %.3f' %np.std(u3))        
@@ -258,7 +258,21 @@ class ParticleImage:
 
         # return np.std(u3)        
 
-    def piv_over_time(self,search_dict,start_index=1,N=100):
+    def get_entire_velocity_map(self,index_a=100,index_b=101):       
+        vmap_list = []
+        for sd in self.search_dict_list:
+            print(sd)
+            self.set_piv_param({'save_result': True, 'show_result': False})            
+            
+            ind = self.check_proper_index(sd,index_a = 10)
+            xyuv = self.quick_piv(sd,index_a = ind, index_b = ind + 1)
+            self.set_piv_param({'show_result': True})            
+
+            vmap_list.append({'pos': sd['pos'],'VOFFSET': sd['VOFFSET'], 'map': xyuv})
+
+        self.entire_velocity_map = vmap_list     
+
+    def piv_over_time(self,search_dict,start_index=1,N=90):
         ind = start_index
 
         location_path = [x['path'] for x in self.piv_dict_list if search_dict.items() <= x.items()]
@@ -268,7 +282,11 @@ class ParticleImage:
         entire_V = []
 
         for i in range(N):
+            self.set_piv_param({'save_result': True, 'show_result': False})            
+            ind = self.check_proper_index(sd,index_a = 1)
             x,y,U,V = self.quick_piv(search_dict,index_a = ind,index_b = ind+1)
+            self.set_piv_param({'save_result': True, 'show_result': False})            
+
             entire_U.append(U)
             entire_V.append(V)
             ind = ind + 2        
@@ -293,8 +311,8 @@ class ParticleImage:
                 np.savetxt(vfile, V_slice, fmt='%-7.5f')
 
                 # Writing out a break to indicate different slices...
-                ufile.write('# New slice\n')     
-                vfile.write('# New slice\n')     
+                ufile.write('# New slice\n')
+                vfile.write('# New slice\n')
 
     def point_statistics(self,search_dict,ind_x,ind_y,dt):
         location_path = [x['path'] for x in self.piv_dict_list if search_dict.items() <= x.items()]
@@ -804,7 +822,7 @@ def correct_by_angle(u,v):
             
     return u,v
 
-def quiver_and_contour(x,y,Ux,Vy,img_a_count,results_path):
+def quiver_and_contour(x,y,Ux,Vy,img_a_count,results_path, show_result=False):
     fig = plt.figure(figsize=(15, 3), dpi= 400, constrained_layout=True)
     ax = fig.add_subplot(1,1,1)
     CS = ax.contourf(y,x,(Ux**2+Vy**2)**0.5, 50, vmin = 0.00, vmax=np.max(np.absolute(Vy)), cmap = cm.coolwarm)
@@ -822,9 +840,12 @@ def quiver_and_contour(x,y,Ux,Vy,img_a_count,results_path):
 
     pic = 'Stream_%05d.png' %img_a_count
 
-    plt.savefig(os.path.join(results_path,pic), dpi=400, facecolor='w', edgecolor='w')
-    plt.show()
-    # plt.close()
+    if show_result is True:
+        plt.show()
+        plt.savefig(os.path.join(results_path,pic), dpi=400, facecolor='w', edgecolor='w')
+    elif show_result is False:
+        plt.savefig(os.path.join(results_path,pic), dpi=400, facecolor='w', edgecolor='w')
+        plt.close()
 
 def peel_off_edges(xyuv):
     field_shape = xyuv[0].shape    
