@@ -2,8 +2,29 @@
 import openpiv_recipes as piv
 import importlib
 importlib.reload(piv)
+import numpy as np
+import json   
 
 import imageio as io
+# %%
+ar1 = np.zeros((3,3,3))
+ar2 = np.ones((3,3,3))
+
+ar = np.vstack((ar1,ar2))
+
+print(ar)
+# %%
+path = '_test.txt'
+piv.save_nd_array(path,ar)
+# %%
+path = '_test.txt'
+ar = piv.load_nd_array(path)
+ar.shape
+# %%
+dict = {"Key1": ar1,"Key2": ar2}
+
+with open("sample.json", "w") as outfile:  
+    json.dump(dict, outfile) 
 # %%
 img_a = io.imread('C:\\Users\\yj\\Downloads\\0311_Exp05_frame_000021.tiff')
 img_b = io.imread('C:\\Users\\yj\\Downloads\\0311_Exp05_frame_000022.tiff')

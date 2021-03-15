@@ -65,6 +65,15 @@ class ParticleImage:
             "check_angle": False,
         }
 
+        self.crop_info = {
+            1: (0.5,460),
+            2: (0.5,460),
+            3: (0.5,450),
+            4: (0.58,453),
+            5: (0.45,446),
+            6: (0.45,435)
+        }
+
         self.piv_dict_list = self.param_dict_list
         try:
             self.search_dict_list = self.check_piv_dict_list()
@@ -109,8 +118,12 @@ class ParticleImage:
         location_path = [x['path'] for x in self.piv_dict_list if search_dict.items() <= x.items()]
         print('Read image from:', location_path[0])
 
-        file_a_path = os.path.join(self.path,*location_path,'frame_%06d.tiff' %index_a)
-        file_b_path = os.path.join(self.path,*location_path,'frame_%06d.tiff' %index_b)
+        try:
+            file_a_path = os.path.join(self.path,*location_path,'cropped_%06d.tiff' %index_a)
+            file_b_path = os.path.join(self.path,*location_path,'cropped_%06d.tiff' %index_b)
+        except:    
+            file_a_path = os.path.join(self.path,*location_path,'frame_%06d.tiff' %index_a)
+            file_b_path = os.path.join(self.path,*location_path,'frame_%06d.tiff' %index_b)
 
         try:
             img_a = Image.open(file_a_path)
@@ -134,11 +147,12 @@ class ParticleImage:
         return img_a_array, img_b_array
 
     def check_piv_dict_list(self):      
-        lis = self.piv_dict_list        
+        self.piv_dict_list = sorted(self.piv_dict_list,key=lambda d: (d['pos'],d['VOFFSET']))
+        lis = self.piv_dict_list
         search_dict_list = []
         for x in lis:
             search_dict = {'pos': x['pos'], 'VOFFSET': x['VOFFSET']}
-            search_dict_list.append(search_dict)
+            search_dict_list.append(search_dict)        
 
         self.search_dict_list = sorted(search_dict_list, key=lambda e: (e['pos'],e['VOFFSET']))        
 
@@ -150,6 +164,12 @@ class ParticleImage:
     def check_proper_index(self,search_dict,index_a):
         img_a, img_b = self.read_two_images(search_dict,index_a=index_a,index_b=index_a+1)
         img_b, img_c = self.read_two_images(search_dict,index_a=index_a+1,index_b=index_a+2)        
+
+        ns = Namespace(**self.piv_param)
+
+        img_a = img_a[ns.crop[0]:-ns.crop[1]-1,ns.crop[2]:-ns.crop[3]-1]
+        img_b = img_b[ns.crop[0]:-ns.crop[1]-1,ns.crop[2]:-ns.crop[3]-1]        
+        img_c = img_c[ns.crop[0]:-ns.crop[1]-1,ns.crop[2]:-ns.crop[3]-1]
         
         corr1 = pyprocess.correlate_windows(img_a,img_b)
         corr2 = pyprocess.correlate_windows(img_b,img_c)
@@ -184,11 +204,11 @@ class ParticleImage:
                 return None
         
         # crop
-        img_a = img_a[ns.crop[0]:-ns.crop[1]-1,ns.crop[2]:-ns.crop[3]-1]
-        img_b = img_b[ns.crop[0]:-ns.crop[1]-1,ns.crop[2]:-ns.crop[3]-1]
-        
         img_a = ndimage.rotate(img_a, ns.rotate)
         img_b = ndimage.rotate(img_b, ns.rotate)
+
+        img_a = img_a[ns.crop[0]:-ns.crop[1]-1,ns.crop[2]:-ns.crop[3]-1]
+        img_b = img_b[ns.crop[0]:-ns.crop[1]-1,ns.crop[2]:-ns.crop[3]-1]        
             
         u0, v0, sig2noise = process.extended_search_area_piv(img_a.astype(np.int32),
                                                             img_b.astype(np.int32),
@@ -258,19 +278,100 @@ class ParticleImage:
 
         # return np.std(u3)        
 
-    def get_entire_velocity_map(self,index_a=100,index_b=101):       
-        vmap_list = []
-        for sd in self.search_dict_list:
-            print(sd)
+    def get_entire_velocity_map(self,camera_step,start_index = 2):       
+        x_path = os.path.join(self.results_path, 'entire_x_%03d.txt'%start_index)
+        y_path = os.path.join(self.results_path, 'entire_y_%03d.txt'%start_index)
+        u_path = os.path.join(self.results_path, 'entire_u_%03d.txt'%start_index)
+        v_path = os.path.join(self.results_path, 'entire_v_%03d.txt'%start_index)
+
+        for sd in self.search_dict_list:            
             self.set_piv_param({'save_result': True, 'show_result': False})            
+            # angle,offset =  self.crop_info[sd['pos']]
             
-            ind = self.check_proper_index(sd,index_a = 10)
-            xyuv = self.quick_piv(sd,index_a = ind, index_b = ind + 1)
-            self.set_piv_param({'show_result': True})            
+            ind = self.check_proper_index(sd,index_a = start_index)
+            x,y,u,v = self.quick_piv(sd,index_a = ind, index_b = ind + 1)
+            y = y + camera_step * float(sd['pos']) + float(sd['VOFFSET'])/self.piv_param['pixel_density']
+            self.set_piv_param({'show_result': True})
 
-            vmap_list.append({'pos': sd['pos'],'VOFFSET': sd['VOFFSET'], 'map': xyuv})
+            try:
+                entire_x = np.vstack((entire_x,x))
+                entire_y = np.vstack((entire_y,y))
+                entire_u = np.vstack((entire_u,u))
+                entire_v = np.vstack((entire_v,v))
+            except:
+                entire_x = x
+                entire_y = y
+                entire_u = u
+                entire_v = v
+        
+        np.savetxt(x_path,entire_x)
+        np.savetxt(y_path,entire_y)
+        np.savetxt(u_path,entire_u)
+        np.savetxt(v_path,entire_v)        
 
-        self.entire_velocity_map = vmap_list     
+    def get_entire_velocity_map_series(self,camera_step,start_index = 2,N = 10):
+        for i in range(N):
+            self.get_entire_velocity_map(camera_step,start_index = start_index+i)
+
+    def average_velocity_series(self,start_index=10,N = 10):
+
+        for i in range(N):            
+            u_path = os.path.join(self.results_path, 'entire_u_%03d.txt'%(start_index+i))
+            v_path = os.path.join(self.results_path, 'entire_v_%03d.txt'%(start_index+i))
+        
+            try:                
+                entire_u_series = np.vstack(entire_u_series,np.loadtxt(u_path))
+                entire_v_series = np.vstack(entire_v_series,np.loadtxt(v_path))
+            except:                
+                entire_u_series = np.loadtxt(u_path)
+                entire_v_series = np.loadtxt(v_path)
+
+        return (entire_u_series,entire_v_series)    
+
+    def get_entire_avg_velocity_map(self,camera_step,s):
+        lis = self.piv_dict_list    
+        
+        for pd in lis:
+            u_path = os.path.join(self.results_path, pd['path'], 'u_tavg_%s.txt'%s)
+            v_path = os.path.join(self.results_path, pd['path'], 'v_tavg_%s.txt'%s)
+
+            us_path = os.path.join(self.results_path, pd['path'], 'u_tstd_%s.txt'%s)
+            vs_path = os.path.join(self.results_path, pd['path'], 'v_tstd_%s.txt'%s)
+
+            u_tavg = np.loadtxt(u_path)
+            v_tavg = np.loadtxt(v_path)
+
+            u_tstd = np.loadtxt(us_path)
+            v_tstd = np.loadtxt(vs_path)
+            
+            x = np.loadtxt(os.path.join(self.results_path, pd['path'],'x.txt'))
+            y = np.loadtxt(os.path.join(self.results_path, pd['path'],'y.txt'))
+            y = y + camera_step * float(pd['pos']) + float(pd['VOFFSET'])/self.piv_param['pixel_density']
+
+            try:
+                entire_x = np.vstack((entire_x,x))
+                entire_y = np.vstack((entire_y,y))
+                entire_u_tavg = np.vstack((entire_u_tavg,u_tavg))
+                entire_v_tavg = np.vstack((entire_v_tavg,v_tavg))
+                entire_u_tstd = np.vstack((entire_u_tstd,u_tstd))
+                entire_v_tstd = np.vstack((entire_v_tstd,v_tstd))
+            except:
+                entire_x = x
+                entire_y = y
+                entire_u_tavg = u_tavg
+                entire_v_tavg = v_tavg
+                entire_u_tstd = u_tstd
+                entire_v_tstd = v_tstd
+
+        np.savetxt(os.path.join(self.results_path,'entire_x.txt'),entire_x)
+        np.savetxt(os.path.join(self.results_path,'entire_y.txt'),entire_y)
+        np.savetxt(os.path.join(self.results_path,'entire_u_tavg.txt'),entire_u_tavg)
+        np.savetxt(os.path.join(self.results_path,'entire_v_tavg.txt'),entire_v_tavg)
+        np.savetxt(os.path.join(self.results_path,'entire_u_tstd.txt'),entire_u_tstd)
+        np.savetxt(os.path.join(self.results_path,'entire_v_tstd.txt'),entire_v_tstd)
+
+        return (entire_x,entire_y,entire_u_tavg,entire_v_tavg,entire_u_tstd,entire_v_tstd)
+
 
     def piv_over_time(self,search_dict,start_index=1,N=90):
         ind = start_index
@@ -278,41 +379,46 @@ class ParticleImage:
         location_path = [x['path'] for x in self.piv_dict_list if search_dict.items() <= x.items()]
         results_path = os.path.join(self.results_path,*location_path)
 
-        entire_U = []
-        entire_V = []
+        u_series = []
+        v_series = []
+
+        ind = self.check_proper_index(search_dict,index_a = start_index)
 
         for i in range(N):
-            self.set_piv_param({'save_result': True, 'show_result': False})            
-            ind = self.check_proper_index(sd,index_a = 1)
-            x,y,U,V = self.quick_piv(search_dict,index_a = ind,index_b = ind+1)
-            self.set_piv_param({'save_result': True, 'show_result': False})            
+            self.set_piv_param({'save_result': True, 'show_result': False})                        
+            x,y,U,V = self.quick_piv(search_dict,index_a = ind,index_b = ind + 1)            
 
-            entire_U.append(U)
-            entire_V.append(V)
+            u_series.append(U)
+            v_series.append(V)
             ind = ind + 2        
 
-        u_path = os.path.join(results_path, 'entire_U.txt')
-        v_path = os.path.join(results_path, 'entire_V.txt')        
+        u_path = os.path.join(results_path, 'u_series_%03d_%d.txt'%(start_index,N))
+        v_path = os.path.join(results_path, 'v_series_%03d_%d.txt'%(start_index,N))        
 
-        with open(u_path, 'w') as ufile, open(v_path,'w') as vfile:
-            # I'm writing a header here just for the sake of readability
-            # Any line starting with "#" will be ignored by numpy.loadtxt
-            ufile.write('# Array shape: {0}\n'.format(U.shape))
-            vfile.write('# Array shape: {0}\n'.format(U.shape))
+        save_nd_array(u_path,u_series)
+        save_nd_array(v_path,v_series)
 
-            # Iterating through a ndimensional array produces slices along
-            # the last axis. This is equivalent to data[i,:,:] in this case
-            for U_slice,V_slice in zip(entire_U,entire_V):
+        u_tavg = np.mean(u_series,axis=0)
+        v_tavg = np.mean(v_series,axis=0)
 
-                # The formatting string indicates that I'm writing out
-                # the values in left-justified columns 7 characters in width
-                # with 2 decimal places.  
-                np.savetxt(ufile, U_slice, fmt='%-7.5f')
-                np.savetxt(vfile, V_slice, fmt='%-7.5f')
+        u_tstd = np.std(u_series,axis=0)
+        v_tstd = np.std(u_series,axis=0)
+        
+        x_path = os.path.join(results_path, 'x.txt')
+        y_path = os.path.join(results_path, 'y.txt')
+        u_tavg_path = os.path.join(results_path, 'u_tavg_%03d_%d.txt' %(start_index,N))
+        v_tavg_path = os.path.join(results_path, 'v_tavg_%03d_%d.txt' %(start_index,N))
+        u_tstd_path = os.path.join(results_path, 'u_tstd_%03d_%d.txt' %(start_index,N))
+        v_tstd_path = os.path.join(results_path, 'v_tstd_%03d_%d.txt' %(start_index,N))
 
-                # Writing out a break to indicate different slices...
-                ufile.write('# New slice\n')
-                vfile.write('# New slice\n')
+        np.savetxt(x_path,x)
+        np.savetxt(y_path,y)
+        np.savetxt(u_tavg_path,u_tavg)
+        np.savetxt(v_tavg_path,v_tavg)
+        np.savetxt(u_tstd_path,u_tstd)
+        np.savetxt(v_tstd_path,v_tstd)
+
+        return (x,y,u_series,v_series)
 
     def point_statistics(self,search_dict,ind_x,ind_y,dt):
         location_path = [x['path'] for x in self.piv_dict_list if search_dict.items() <= x.items()]
@@ -823,7 +929,7 @@ def correct_by_angle(u,v):
     return u,v
 
 def quiver_and_contour(x,y,Ux,Vy,img_a_count,results_path, show_result=False):
-    fig = plt.figure(figsize=(15, 3), dpi= 400, constrained_layout=True)
+    fig = plt.figure(figsize=(20, 5), dpi= 400, constrained_layout=True)
     ax = fig.add_subplot(1,1,1)
     CS = ax.contourf(y,x,(Ux**2+Vy**2)**0.5, 50, vmin = 0.00, vmax=np.max(np.absolute(Vy)), cmap = cm.coolwarm)
     m = plt.cm.ScalarMappable(cmap = cm.coolwarm)
@@ -841,8 +947,8 @@ def quiver_and_contour(x,y,Ux,Vy,img_a_count,results_path, show_result=False):
     pic = 'Stream_%05d.png' %img_a_count
 
     if show_result is True:
-        plt.show()
         plt.savefig(os.path.join(results_path,pic), dpi=400, facecolor='w', edgecolor='w')
+        plt.show()        
     elif show_result is False:
         plt.savefig(os.path.join(results_path,pic), dpi=400, facecolor='w', edgecolor='w')
         plt.close()
@@ -896,3 +1002,32 @@ def ensemble_statistics(uu,vv):
     ax[0].set_xlabel('u (mm/s)')
     ax[1].set_xlabel('v (mm/s)')
     ax[0].set_ylabel('Frequency (no. samples in a bin)')    
+
+def save_nd_array(path,ndarray):
+    with open(path, 'w') as file:
+        # I'm writing a header here just for the sake of readability
+        # Any line starting with "#" will be ignored by numpy.loadtxt
+        file.write('# Array shape: {0}\n'.format(ndarray[0].shape))        
+
+        # Iterating through a ndimensional array produces slices along
+        # the last axis. This is equivalent to data[i,:,:] in this case
+        for slice in ndarray:
+            # The formatting string indicates that I'm writing out
+            # the values in left-justified columns 7 characters in width
+            # with 2 decimal places.  
+            np.savetxt(file, slice, fmt='%-7.5f')
+            # Writing out a break to indicate different slices...
+            file.write('# New slice\n')
+
+def load_nd_array(path):
+    with open(path, 'r') as file:
+        temp = file.readline()            
+        a = re.findall("\d+",temp)            
+
+        ar = np.loadtxt(path)
+
+        no_slices = ar.shape[0]//int(a[0])
+        field_shape = (no_slices,int(a[0]),int(a[1]))
+        
+        ar = ar.reshape(field_shape)        
+    return ar
