@@ -118,6 +118,9 @@ class ParticleImage:
         location_path = [x['path'] for x in self.piv_dict_list if search_dict.items() <= x.items()]
         print('Read image from:', location_path[0])
 
+        # file_a_path = os.path.join(self.path,*location_path,'frame_%06d.tiff' %index_a)
+        # file_b_path = os.path.join(self.path,*location_path,'frame_%06d.tiff' %index_b)
+
         try:
             file_a_path = os.path.join(self.path,*location_path,'cropped_%06d.tiff' %index_a)
             file_b_path = os.path.join(self.path,*location_path,'cropped_%06d.tiff' %index_b)
@@ -308,6 +311,7 @@ class ParticleImage:
         np.savetxt(y_path,entire_y)
         np.savetxt(u_path,entire_u)
         np.savetxt(v_path,entire_v)        
+        
 
     def get_entire_velocity_map_series(self,camera_step,start_index = 2,N = 10):
         for i in range(N):
@@ -372,31 +376,35 @@ class ParticleImage:
 
         return (entire_x,entire_y,entire_u_tavg,entire_v_tavg,entire_u_tstd,entire_v_tstd)
 
-
     def piv_over_time(self,search_dict,start_index=1,N=90):
         ind = start_index
 
         location_path = [x['path'] for x in self.piv_dict_list if search_dict.items() <= x.items()]
         results_path = os.path.join(self.results_path,*location_path)
 
-        u_series = []
-        v_series = []
+        u_path = os.path.join(results_path, 'u_series_%03d_%d.txt'%(start_index,N))
+        v_path = os.path.join(results_path, 'v_series_%03d_%d.txt'%(start_index,N))
 
+        x,y,U,V = self.quick_piv(search_dict,index_a = start_index, index_b = start_index + 1)
+
+        with open(u_path, 'w') as uf, open(v_path, 'w') as vf:          
+            uf.write('# Array shape: {0}\n'.format(U.shape))        
+            vf.write('# Array shape: {0}\n'.format(U.shape))        
+                        
         ind = self.check_proper_index(search_dict,index_a = start_index)
 
         for i in range(N):
-            self.set_piv_param({'save_result': True, 'show_result': False})                        
-            x,y,U,V = self.quick_piv(search_dict,index_a = ind,index_b = ind + 1)            
+            self.set_piv_param({'save_result': True, 'show_result': False})
+            x,y,U,V = self.quick_piv(search_dict,index_a = ind,index_b = ind + 1)
 
-            u_series.append(U)
-            v_series.append(V)
-            ind = ind + 2        
+            with open(u_path, 'a') as uf, open(v_path, 'a') as vf:
+                np.savetxt(uf,U,fmt='%-7.5f')
+                np.savetxt(vf,V,fmt='%-7.5f')
 
-        u_path = os.path.join(results_path, 'u_series_%03d_%d.txt'%(start_index,N))
-        v_path = os.path.join(results_path, 'v_series_%03d_%d.txt'%(start_index,N))        
-
-        save_nd_array(u_path,u_series)
-        save_nd_array(v_path,v_series)
+            ind = ind + 2
+        
+        u_series = load_nd_array(u_path)
+        v_series = load_nd_array(v_path)
 
         u_tavg = np.mean(u_series,axis=0)
         v_tavg = np.mean(v_series,axis=0)
@@ -416,9 +424,8 @@ class ParticleImage:
         np.savetxt(u_tavg_path,u_tavg)
         np.savetxt(v_tavg_path,v_tavg)
         np.savetxt(u_tstd_path,u_tstd)
-        np.savetxt(v_tstd_path,v_tstd)
-
-        return (x,y,u_series,v_series)
+        np.savetxt(v_tstd_path,v_tstd)              
+               
 
     def point_statistics(self,search_dict,ind_x,ind_y,dt):
         location_path = [x['path'] for x in self.piv_dict_list if search_dict.items() <= x.items()]
@@ -654,8 +661,7 @@ def run_piv(
     searchsize = 34,  # pixels, search in image B
     overlap = 24, # pixels, 50% overlap
     dt = 0.0001, # sec, time interval between pulses
-    image_check = False,
-    show_vertical_profiles = False,
+    image_check = False,    
     figure_export_name = '_results.png',
     text_export_name =  "_results.txt",
     scale_factor = 1,
@@ -707,7 +713,7 @@ def run_piv(
     if show_result == True:
         fig, ax = plt.subplots(figsize=(24,12))
         tools.display_vector_field(text_export_name, 
-                                    # ax=ax,
+                                    ax=ax,
                                     scaling_factor= pixel_density, 
                                     scale=scale_factor, # scale defines here the arrow length
                                     width=arrow_width, # width is the thickness of the arrow
@@ -1018,6 +1024,17 @@ def save_nd_array(path,ndarray):
             np.savetxt(file, slice, fmt='%-7.5f')
             # Writing out a break to indicate different slices...
             file.write('# New slice\n')
+
+def load_nd_array(path):        
+    with open(path) as f:
+        shape_info = f.readline()
+        shape = re.findall("\d+",shape_info)
+        shape = (int(shape[0]), int(shape[1]))
+
+    out = np.loadtxt(path)        
+    out = out.reshape( (out.shape[0]//shape[0],shape[0],shape[1]) )        
+
+    return out
 
 def load_nd_array(path):
     with open(path, 'r') as file:
