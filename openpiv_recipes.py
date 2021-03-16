@@ -63,6 +63,7 @@ class ParticleImage:
             "rotate": 0,
             "save_result": True,
             "check_angle": False,
+            "raw_or_cropped": False,
         }
 
         self.crop_info = {
@@ -114,17 +115,17 @@ class ParticleImage:
 
         return param_dict
 
-    def read_two_images(self,search_dict,index_a = 100,index_b = 101, open = False):
+    def read_two_images(self,search_dict,index_a = 100,index_b = 101, open = False, raw=False):
         location_path = [x['path'] for x in self.piv_dict_list if search_dict.items() <= x.items()]
         print('Read image from:', location_path[0])
 
         # file_a_path = os.path.join(self.path,*location_path,'frame_%06d.tiff' %index_a)
         # file_b_path = os.path.join(self.path,*location_path,'frame_%06d.tiff' %index_b)
 
-        try:
+        if raw is False:
             file_a_path = os.path.join(self.path,*location_path,'cropped_%06d.tiff' %index_a)
             file_b_path = os.path.join(self.path,*location_path,'cropped_%06d.tiff' %index_b)
-        except:    
+        elif raw is True:
             file_a_path = os.path.join(self.path,*location_path,'frame_%06d.tiff' %index_a)
             file_b_path = os.path.join(self.path,*location_path,'frame_%06d.tiff' %index_b)
 
@@ -188,7 +189,7 @@ class ParticleImage:
         ns = Namespace(**self.piv_param)
 
         if folder == None:
-            img_a, img_b = self.read_two_images(search_dict,index_a=index_a,index_b=index_b)
+            img_a, img_b = self.read_two_images(search_dict,index_a=index_a,index_b=index_b,raw=ns.raw_or_cropped)
 
             location_path = [x['path'] for x in self.piv_dict_list if search_dict.items() <= x.items()]
             results_path = os.path.join(self.results_path,*location_path)

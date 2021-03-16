@@ -7,6 +7,19 @@ import json
 
 import imageio as io
 # %%
+# %%
+
+img_a = io.imread('C:\\Users\\yj\\Downloads\\Flat_10 (black)_motor5.00_pos1_VOFFSET630_timing100_ag1_dg1_laser5_[03-12]_frame_000020.tiff')
+img_b = io.imread('C:\\Users\\yj\\Downloads\\Flat_10 (black)_motor5.00_pos1_VOFFSET630_timing100_ag1_dg1_laser5_[03-12]_frame_000021.tiff')
+
+
+dummy = piv.run_piv(img_a,img_b,
+    winsize = 28, # pixels, interrogation window size in frame A
+    searchsize = 34,  # pixels, search in image B
+    overlap = 24,
+    scale_factor=1e4,
+    pixel_density=40.3676),
+# %%
 ar1 = np.zeros((3,3,3))
 ar2 = np.ones((3,3,3))
 
@@ -74,8 +87,8 @@ piv.run_piv(img_a,img_b,
     scale_factor=1e4)
 # %%
 
-img_a = io.imread('C:\\Users\\yj\\Downloads\\0309_Exp03_frame_000020.tiff')
-img_b = io.imread('C:\\Users\\yj\\Downloads\\0309_Exp03_frame_000021.tiff')
+img_a = io.imread('C:\\Users\\yj\\Downloads\\Flat_10 (black)_motor5.00_pos1_VOFFSET630_timing100_ag1_dg1_laser5_[03-12]_frame_000020.tiff')
+img_b = io.imread('C:\\Users\\yj\\Downloads\\Flat_10 (black)_motor5.00_pos1_VOFFSET630_timing100_ag1_dg1_laser5_[03-12]_frame_000021.tiff')
 
 img_a = img_a[:,250:]
 img_b = img_b[:,250:]
@@ -88,6 +101,8 @@ dummy = piv.run_piv(img_a,img_b,
     pixel_density=40.3676),
 
 # %%
+
+
 img_a = io.imread('C:\\Users\\yj\\Downloads\\0309_Exp04_frame_000021.tiff')
 img_b = io.imread('C:\\Users\\yj\\Downloads\\0309_Exp04_frame_000022.tiff')
 
