@@ -63,7 +63,7 @@ class ParticleImage:
             "rotate": 0,
             "save_result": True,
             "check_angle": False,
-            "raw_or_cropped": False,
+            "raw_or_cropped": True,
         }
 
         self.crop_info = {
@@ -115,7 +115,7 @@ class ParticleImage:
 
         return param_dict
 
-    def read_two_images(self,search_dict,index_a = 100,index_b = 101, open = False, raw=False):
+    def read_two_images(self,search_dict,index_a = 100,index_b = 101, open = False, raw=True):
         location_path = [x['path'] for x in self.piv_dict_list if search_dict.items() <= x.items()]
         print('Read image from:', location_path[0])
 
@@ -378,7 +378,6 @@ class ParticleImage:
         return (entire_x,entire_y,entire_u_tavg,entire_v_tavg,entire_u_tstd,entire_v_tstd)
 
     def piv_over_time(self,search_dict,start_index=1,N=90):
-        ind = start_index
 
         location_path = [x['path'] for x in self.piv_dict_list if search_dict.items() <= x.items()]
         results_path = os.path.join(self.results_path,*location_path)
@@ -395,7 +394,7 @@ class ParticleImage:
         ind = self.check_proper_index(search_dict,index_a = start_index)
 
         for i in range(N):
-            self.set_piv_param({'save_result': True, 'show_result': False})
+            self.set_piv_param({'save_result': False, 'show_result': False})
             x,y,U,V = self.quick_piv(search_dict,index_a = ind,index_b = ind + 1)
 
             with open(u_path, 'a') as uf, open(v_path, 'a') as vf:
@@ -425,7 +424,57 @@ class ParticleImage:
         np.savetxt(u_tavg_path,u_tavg)
         np.savetxt(v_tavg_path,v_tavg)
         np.savetxt(u_tstd_path,u_tstd)
-        np.savetxt(v_tstd_path,v_tstd)              
+        np.savetxt(v_tstd_path,v_tstd)           
+
+    def piv_over_time2(self,search_dict,start_index=1,N=90):
+        self.set_piv_param({'raw_or_cropped': True})
+        location_path = [x['path'] for x in self.piv_dict_list if search_dict.items() <= x.items()]
+        results_path = os.path.join(self.results_path,*location_path)
+
+        u_path = os.path.join(results_path, 'u_full_series_%03d_%d.txt'%(start_index,N))
+        v_path = os.path.join(results_path, 'v_full_series_%03d_%d.txt'%(start_index,N))
+
+        x,y,U,V = self.quick_piv(search_dict,index_a = start_index, index_b = start_index + 1)
+
+        with open(u_path, 'w') as uf, open(v_path, 'w') as vf:          
+            uf.write('# Array shape: {0}\n'.format(U.shape))        
+            vf.write('# Array shape: {0}\n'.format(U.shape))        
+                        
+        ind = self.check_proper_index(search_dict,index_a = start_index)
+
+        for i in range(N):
+            self.set_piv_param({'save_result': False, 'show_result': False})
+            x,y,U,V = self.quick_piv(search_dict,index_a = ind,index_b = ind + 1)
+
+            with open(u_path, 'a') as uf, open(v_path, 'a') as vf:
+                np.savetxt(uf,U,fmt='%-7.5f')
+                np.savetxt(vf,V,fmt='%-7.5f')
+
+            ind = ind + 2
+        
+        u_series = load_nd_array(u_path)
+        v_series = load_nd_array(v_path)
+
+        u_tavg = np.mean(u_series,axis=0)
+        v_tavg = np.mean(v_series,axis=0)
+
+        u_tstd = np.std(u_series,axis=0)
+        v_tstd = np.std(u_series,axis=0)
+        
+        x_path = os.path.join(results_path, 'x_full.txt')
+        y_path = os.path.join(results_path, 'y_full.txt')
+        u_tavg_path = os.path.join(results_path, 'u_full_tavg_%03d_%d.txt' %(start_index,N))
+        v_tavg_path = os.path.join(results_path, 'v_full_tavg_%03d_%d.txt' %(start_index,N))
+        u_tstd_path = os.path.join(results_path, 'u_full_tstd_%03d_%d.txt' %(start_index,N))
+        v_tstd_path = os.path.join(results_path, 'v_full_tstd_%03d_%d.txt' %(start_index,N))
+
+        np.savetxt(x_path,x)
+        np.savetxt(y_path,y)
+        np.savetxt(u_tavg_path,u_tavg)
+        np.savetxt(v_tavg_path,v_tavg)
+        np.savetxt(u_tstd_path,u_tstd)
+        np.savetxt(v_tstd_path,v_tstd)          
+        self.set_piv_param({'raw_or_cropped': False}) 
                
 
     def point_statistics(self,search_dict,ind_x,ind_y,dt):
@@ -964,7 +1013,7 @@ def peel_off_edges(xyuv):
     field_shape = xyuv[0].shape    
     out = []
     for x in xyuv:        
-        out.append(x[1:-1,1:-1])
+        out.append(x[:,1:-1])
     out = tuple(out)
     return out
 
