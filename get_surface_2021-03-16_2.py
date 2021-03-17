@@ -60,7 +60,7 @@ crop_info = {
 whole_stack = np.zeros((depth*len(crop_info),height))
 # %%
 pos = 1
-offset = 398
+offset = 389
 angle = 0.42
 
 crop_info[pos] = (angle,offset)
@@ -85,7 +85,7 @@ ax.plot([30,30],[0,depth],'r')
 whole_stack[(pos-1) * depth:pos * depth,:] = stack_a
 # %%
 pos = 2
-offset = 400
+offset = 405
 angle = 0.42
 
 crop_info[pos] = (angle,offset)
@@ -134,7 +134,7 @@ ax.plot([30,30],[0,depth],'r--')
 whole_stack[(pos-1) * depth:pos * depth,:] = stack_a
 # %%
 pos = 4
-offset = 385
+offset = 383
 angle = 0.5
 crop_info[pos] = (angle,offset)
 
@@ -158,7 +158,7 @@ ax.plot([30,30],[0,depth],'r--')
 whole_stack[(pos-1) * depth:pos * depth,:] = stack_a
 # %%
 pos = 5
-offset = 385
+offset = 383
 angle = 0.5
 crop_info[pos] = (angle,offset)
 
@@ -182,7 +182,7 @@ ax.plot([30,30],[0,depth],'r--')
 whole_stack[(pos-1) * depth:pos * depth,:] = stack_a
 # %%
 pos = 6
-offset = 410
+offset = 367
 angle = 0.5
 crop_info[pos] = (angle,offset)
 

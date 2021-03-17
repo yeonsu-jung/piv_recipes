@@ -77,8 +77,9 @@ v_path = os.path.join(results_path,'entire_v_tavg.txt')
 us_path = os.path.join(results_path,'entire_u_tstd.txt')
 vs_path = os.path.join(results_path,'entire_v_tstd.txt')
 # %%
-x = np.loadtxt(x_path)
+x = np.loadtxt(x_path) - 0.25
 y = np.loadtxt(y_path)
+
 
 u = np.loadtxt(u_path)
 v = np.loadtxt(v_path)

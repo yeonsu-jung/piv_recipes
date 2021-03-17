@@ -54,7 +54,6 @@ fig.colorbar(c1, ax=ax)
 for pos in [1,2,3,4,5,6]:
     ax.plot([step*pos,step*pos],[0.5,np.max(x)],'k-')
 
-
 xx = np.linspace(56,156,100)
 yy = 5*np.sqrt(1e-6/0.54*(xx-56)/1000)*1000+0.5
 ax.plot(xx,yy,'b-')
@@ -77,7 +76,7 @@ v_path = os.path.join(results_path,'entire_v_tavg.txt')
 us_path = os.path.join(results_path,'entire_u_tstd.txt')
 vs_path = os.path.join(results_path,'entire_v_tstd.txt')
 # %%
-x = np.loadtxt(x_path)
+x = np.loadtxt(x_path) - 0.25
 y = np.loadtxt(y_path)
 
 u = np.loadtxt(u_path)
@@ -128,7 +127,7 @@ def blasius(x,U,p,q):
 
 # %%
 xx = x[0,:]
-v_i = v_array[10]
+v_i = v_array[13]
 
 fig,ax = plt.subplots()
 ax.plot(v_i,xx,'k--')
@@ -137,7 +136,7 @@ for j, vvv in enumerate(v_i):
         ax.arrow(0, x[0,j], (vvv-20), 0, head_width=0.02, head_length=10, fc='k', ec='k')
 
 # %%
-popt,pcov = curve_fit(blasius, xx,v_i,bounds=((0,0.5,-1),(500,5,0.3)))
+popt,pcov = curve_fit(blasius, xx,v_i,bounds=((0,0.5,0),(500,5,0.3)))
 # %%
 plt.plot(v_i,xx,'o',label='piv data')
 yy = np.linspace(0,np.max(xx),100)
@@ -149,7 +148,7 @@ plt.ylabel('u (mm/s)')
 plt.legend()
 print(popt)
 # %%
-x_fit = np.linspace(0.3,2.5,100)
+x_fit = np.linspace(0,2.5,100)
 v_fit = blasius(x_fit,*popt)
 # %%
 fig,ax = plt.subplots()
@@ -163,7 +162,7 @@ ax.set_ylabel('y (mm)')
 ax.legend(loc='lower right')
 # %%
 def fit_with_blasius(xx,v_i):  
-    popt,pcov = curve_fit(blasius, xx,v_i,bounds=((0,0.5,-0.3),(500,10,0)))            
+    popt,pcov = curve_fit(blasius, xx,v_i,bounds=((0,0.5,0),(500,10,0.4)))            
     x_fit = np.linspace(-popt[2],2.5,100)
     print(x_fit)
     v_fit = blasius(x_fit,*popt)    
@@ -175,7 +174,7 @@ def fit_with_blasius(xx,v_i):
     ax.plot(v_fit,x_fit,'b-',label='Blasius')
     ax.set_xlabel('u (mm/s)')
     ax.set_ylabel('y (mm)')
-    ax.legend(loc='lower right')    
+    # ax.legend(loc='lower right')    
     print(*popt)
     return popt
 # %%
@@ -183,7 +182,6 @@ U_array = []
 p_array = []
 q_array = []
 
-fig,ax = plt.subplots(12,figsize=(20,5))
 for i in range(6,18):
     u,p,q = fit_with_blasius(xx,v_array[i])
     U_array.append(u)
@@ -196,10 +194,11 @@ U_array_conversion = np.array(U_array) * 0.001
 nux_array = U_array_conversion/(np.array(p_array)*1000)**2
 wall_shear_stress = U_array_conversion*0.33206*(U_array_conversion/nux_array)**0.5*0.001
 # %%
-fig,ax = plt.subplots(3)
+fig,ax = plt.subplots(4)
 ax[0].plot(U_array_conversion)
 ax[1].plot(nux_array,'o-')
-ax[2].plot(wall_shear_stress,'o-')
+ax[2].plot(q_array,'o-')
+ax[3].plot(wall_shear_stress,'o-')
 # %%
 
 x = y_array[6:18] - 55

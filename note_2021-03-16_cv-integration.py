@@ -12,14 +12,17 @@ t = time.time()
 importlib.reload(piv)
 
 # %%
-# folder_path = '/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-11/Flat_10 (black)_motor15'
-# results_folder_path = '/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-results'
+# folder_path = 'C:/Users/yjDropbox (Harvard University)/Riblet/data/piv-data/2021-03-11/Flat_10 (black)_motor15'
+# results_folder_path = 'C:/Users/yjDropbox (Harvard University)/Riblet/data/piv-results'
 
 # folder_path = "C:\\Users\\yj\\Dropbox (Harvard University)\\Riblet\\data\\piv-data\\2021-03-11\\Flat_10 (black)_motor15"
 # results_folder_path = 'C:\\Users\\yj\\Dropbox (Harvard University)\\Riblet\\data\\piv-results'
 
-folder_path = "/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-11/Flat_10 (black)_motor15"
-results_folder_path = '/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-results'
+folder_path = "C:/Users/yjDropbox (Harvard University)/Riblet/data/piv-data/2021-03-11/Flat_10 (black)_motor15"
+results_folder_path = 'C:/Users/yjDropbox (Harvard University)/Riblet/data/piv-results'
+
+folder_path = "C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-11/Flat_10 (black)_motor15"
+results_folder_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-results'
 
 pi = piv.ParticleImage(folder_path,results_folder_path)
 # %%
@@ -90,16 +93,16 @@ vl_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-results/2021
 ur_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-results/2021-03-11/Flat_10 (black)_motor15/Flat_10 (black)_motor15.00_pos6_VOFFSET840_timing100_ag1_dg1_laser5_[03-11]/u_full_tavg_003_90.txt'
 vr_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-results/2021-03-11/Flat_10 (black)_motor15/Flat_10 (black)_motor15.00_pos6_VOFFSET840_timing100_ag1_dg1_laser5_[03-11]/v_full_tavg_003_90.txt'
 # %%
-x_path = '/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-results/2021-03-11/Flat_10 (black)_motor15/Flat_10 (black)_motor15.00_pos1_VOFFSET0_ag1_dg1_laser5_[03-11]/x_full.txt'
-y_path = '/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-results/2021-03-11/Flat_10 (black)_motor15/Flat_10 (black)_motor15.00_pos1_VOFFSET0_ag1_dg1_laser5_[03-11]/y_full.txt'
+x_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-results/2021-03-11/Flat_10 (black)_motor15/Flat_10 (black)_motor15.00_pos1_VOFFSET0_ag1_dg1_laser5_[03-11]/x_full.txt'
+y_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-results/2021-03-11/Flat_10 (black)_motor15/Flat_10 (black)_motor15.00_pos1_VOFFSET0_ag1_dg1_laser5_[03-11]/y_full.txt'
 
-ul_path = '/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-results/2021-03-11/Flat_10 (black)_motor15/Flat_10 (black)_motor15.00_pos1_VOFFSET0_ag1_dg1_laser5_[03-11]/u_full_tavg_003_90.txt'
-vl_path = '/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-results/2021-03-11/Flat_10 (black)_motor15/Flat_10 (black)_motor15.00_pos1_VOFFSET0_ag1_dg1_laser5_[03-11]/v_full_tavg_003_90.txt'
+ul_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-results/2021-03-11/Flat_10 (black)_motor15/Flat_10 (black)_motor15.00_pos1_VOFFSET0_ag1_dg1_laser5_[03-11]/u_full_tavg_003_90.txt'
+vl_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-results/2021-03-11/Flat_10 (black)_motor15/Flat_10 (black)_motor15.00_pos1_VOFFSET0_ag1_dg1_laser5_[03-11]/v_full_tavg_003_90.txt'
 
-ur_path = '/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-results/2021-03-11/Flat_10 (black)_motor15/Flat_10 (black)_motor15.00_pos6_VOFFSET840_timing100_ag1_dg1_laser5_[03-11]/u_full_tavg_003_90.txt'
-vr_path = '/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-results/2021-03-11/Flat_10 (black)_motor15/Flat_10 (black)_motor15.00_pos6_VOFFSET840_timing100_ag1_dg1_laser5_[03-11]/v_full_tavg_003_90.txt'
+ur_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-results/2021-03-11/Flat_10 (black)_motor15/Flat_10 (black)_motor15.00_pos6_VOFFSET840_timing100_ag1_dg1_laser5_[03-11]/u_full_tavg_003_90.txt'
+vr_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-results/2021-03-11/Flat_10 (black)_motor15/Flat_10 (black)_motor15.00_pos6_VOFFSET840_timing100_ag1_dg1_laser5_[03-11]/v_full_tavg_003_90.txt'
 
-entire_u_path = '/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-results/2021-03-11/Flat_10 (black)_motor15/entire_u_tavg.txt'
+entire_u_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-results/2021-03-11/Flat_10 (black)_motor15/entire_u_tavg.txt'
 # %%
 x = np.loadtxt(x_path)
 y = np.loadtxt(y_path)
@@ -183,9 +186,9 @@ for pd in pi.piv_dict_list:
     pi.piv_over_time3(pd,start_index=3,N=90,tag='lower')
 # %%
 
-u_upper = np.loadtxt('/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-results/2021-03-11/Flat_10 (black)_motor15/Flat_10 (black)_motor15.00_pos1_VOFFSET0_ag1_dg1_laser5_[03-11]/u_upper_tavg_003_90.txt')
+u_upper = np.loadtxt('C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-results/2021-03-11/Flat_10 (black)_motor15/Flat_10 (black)_motor15.00_pos1_VOFFSET0_ag1_dg1_laser5_[03-11]/u_upper_tavg_003_90.txt')
 
-u_upper = np.loadtxt('/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-results/2021-03-11/Flat_10 (black)_motor15/Flat_10 (black)_motor15.00_pos1_VOFFSET0_ag1_dg1_laser5_[03-11]/u_lower_tavg_003_90.txt')
+u_upper = np.loadtxt('C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-results/2021-03-11/Flat_10 (black)_motor15/Flat_10 (black)_motor15.00_pos1_VOFFSET0_ag1_dg1_laser5_[03-11]/u_lower_tavg_003_90.txt')
 
 # %%
 
@@ -196,29 +199,48 @@ xu,yu,uu_avg,vu_avg,uu_std,vu_std,xl,yl,ul_avg,vl_avg,ul_std,vl_std = pi.get_ent
 (np.mean(uu_avg[:,0]) - np.mean(ul_avg[:,-1])) * 0.001 * 0.048 * (0.1766 - 0.02535) * 0.5 * 1e3
 
 # %%
-plt.plot(yu[:,0]-55,uu_avg[:,0])
-# plt.plot(vu_avg[:,0])
-plt.xlabel('x (mm)')
-plt.ylabel('v_lower (mm/s)')
+fig, ax = plt.subplots(1,2,figsize=(20,5))
+ax[0].plot(yu[:,0]-55,uu_avg[:,1])
+ax[1].plot(yu[:,0]-55,-vu_avg[:,1])
+ax[0].set_xlabel('x (mm)')
+ax[0].set_ylabel('u (mm)')
+ax[1].set_xlabel('x (mm)')
+ax[1].set_ylabel('v (mm)')
+fig.suptitle('Lower boundary')
+
+# %%
+fig, ax = plt.subplots(1,2,figsize=(20,5))
+ax[0].plot(yu[:,0]-55,ul_avg[:,1])
+ax[1].plot(yu[:,0]-55,-vl_avg[:,1])
+ax[0].set_xlabel('x (mm)')
+ax[0].set_ylabel('u (mm)')
+ax[1].set_xlabel('x (mm)')
+ax[1].set_ylabel('v (mm)')
+fig.suptitle('Upper boundary')
+
 # %%
 plt.plot(yu[:,0]-55,ul_avg[:,0])
 # plt.plot(vl_avg[:,0])
 plt.xlabel('x (mm)')
 plt.ylabel('v_upper (mm/s)')
 # %%
-uu = uu_avg[:,-1]
-vu = vu_avg[:,-1]
-
+uu = ul_avg[:,-1]
+vu = -vl_avg[:,-1]
 yy = yu[:,-1]
 
-np.sum(uu[:-1] * vu[:-1] * (yy[1:] - yy[:-1])) * 0.048 * 1e-9 * 1e3
+mom_out_upper = np.sum(-uu[:-1] * vu[:-1] * (yy[1:] - yy[:-1])) * 0.048 * 1e-9 * 1e3
 # %%
-ul = ul_avg[:,0]
-vl = vl_avg[:,0]
-
+np.trapz(uu*vu*1e-6,yy)*0.048
+# %%
+ul = uu_avg[:,3]
+vl = -vu_avg[:,3]
 yy = yl[:,0]
 
-np.sum(ul[:-1] * vl[:-1] * (yy[1:] - yy[:-1])) * 0.048 * 1e-9 * 1e3
+mom_out_lower = np.sum(ul[:-1] * vl[:-1] * (yy[1:] - yy[:-1])) * 0.048 * 1e-9 * 1e3
+# %%
+mom_out_lower + mom_out_upper
+# %%
+np.trapz(ul*vl*1e-6,yy)*0.048
 # %%
 mdot_upper = np.sum(uu[:-1] * (yy[1:] - yy[:-1])) * 1e-6 * 0.048 * 1e3
 mdot_lower = np.sum(ul[:-1] * (yy[1:] - yy[:-1])) * 1e-6 * 0.048 * 1e3
