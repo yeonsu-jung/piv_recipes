@@ -377,6 +377,91 @@ class ParticleImage:
 
         return (entire_x,entire_y,entire_u_tavg,entire_v_tavg,entire_u_tstd,entire_v_tstd)
 
+    def get_entire_ul_velocity_map(self,camera_step,s):
+        lis = self.piv_dict_list    
+        
+        for pd in lis:
+            uu_path = os.path.join(self.results_path, pd['path'], 'u_upper_tavg_%s.txt'%s)
+            vu_path = os.path.join(self.results_path, pd['path'], 'v_upper_tavg_%s.txt'%s)
+
+            uus_path = os.path.join(self.results_path, pd['path'], 'u_upper_tstd_%s.txt'%s)
+            vus_path = os.path.join(self.results_path, pd['path'], 'v_upper_tstd_%s.txt'%s)
+
+            ul_path = os.path.join(self.results_path, pd['path'], 'u_lower_tavg_%s.txt'%s)
+            vl_path = os.path.join(self.results_path, pd['path'], 'v_lower_tavg_%s.txt'%s)
+
+            uls_path = os.path.join(self.results_path, pd['path'], 'u_lower_tstd_%s.txt'%s)
+            vls_path = os.path.join(self.results_path, pd['path'], 'v_lower_tstd_%s.txt'%s)
+
+            uu_tavg = np.loadtxt(uu_path)
+            vu_tavg = np.loadtxt(vu_path)
+
+            uu_tstd = np.loadtxt(uus_path)
+            vu_tstd = np.loadtxt(vus_path)
+
+            ul_tavg = np.loadtxt(ul_path)
+            vl_tavg = np.loadtxt(vl_path)
+
+            ul_tstd = np.loadtxt(uls_path)
+            vl_tstd = np.loadtxt(vls_path)
+            
+            xu = np.loadtxt(os.path.join(self.results_path, pd['path'],'x_upper.txt'))
+            yu = np.loadtxt(os.path.join(self.results_path, pd['path'],'y_upper.txt'))
+            yu = yu + camera_step * float(pd['pos']) + float(pd['VOFFSET'])/self.piv_param['pixel_density']
+
+            xl = np.loadtxt(os.path.join(self.results_path, pd['path'],'x_lower.txt'))
+            yl = np.loadtxt(os.path.join(self.results_path, pd['path'],'y_lower.txt'))
+            yl = yu + camera_step * float(pd['pos']) + float(pd['VOFFSET'])/self.piv_param['pixel_density']
+
+            try:
+                entire_xu = np.vstack((entire_xu,xu))
+                entire_yu = np.vstack((entire_yu,yu))
+
+                entire_xl = np.vstack((entire_xl,xl))
+                entire_yl = np.vstack((entire_yl,yl))
+
+                entire_uu_tavg = np.vstack((entire_uu_tavg,uu_tavg))
+                entire_vu_tavg = np.vstack((entire_vu_tavg,vu_tavg))
+                entire_uu_tstd = np.vstack((entire_uu_tstd,uu_tstd))
+                entire_vu_tstd = np.vstack((entire_vu_tstd,vu_tstd))
+
+                entire_ul_tavg = np.vstack((entire_ul_tavg,ul_tavg))
+                entire_vl_tavg = np.vstack((entire_vl_tavg,vl_tavg))
+                entire_ul_tstd = np.vstack((entire_ul_tstd,ul_tstd))
+                entire_vl_tstd = np.vstack((entire_vl_tstd,vl_tstd))
+            except:
+                entire_xu = xu
+                entire_yu = yu
+
+                entire_xl = xl
+                entire_yl = yl
+
+                entire_uu_tavg = uu_tavg
+                entire_vu_tavg = vu_tavg
+                entire_uu_tstd = uu_tstd
+                entire_vu_tstd = vu_tstd
+
+                entire_ul_tavg = ul_tavg
+                entire_vl_tavg = vl_tavg
+                entire_ul_tstd = ul_tstd
+                entire_vl_tstd = vl_tstd
+
+        np.savetxt(os.path.join(self.results_path,'entire_xu.txt'),entire_xu)
+        np.savetxt(os.path.join(self.results_path,'entire_yu.txt'),entire_yu)
+        np.savetxt(os.path.join(self.results_path,'entire_uu_tavg.txt'),entire_uu_tavg)
+        np.savetxt(os.path.join(self.results_path,'entire_vu_tavg.txt'),entire_vu_tavg)
+        np.savetxt(os.path.join(self.results_path,'entire_uu_tstd.txt'),entire_uu_tstd)
+        np.savetxt(os.path.join(self.results_path,'entire_vu_tstd.txt'),entire_vu_tstd)
+
+        np.savetxt(os.path.join(self.results_path,'entire_xl.txt'),entire_xl)
+        np.savetxt(os.path.join(self.results_path,'entire_yl.txt'),entire_yl)
+        np.savetxt(os.path.join(self.results_path,'entire_ul_tavg.txt'),entire_ul_tavg)
+        np.savetxt(os.path.join(self.results_path,'entire_vl_tavg.txt'),entire_vl_tavg)
+        np.savetxt(os.path.join(self.results_path,'entire_ul_tstd.txt'),entire_ul_tstd)
+        np.savetxt(os.path.join(self.results_path,'entire_vl_tstd.txt'),entire_vl_tstd)
+
+        return (entire_xu,entire_yu,entire_uu_tavg,entire_vu_tavg,entire_uu_tstd,entire_vu_tstd,entire_xl,entire_yl,entire_ul_tavg,entire_vl_tavg,entire_ul_tstd,entire_vl_tstd)
+
     def piv_over_time(self,search_dict,start_index=1,N=90):
 
         location_path = [x['path'] for x in self.piv_dict_list if search_dict.items() <= x.items()]
@@ -467,6 +552,56 @@ class ParticleImage:
         v_tavg_path = os.path.join(results_path, 'v_full_tavg_%03d_%d.txt' %(start_index,N))
         u_tstd_path = os.path.join(results_path, 'u_full_tstd_%03d_%d.txt' %(start_index,N))
         v_tstd_path = os.path.join(results_path, 'v_full_tstd_%03d_%d.txt' %(start_index,N))
+
+        np.savetxt(x_path,x)
+        np.savetxt(y_path,y)
+        np.savetxt(u_tavg_path,u_tavg)
+        np.savetxt(v_tavg_path,v_tavg)
+        np.savetxt(u_tstd_path,u_tstd)
+        np.savetxt(v_tstd_path,v_tstd)          
+        self.set_piv_param({'raw_or_cropped': False}) 
+
+    def piv_over_time3(self,search_dict,start_index=1,N=90,tag = 'test'):
+        self.set_piv_param({'raw_or_cropped': True})
+        location_path = [x['path'] for x in self.piv_dict_list if search_dict.items() <= x.items()]
+        results_path = os.path.join(self.results_path,*location_path)
+
+        u_path = os.path.join(results_path, 'u_%s_series_%03d_%d.txt'%(tag,start_index,N))
+        v_path = os.path.join(results_path, 'v_%s_series_%03d_%d.txt'%(tag,start_index,N))
+
+        x,y,U,V = self.quick_piv(search_dict,index_a = start_index, index_b = start_index + 1)
+
+        with open(u_path, 'w') as uf, open(v_path, 'w') as vf:          
+            uf.write('# Array shape: {0}\n'.format(U.shape))        
+            vf.write('# Array shape: {0}\n'.format(U.shape))        
+                        
+        ind = self.check_proper_index(search_dict,index_a = start_index)
+
+        for i in range(N):
+            self.set_piv_param({'save_result': False, 'show_result': False})
+            x,y,U,V = self.quick_piv(search_dict,index_a = ind,index_b = ind + 1)
+
+            with open(u_path, 'a') as uf, open(v_path, 'a') as vf:
+                np.savetxt(uf,U,fmt='%-7.5f')
+                np.savetxt(vf,V,fmt='%-7.5f')
+
+            ind = ind + 2
+        
+        u_series = load_nd_array(u_path)
+        v_series = load_nd_array(v_path)
+
+        u_tavg = np.mean(u_series,axis=0)
+        v_tavg = np.mean(v_series,axis=0)
+
+        u_tstd = np.std(u_series,axis=0)
+        v_tstd = np.std(u_series,axis=0)
+        
+        x_path = os.path.join(results_path, 'x_%s.txt'%tag)
+        y_path = os.path.join(results_path, 'y_%s.txt'%tag)
+        u_tavg_path = os.path.join(results_path, 'u_%s_tavg_%03d_%d.txt' %(tag,start_index,N))
+        v_tavg_path = os.path.join(results_path, 'v_%s_tavg_%03d_%d.txt' %(tag,start_index,N))
+        u_tstd_path = os.path.join(results_path, 'u_%s_tstd_%03d_%d.txt' %(tag,start_index,N))
+        v_tstd_path = os.path.join(results_path, 'v_%s_tstd_%03d_%d.txt' %(tag,start_index,N))
 
         np.savetxt(x_path,x)
         np.savetxt(y_path,y)
