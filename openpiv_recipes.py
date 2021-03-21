@@ -487,6 +487,93 @@ class ParticleImage:
         v_right = np.loadtxt(vr_path)
 
         return x,y, u_left, v_left, u_right, v_right
+
+    def get_left_right_velocity_map_series(self,s):
+        sd_left = {'pos': 1, 'VOFFSET': 0}
+        left_path = [x['path'] for x in self.piv_dict_list if sd_left.items() <= x.items()][0]
+
+        sd_right = {'pos': 6, 'VOFFSET': 840}
+        right_path = [x['path'] for x in self.piv_dict_list if sd_right.items() <= x.items()][0]               
+        
+        x_path = os.path.join(self.results_path,left_path,'x_full.txt')
+        y_path = os.path.join(self.results_path,left_path,'y_full.txt')
+
+        ul_path = os.path.join(self.results_path,left_path,'u_full_series_%s.txt'%s)
+        vl_path = os.path.join(self.results_path,left_path,'v_full_series_%s.txt'%s)
+
+        ur_path = os.path.join(self.results_path,right_path,'u_full_series_%s.txt'%s)
+        vr_path = os.path.join(self.results_path,right_path,'v_full_series_%s.txt'%s)
+
+        x = np.loadtxt(x_path)
+        y = np.loadtxt(y_path)
+
+        # u_left = np.loadtxt(ul_path)    
+        # v_left = np.loadtxt(vl_path)
+        # u_right = np.loadtxt(ur_path)
+        # v_right = np.loadtxt(vr_path)
+
+        u_left = load_nd_array(ul_path)
+        v_left = load_nd_array(vl_path)
+        u_right = load_nd_array(ur_path)
+        v_right = load_nd_array(vr_path)
+
+        return x,y, u_left, v_left, u_right, v_right
+# %%
+    def get_top_bottom_velocity_series(self,camera_step,s):
+        lis = self.piv_dict_list    
+        for pd in lis:        
+            print(pd['path'])
+            xu = np.loadtxt(os.path.join(self.results_path, pd['path'],'x_upper.txt'))
+            yu = np.loadtxt(os.path.join(self.results_path, pd['path'],'y_upper.txt'))
+            yu = yu + camera_step * float(pd['pos']) + float(pd['VOFFSET'])/self.piv_param['pixel_density']
+
+            xl = np.loadtxt(os.path.join(self.results_path, pd['path'],'x_lower.txt'))
+            yl = np.loadtxt(os.path.join(self.results_path, pd['path'],'y_lower.txt'))
+            yl = yl + camera_step * float(pd['pos']) + float(pd['VOFFSET'])/self.piv_param['pixel_density']
+            
+            uu_path = os.path.join(self.results_path, pd['path'], 'u_upper_series_%s.txt'%s)
+            vu_path = os.path.join(self.results_path, pd['path'], 'v_upper_series_%s.txt'%s)
+
+            ul_path = os.path.join(self.results_path, pd['path'], 'u_lower_series_%s.txt'%s)
+            vl_path = os.path.join(self.results_path, pd['path'], 'v_lower_series_%s.txt'%s)
+            
+            uu_series = load_nd_array(uu_path)
+            vu_series = load_nd_array(vu_path)        
+            ul_series = load_nd_array(ul_path)
+            vl_series = load_nd_array(vl_path)
+
+            try:
+                entire_xu = np.vstack((entire_xu,xu))
+                entire_yu = np.vstack((entire_yu,yu))
+
+                entire_xl = np.vstack((entire_xl,xl))
+                entire_yl = np.vstack((entire_yl,yl))
+
+                entire_uu_series = np.vstack((entire_uu_series,uu_series.reshape(1,*uu_series.shape)))
+                entire_vu_series = np.vstack((entire_vu_series,vu_series.reshape(1,*uu_series.shape)))
+                
+                entire_ul_series = np.vstack((entire_ul_series,ul_series.reshape(1,*uu_series.shape)))
+                entire_vl_series = np.vstack((entire_vl_series,vl_series.reshape(1,*uu_series.shape)))
+            except:
+                entire_xu = xu
+                entire_yu = yu
+
+                entire_xl = xl
+                entire_yl = yl
+
+                entire_uu_series = uu_series.reshape(1,*uu_series.shape)
+                entire_vu_series = vu_series.reshape(1,*vu_series.shape)
+            
+                entire_ul_series = ul_series.reshape(1,*ul_series.shape)
+                entire_vl_series = vl_series.reshape(1,*vl_series.shape)
+
+        a,b,c,d = entire_uu_series.shape   
+        entire_uu_series = np.moveaxis(entire_uu_series,0,1).reshape(b,a*c,d)
+        entire_vu_series = np.moveaxis(entire_vu_series,0,1).reshape(b,a*c,d)
+        entire_ul_series = np.moveaxis(entire_ul_series,0,1).reshape(b,a*c,d)
+        entire_vl_series = np.moveaxis(entire_vl_series,0,1).reshape(b,a*c,d)        
+
+        return entire_xu, entire_yu, entire_uu_series,entire_vu_series, entire_xl, entire_yl, entire_ul_series, entire_vl_series
         
 
     def piv_over_time(self,search_dict,start_index=1,N=90):

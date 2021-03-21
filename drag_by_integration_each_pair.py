@@ -104,21 +104,20 @@ folder_path = folder_path.replace('C:/Users/yj/','/Users/yeonsu/')
 results_folder_path = results_folder_path.replace('C:/Users/yj/','/Users/yeonsu/')
 
 pi = piv.ParticleImage(folder_path,results_folder_path)
-pi.set_piv_param(piv_cond)
 # %%
 stitch_list = [x for x in os.listdir(folder_path) if not x.startswith(('.','_')) and not 'timing500' in x]
 pi.set_param_string_list(stitch_list)
 pi.piv_dict_list = pi.param_dict_list
 pi.check_piv_dict_list()
 # %%
-x,y,ul,vl,ur,vr = get_left_right_velocity_map_series(pi,'003_90')
+x,y,ul,vl,ur,vr = pi.get_left_right_velocity_map_series('003_90')
 # %%
 plt.plot(vl[0,:,:])
 # %%
 plt.plot(vr[0,24,:])
 # %%
 step = 25
-x1,y1,u1,v1,x2,y2,u2,v2 = get_top_bottom_velocity_series(pi,25,'003_90')
+x1,y1,u1,v1,x2,y2,u2,v2 = pi.get_top_bottom_velocity_series(25,'003_90')
 # %%
 y_lr = x[0,:]
 u_left = -vl[:,0,:]
@@ -295,7 +294,7 @@ def update(n):
 ani = animation.FuncAnimation(fig,update,90,interval=30)
 writer = animation.writers['ffmpeg'](fps=10)
 
-ani.save('demo.mp4',writer=writer,dpi=dpi)
+ani.save('Flat_10_motor15.mp4',writer=writer,dpi=dpi)
 # %%
 plt.plot(t,np.mean(v_top,axis=1))
 # %%
