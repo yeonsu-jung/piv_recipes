@@ -11,8 +11,8 @@ t = time.time()
 importlib.reload(piv)
 
 # %%
-folder_path = "C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-15/2_1_1_10 (black)_motor15_cropped"
-results_folder_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-results'
+folder_path = "/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-15/2_1_1_10 (black)_motor15_cropped"
+results_folder_path = '/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-results'
 
 pi = piv.ParticleImage(folder_path,results_folder_path)
 # %%
@@ -30,6 +30,17 @@ stitch_list = [x for x in os.listdir(folder_path) if not x.startswith(('.','_'))
 pi.set_param_string_list(stitch_list)
 pi.piv_dict_list = pi.param_dict_list
 pi.check_piv_dict_list()
+# %%
+x = np.loadtxt(x_path)
+y = np.loadtxt(y_path)
+
+u_left = np.loadtxt(ul_path)
+v_left = np.loadtxt(vl_path)
+
+u_right = np.loadtxt(ur_path)
+v_right = np.loadtxt(vr_path)
+
+entire_u = np.loadtxt(entire_u_path)
 # %%
 try:
     x = np.loadtxt(x_path)
@@ -52,8 +63,8 @@ except:
     pi.piv_over_time2(sd2,start_index=0,N=0)
 
 # %%
-folder_path = "C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-15/2_1_1_10 (black)_motor15"
-results_folder_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-results'
+folder_path = "/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-15/2_1_1_10 (black)_motor15"
+results_folder_path = '/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-results'
 
 pi = piv.ParticleImage(folder_path,results_folder_path)
 
@@ -127,6 +138,21 @@ except:
     for pd in pi.piv_dict_list:
         pi.piv_over_time3(pd,start_index=3,N=2,tag='lower')
 
+# %%
+folder_path = "/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-15/2_1_1_10 (black)_motor15"
+results_folder_path = '/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-results'
+pi = piv.ParticleImage(folder_path,results_folder_path)
+
+stitch_list = [x for x in os.listdir(folder_path) if not x.startswith(('.','_')) and not 'timing500' in x]
+pi.set_param_string_list(stitch_list)
+pi.piv_dict_list = pi.param_dict_list
+pi.check_piv_dict_list()
+# %%
+for pd in pi.piv_dict_list:
+    print(pd['path'])
+   
+# %%
+os.listdir(folder_path)
 # %%
 step = 25
 xu,yu,uu_avg,vu_avg,uu_std,vu_std,xl,yl,ul_avg,vl_avg,ul_std,vl_std = pi.get_entire_ul_velocity_map(step,'003_90')
@@ -228,8 +254,8 @@ plt.legend()
 (np.mean(uu_avg[:,0]) - np.mean(ul_avg[:,-1])) * 0.001 * 0.048 * (0.1766 - 0.02535) * 0.5 * 1e3
 # %%
 
-folder_path = "C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-15/2_1_1_10 (black)_motor15_cropped"
-results_folder_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-results'
+folder_path = "/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-15/2_1_1_10 (black)_motor15_cropped"
+results_folder_path = '/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-results'
 
 pi = piv.ParticleImage(folder_path,results_folder_path)
 # %%
@@ -247,8 +273,8 @@ stitch_list = [x for x in os.listdir(folder_path) if not x.startswith(('.','_'))
 pi.set_param_string_list(stitch_list)
 pi.piv_dict_list = pi.param_dict_list
 pi.check_piv_dict_list()
-folder_path = "C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-15/2_1_1_10 (black)_motor15_cropped"
-results_folder_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-results'
+folder_path = "/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-15/2_1_1_10 (black)_motor15_cropped"
+results_folder_path = '/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-results'
 
 pi = piv.ParticleImage(folder_path,results_folder_path)
 # %%
@@ -266,8 +292,8 @@ stitch_list = [x for x in os.listdir(folder_path) if not x.startswith(('.','_'))
 pi.set_param_string_list(stitch_list)
 pi.piv_dict_list = pi.param_dict_list
 pi.check_piv_dict_list()
-folder_path = "C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-15/2_1_1_10 (black)_motor15_cropped"
-results_folder_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-results'
+folder_path = "/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-15/2_1_1_10 (black)_motor15_cropped"
+results_folder_path = '/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-results'
 
 pi = piv.ParticleImage(folder_path,results_folder_path)
 # %%
@@ -285,8 +311,8 @@ stitch_list = [x for x in os.listdir(folder_path) if not x.startswith(('.','_'))
 pi.set_param_string_list(stitch_list)
 pi.piv_dict_list = pi.param_dict_list
 pi.check_piv_dict_list()
-folder_path = "C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-15/2_1_1_10 (black)_motor15_cropped"
-results_folder_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-results'
+folder_path = "/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-15/2_1_1_10 (black)_motor15_cropped"
+results_folder_path = '/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-results'
 
 pi = piv.ParticleImage(folder_path,results_folder_path)
 # %%
@@ -304,8 +330,8 @@ stitch_list = [x for x in os.listdir(folder_path) if not x.startswith(('.','_'))
 pi.set_param_string_list(stitch_list)
 pi.piv_dict_list = pi.param_dict_list
 pi.check_piv_dict_list()
-folder_path = "C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-15/2_1_1_10 (black)_motor15_cropped"
-results_folder_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-results'
+folder_path = "/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-15/2_1_1_10 (black)_motor15_cropped"
+results_folder_path = '/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-results'
 
 pi = piv.ParticleImage(folder_path,results_folder_path)
 # %%
@@ -323,8 +349,8 @@ stitch_list = [x for x in os.listdir(folder_path) if not x.startswith(('.','_'))
 pi.set_param_string_list(stitch_list)
 pi.piv_dict_list = pi.param_dict_list
 pi.check_piv_dict_list()
-folder_path = "C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-15/2_1_1_10 (black)_motor15_cropped"
-results_folder_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-results'
+folder_path = "/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-15/2_1_1_10 (black)_motor15_cropped"
+results_folder_path = '/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-results'
 
 pi = piv.ParticleImage(folder_path,results_folder_path)
 # %%
@@ -342,8 +368,8 @@ stitch_list = [x for x in os.listdir(folder_path) if not x.startswith(('.','_'))
 pi.set_param_string_list(stitch_list)
 pi.piv_dict_list = pi.param_dict_list
 pi.check_piv_dict_list()
-folder_path = "C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-15/2_1_1_10 (black)_motor15_cropped"
-results_folder_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-results'
+folder_path = "/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-15/2_1_1_10 (black)_motor15_cropped"
+results_folder_path = '/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-results'
 
 pi = piv.ParticleImage(folder_path,results_folder_path)
 # %%
@@ -361,8 +387,8 @@ stitch_list = [x for x in os.listdir(folder_path) if not x.startswith(('.','_'))
 pi.set_param_string_list(stitch_list)
 pi.piv_dict_list = pi.param_dict_list
 pi.check_piv_dict_list()
-folder_path = "C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-15/2_1_1_10 (black)_motor15"
-results_folder_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-results'
+folder_path = "/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-15/2_1_1_10 (black)_motor15"
+results_folder_path = '/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-results'
 
 pi = piv.ParticleImage(folder_path,results_folder_path)
 # %%
@@ -388,16 +414,16 @@ pi.piv_over_time2(sd1,start_index=3,N=90)
 sd2 = {'pos': 6, 'VOFFSET': 840}
 pi.piv_over_time2(sd2,start_index=3,N=90)
 # %%
-x_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-results/2021-03-15/2_1_1_10 (black)_motor15/2_1_1_10 (black)_timing100_ag1_dg1_laser5_motor15.00_pos1_[03-15]_VOFFSET0/x_full.txt'
-y_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-results/2021-03-15/2_1_1_10 (black)_motor15/2_1_1_10 (black)_timing100_ag1_dg1_laser5_motor15.00_pos1_[03-15]_VOFFSET0/y_full.txt'
+x_path = '/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-results/2021-03-15/2_1_1_10 (black)_motor15/2_1_1_10 (black)_timing100_ag1_dg1_laser5_motor15.00_pos1_[03-15]_VOFFSET0/x_full.txt'
+y_path = '/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-results/2021-03-15/2_1_1_10 (black)_motor15/2_1_1_10 (black)_timing100_ag1_dg1_laser5_motor15.00_pos1_[03-15]_VOFFSET0/y_full.txt'
 
-ul_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-results/2021-03-15/2_1_1_10 (black)_motor15/2_1_1_10 (black)_timing100_ag1_dg1_laser5_motor15.00_pos1_[03-15]_VOFFSET0/u_full_tavg_003_2.txt'
-vl_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-results/2021-03-15/2_1_1_10 (black)_motor15/2_1_1_10 (black)_timing100_ag1_dg1_laser5_motor15.00_pos1_[03-15]_VOFFSET0/v_full_tavg_003_2.txt'
+ul_path = '/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-results/2021-03-15/2_1_1_10 (black)_motor15/2_1_1_10 (black)_timing100_ag1_dg1_laser5_motor15.00_pos1_[03-15]_VOFFSET0/u_full_tavg_003_90.txt'
+vl_path = '/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-results/2021-03-15/2_1_1_10 (black)_motor15/2_1_1_10 (black)_timing100_ag1_dg1_laser5_motor15.00_pos1_[03-15]_VOFFSET0/v_full_tavg_003_90.txt'
 
-ur_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-results/2021-03-15/2_1_1_10 (black)_motor15/2_1_1_10 (black)_timing100_ag1_dg1_laser5_motor15.00_pos6_[03-15]_VOFFSET840/u_full_tavg_003_2.txt'
-vr_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-results/2021-03-15/2_1_1_10 (black)_motor15/2_1_1_10 (black)_timing100_ag1_dg1_laser5_motor15.00_pos6_[03-15]_VOFFSET840/v_full_tavg_003_2.txt'
+ur_path = '/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-results/2021-03-15/2_1_1_10 (black)_motor15/2_1_1_10 (black)_timing100_ag1_dg1_laser5_motor15.00_pos6_[03-15]_VOFFSET840/u_full_tavg_003_90.txt'
+vr_path = '/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-results/2021-03-15/2_1_1_10 (black)_motor15/2_1_1_10 (black)_timing100_ag1_dg1_laser5_motor15.00_pos6_[03-15]_VOFFSET840/v_full_tavg_003_90.txt'
 
-entire_u_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-results/2021-03-11/Flat_10 (black)_motor15/entire_u_tavg.txt'
+entire_u_path = '/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-results/2021-03-11/Flat_10 (black)_motor15/entire_u_tavg.txt'
 # %%
 x = np.loadtxt(x_path)
 y = np.loadtxt(y_path)
@@ -407,8 +433,6 @@ v_left = np.loadtxt(vl_path)
 
 u_right = np.loadtxt(ur_path)
 v_right = np.loadtxt(vr_path)
-
-entire_u = np.loadtxt(entire_u_path)
 # %%
 try:
     x = np.loadtxt(x_path)
@@ -428,5 +452,51 @@ plt.plot(-v_left[10,:],x[0,:])
 plt.plot(-v_right[10,:],x[0,:])
 
 # %%
-u_lower = np.loadtxt('C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-results/2021-03-11/Flat_10 (black)_motor15/Flat_10 (black)_motor15.00_pos1_VOFFSET0_ag1_dg1_laser5_[03-11]/u_upper_tavg_003_90.txt')
-u_upper = np.loadtxt('C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-results/2021-03-11/Flat_10 (black)_motor15/Flat_10 (black)_motor15.00_pos1_VOFFSET0_ag1_dg1_laser5_[03-11]/u_lower_tavg_003_90.txt')
+# xu,yu,uu_avg,vu_avg,uu_std,vu_std,xl,yl,ul_avg,vl_avg,ul_std,vl_std
+
+x = np.loadtxt(x_path)
+y = np.loadtxt(y_path)
+# %%
+u_left = np.loadtxt(ul_path)
+v_left = np.loadtxt(vl_path)
+
+u_right = np.loadtxt(ur_path)
+v_right = np.loadtxt(vr_path)
+
+# %%
+rho = 1e3
+D = np.sum(rho*(v_left[10,:-1]**2 - v_right[10,:-1]**2)*1e-6 * (x[0,1:] - x[0,0:-1]) )*1e-3 * 0.048
+print(D)
+# %%
+D_trapz = rho* np.trapz(v_left[10,:]**2 - v_right[10,:]**2,x[0,:])*1e-9 * 0.048
+print(D_trapz)
+# %%
+np.trapz(-v_left[0,:],x[0,:]), np.trapz(-v_right[0,:],x[0,:])
+# %%
+mdot2 = rho * np.sum(v_left[0,:-1] - v_right[0,:-1])
+# %%
+mdot2_trapz = rho * np.trapz(-v_left[0,:] + v_right[0,:],x[0,:]) * 1e-6 * 0.048
+print(mdot2_trapz)
+# %%
+D_trapz - mdot2_trapz*0.5
+# %%
+uu = ul_avg[:,-1]
+vu = -vl_avg[:,-1]
+yy = yu[:,-1]
+
+mom_out_upper = np.sum(-uu[:-1] * vu[:-1] * (yy[1:] - yy[:-1])) * 0.048 * 1e-9 * 1e3
+# np.trapz(uu*vu*1e-6,yy)*0.048
+print(mom_out_upper)
+# %%
+ul = uu_avg[:,3]
+vl = -vu_avg[:,3]
+yy = yl[:,0]
+
+mom_out_lower = np.sum(ul[:-1] * vl[:-1] * (yy[1:] - yy[:-1])) * 0.048 * 1e-9 * 1e3
+print(mom_out_lower)
+# %%
+mdot_upper = np.sum(uu[:-1] * (yy[1:] - yy[:-1])) * 1e-6 * 0.048 * 1e3
+mdot_lower = np.sum(ul[:-1] * (yy[1:] - yy[:-1])) * 1e-6 * 0.048 * 1e3
+mdot = mdot_upper - mdot_lower
+(mdot_upper,mdot_lower,mdot)
+# %%

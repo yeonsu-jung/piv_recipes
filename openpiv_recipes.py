@@ -8,7 +8,6 @@ from PIL import Image
 from argparse import Namespace
 import matplotlib.cm as cm
 
-
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -411,7 +410,7 @@ class ParticleImage:
 
             xl = np.loadtxt(os.path.join(self.results_path, pd['path'],'x_lower.txt'))
             yl = np.loadtxt(os.path.join(self.results_path, pd['path'],'y_lower.txt'))
-            yl = yu + camera_step * float(pd['pos']) + float(pd['VOFFSET'])/self.piv_param['pixel_density']
+            yl = yl + camera_step * float(pd['pos']) + float(pd['VOFFSET'])/self.piv_param['pixel_density']
 
             try:
                 entire_xu = np.vstack((entire_xu,xu))
@@ -461,6 +460,34 @@ class ParticleImage:
         np.savetxt(os.path.join(self.results_path,'entire_vl_tstd.txt'),entire_vl_tstd)
 
         return (entire_xu,entire_yu,entire_uu_tavg,entire_vu_tavg,entire_uu_tstd,entire_vu_tstd,entire_xl,entire_yl,entire_ul_tavg,entire_vl_tavg,entire_ul_tstd,entire_vl_tstd)
+
+    def get_left_right_velocity_map(self,s):
+        sd_left = {'pos': 1, 'VOFFSET': 0}
+        left_path = [x['path'] for x in self.piv_dict_list if sd_left.items() <= x.items()][0]
+
+        sd_right = {'pos': 6, 'VOFFSET': 840}
+        right_path = [x['path'] for x in self.piv_dict_list if sd_right.items() <= x.items()][0]               
+        
+        x_path = os.path.join(self.results_path,left_path,'x_full.txt')
+        y_path = os.path.join(self.results_path,left_path,'y_full.txt')
+
+        ul_path = os.path.join(self.results_path,left_path,'u_full_tavg_%s.txt'%s)
+        vl_path = os.path.join(self.results_path,left_path,'v_full_tavg_%s.txt'%s)
+
+        ur_path = os.path.join(self.results_path,right_path,'u_full_tavg_%s.txt'%s)
+        vr_path = os.path.join(self.results_path,right_path,'v_full_tavg_%s.txt'%s)
+
+        x = np.loadtxt(x_path)
+        y = np.loadtxt(y_path)
+
+        u_left = np.loadtxt(ul_path)
+        v_left = np.loadtxt(vl_path)
+
+        u_right = np.loadtxt(ur_path)
+        v_right = np.loadtxt(vr_path)
+
+        return x,y, u_left, v_left, u_right, v_right
+        
 
     def piv_over_time(self,search_dict,start_index=1,N=90):
 

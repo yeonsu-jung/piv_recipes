@@ -12,11 +12,8 @@ from matplotlib import pyplot as plt
 t = time.time()
 importlib.reload(piv)
 # %%
-# folder_path = '/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-11/Flat_10 (black)_motor15'
-# results_folder_path = '/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-results'
-
-folder_path = "C:\\Users\\yj\\Dropbox (Harvard University)\\Riblet\\data\\piv-data\\2021-03-15\\2_1_1_10 (black)_motor15_cropped"
-results_folder_path = 'C:\\Users\\yj\\Dropbox (Harvard University)\\Riblet\\data\\piv-results'
+folder_path = "C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-15/2_1_1_10 (black)_motor15_cropped"
+results_folder_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-results'
 
 pi = piv.ParticleImage(folder_path,results_folder_path)
 # %%
@@ -65,9 +62,6 @@ results_path = '/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-resul
 
 results_folder_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-results'
 results_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-results/2021-03-11/Flat_10 (black)_motor15_cropped'
-
-# folder_path = "C:\\Users\\yj\\Dropbox (Harvard University)\\Riblet\\data\\piv-data\\2021-03-11\\Flat_10 (black)_motor15"
-# results_folder_path = 'C:\\Users\\yj\\Dropbox (Harvard University)\\Riblet\\data\\piv-results'
 
 x_path = os.path.join(results_path,'entire_x.txt')
 y_path = os.path.join(results_path,'entire_y.txt')

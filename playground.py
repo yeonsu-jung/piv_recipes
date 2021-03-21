@@ -12,7 +12,6 @@ import imageio as io
 img_a = io.imread('C:\\Users\\yj\\Downloads\\Flat_10 (black)_motor5.00_pos1_VOFFSET630_timing100_ag1_dg1_laser5_[03-12]_frame_000020.tiff')
 img_b = io.imread('C:\\Users\\yj\\Downloads\\Flat_10 (black)_motor5.00_pos1_VOFFSET630_timing100_ag1_dg1_laser5_[03-12]_frame_000021.tiff')
 
-
 dummy = piv.run_piv(img_a,img_b,
     winsize = 28, # pixels, interrogation window size in frame A
     searchsize = 34,  # pixels, search in image B

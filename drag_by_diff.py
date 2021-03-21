@@ -5,69 +5,13 @@ import numpy as np
 import os
 import time
 import matplotlib.cm as cm
-from scipy.optimize import curve_fit
-
 from matplotlib import pyplot as plt
 
 t = time.time()
 importlib.reload(piv)
 # %%
-# folder_path = '/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-11/Flat_10 (black)_motor15'
-# results_folder_path = '/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-results'
-
-folder_path = "C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-15/Flat_10 (black)_motor5_cropped"
-results_folder_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-results'
-
-folder_path = folder_path.replace("C:/Users/yj/","/Users/yeonsu/")
-results_folder_path = results_folder_path.replace("C:/Users/yj/","/Users/yeonsu/")
-
-pi = piv.ParticleImage(folder_path,results_folder_path)
-# %%
-piv_cond = {
-    "winsize": 28, "searchsize": 34, "overlap": 22,
-    "pixel_density": 40,"scale_factor": 1e4, "arrow_width": 0.001,
-    "u_bound": [-25,25],"v_bound": [-300,0],
-    "transpose": False, "crop": [0,0,12,0],    
-    "sn_threshold": 1.000001,'dt': 0.0001,
-    "rotate": 0, "save_result": True,"show_result": False, 'raw_or_cropped':True
-}
-pi.set_piv_param(piv_cond)
-# %%
-stitch_list = [x for x in os.listdir(folder_path) if not x.startswith(('.','_')) and not 'timing500' in x]
-
-pi.set_param_string_list(stitch_list)
-pi.piv_dict_list = pi.param_dict_list
-pi.check_piv_dict_list()
-# %%
-pi.set_piv_param({"show_result": True})
-xyuv = pi.quick_piv({'pos': 4, 'VOFFSET':630},index_a=100,index_b=101)
-# %%
-pi.set_piv_param({"show_result": False})
-
-for sd in pi.search_dict_list:
-    pi.piv_over_time(sd,start_index=3,N=90)
-# %%
-step = 25
-x,y,u_avg,v_avg,u_std,v_std = pi.get_entire_avg_velocity_map(step,'003_90')
-# %%
-fig,ax = plt.subplots(figsize=(20,5))
-c1 = ax.contourf(y,x,(u_avg**2+v_avg**2)**0.5,cmap=cm.coolwarm)
-fig.colorbar(c1, ax=ax)
-
-for pos in [1,2,3,4,5,6]:
-    ax.plot([step*pos,step*pos],[0.5,np.max(x)],'k-')
-
-
-xx = np.linspace(56,156,100)
-yy = 5*np.sqrt(1e-6/0.54*(xx-56)/1000)*1000+0.5
-ax.plot(xx,yy,'b-')
-# %%
-
-results_folder_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-results'
 results_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-results/2021-03-11/Flat_10 (black)_motor15_cropped'
-
-results_folder_path = results_folder_path.replace('C:/Users/yj/','/Users/yeonsu/')
-results_path = results_path.replace('C:/Users/yj/','/Users/yeonsu/')
+results_path = results_path.replace('C:/Users/yj','/Users/yeonsu')
 
 x_path = os.path.join(results_path,'entire_x.txt')
 y_path = os.path.join(results_path,'entire_y.txt')
@@ -77,7 +21,7 @@ v_path = os.path.join(results_path,'entire_v_tavg.txt')
 us_path = os.path.join(results_path,'entire_u_tstd.txt')
 vs_path = os.path.join(results_path,'entire_v_tstd.txt')
 # %%
-x = np.loadtxt(x_path)
+x = np.loadtxt(x_path) - 0.25
 y = np.loadtxt(y_path)
 
 u = np.loadtxt(u_path)
@@ -107,7 +51,7 @@ fig,ax = plt.subplots(figsize=(40,10))
 for i,vv in enumerate(v_array):
     # ax.plot(vv + C*y_array[i],x[0,:],'k--')
     ax.plot(C*vv + y_array[i],x[0,:],'k--')
-    ax.plot([y_array[i],y_array[i]],[0,2.5],'b-')
+    ax.plot([y_array[i],y_array[i]],[0,np.max(x)],'b-')
     ax.plot([y_array[i]+C*540,y_array[i]+C*540],[0,2.5],'b--')
     for j, vvv in enumerate(vv):         
         ax.arrow(y_array[i], x[0,j], C*(vvv-50), 0, head_width=0.02, head_length=0.2, fc='k', ec='k')
@@ -120,9 +64,9 @@ eta = [0.,0.1,0.2,0.3,0.4,0.5,0.6,0.8,1.0,1.2,1.4,1.6,1.8,2.0,2.2,2.4,2.6,2.8,3.
 fprime = [0.0,0.03321,0.06441,0.09960,0.13276,0.16589,0.19894,0.26471,0.32978,0.39378,0.45626,0.51676,0.57476,0.62977,0.68131,0.72898,0.77245,0.81151,0.84604,0.91304,0.95552,0.97951,0.99154,0.99688,0.99897,0.99970,0.99992,1.0,1.0,1.0,1.0]
 
 from scipy.interpolate import interp1d
-f2 = interp1d(eta,fprime,kind='cubic')          
+f2 = interp1d(eta,fprime,kind='cubic')
 
-def blasius(x,U,p,q):                  
+def blasius(x,U,p,q):
     # q = 0
     return U*f2(p*(x+q))
 
