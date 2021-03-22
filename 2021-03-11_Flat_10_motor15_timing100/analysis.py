@@ -14,7 +14,7 @@ import openpiv_recipes as piv
 importlib.reload(piv)
 
 # %%
-folder_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-11/Flat_10 (black)_motor15_timing500_cropped'
+folder_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-11/Flat_10 (black)_motor15_cropped'
 results_folder_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-results'
 
 folder_path = folder_path.replace('C:/Users/yj/','/Users/yeonsu/')
@@ -27,9 +27,11 @@ step = 25
 x,y,u_avg,v_avg,u_std,v_std = pi.get_entire_avg_velocity_map(step,'003_90')
 x = x - 0.4 # 0.4 
 # %%
-start_i = 0
+# 
+# %%
+start_i = 400
 stop_i = -1
-step_i = 50
+step_i = 40
 
 v_array = -v_avg[start_i:stop_i:step_i,:]
 v_std_array = v_std[start_i:stop_i:step_i,:]
@@ -91,7 +93,7 @@ v_array.shape
 # %%
 C = 1
 fig,ax = plt.subplots(figsize=(3.5,3.5),dpi=600)
-i = 10
+i = 1
 y_array[i]
 vv = v_array[i,:]
 ax.plot(C*vv[x_cut:],x[0,x_cut:],'k--')
@@ -107,7 +109,6 @@ ax.set_xlabel('u (mm/s)')
 ax.set_ylabel('y (mm)')
 plt.savefig('individual_profile.png')
 # fig.savefig('individual_profile.png',dpi=900)
-
 
 # %%
 plt.plot(v_std_array.T)
