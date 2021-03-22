@@ -11,6 +11,21 @@ from matplotlib import pyplot as plt
 t = time.time()
 importlib.reload(piv)
 # %%
+folder_path = "C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-11/Flat_10 (black)_motor15"
+results_folder_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-results'
+
+folder_path = folder_path.replace('C:/Users/yj/','/Users/yeonsu/')
+results_folder_path = results_folder_path.replace('C:/Users/yj/','/Users/yeonsu/')
+
+pi = piv.ParticleImage(folder_path,results_folder_path,version='2')
+# %%
+import datetime
+
+print(datetime.datetime.now())
+
+with open('test.txt','a') as f:
+    f.write(datetime.datetime.now())
+# %%
 # folder_path = '/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-11/Flat_10 (black)_motor15'
 # results_folder_path = '/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-results'
 

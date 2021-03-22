@@ -7,6 +7,7 @@ from openpiv import tools, process, validation, filters, scaling, pyprocess
 from PIL import Image
 from argparse import Namespace
 import matplotlib.cm as cm
+import datetime
 
 import numpy as np
 import pandas as pd
@@ -18,12 +19,13 @@ import re
 import os
 import sys
 
-
 # %%
 class ParticleImage:    
-    def __init__(self, folder_path, results_folder_path, exception_list = None):
+    def __init__(self, folder_path, results_folder_path, version = None):
         self.path = os.path.normpath(folder_path)
-        self.results_path = os.path.join(os.path.normpath(results_folder_path),*re.findall("[\d]{4}-[\d]{2}-[\d]{2}.*",folder_path))
+        rel_rpath = re.findall("[\d]{4}-[\d]{2}-[\d]{2}.*",folder_path)[0] + '_' + version
+        print('Result path:', rel_rpath)
+        self.results_path = os.path.join(os.path.normpath(results_folder_path), rel_rpath)
         
         try:
             os.makedirs(self.results_path)
@@ -32,12 +34,7 @@ class ParticleImage:
 
         # self.param_string_list = [x for x in os.listdir(self.path) if os.path.isdir(os.path.join(folder_path,x)) and not x.startswith('_')]
         self.param_string_list = [x for x in os.listdir(self.path) if os.path.isdir(os.path.join(folder_path,x))]
-        # temporary code here:
-        try:
-            for x in exception_list:
-                self.param_string_list.remove(x)            
-        except:
-            pass
+        # temporary code here:        
 
         self.set_param_string_list(self.param_string_list)        
         
@@ -623,7 +620,12 @@ class ParticleImage:
         np.savetxt(u_tavg_path,u_tavg)
         np.savetxt(v_tavg_path,v_tavg)
         np.savetxt(u_tstd_path,u_tstd)
-        np.savetxt(v_tstd_path,v_tstd)           
+        np.savetxt(v_tstd_path,v_tstd)    
+
+        with open(os.path.join(results_path,'piv_over_time_log.txt'),'a') as f:
+            f.write('%s \n' %datetime.datetime.now())
+            for k, v in self.piv_param.items():              
+                f.write('%s: %d\n' %(k,str(v)))
 
     def piv_over_time2(self,search_dict,start_index=1,N=90):
         self.set_piv_param({'raw_or_cropped': True})
@@ -635,9 +637,9 @@ class ParticleImage:
 
         x,y,U,V = self.quick_piv(search_dict,index_a = start_index, index_b = start_index + 1)
 
-        with open(u_path, 'w') as uf, open(v_path, 'w') as vf:          
-            uf.write('# Array shape: {0}\n'.format(U.shape))        
-            vf.write('# Array shape: {0}\n'.format(U.shape))        
+        with open(u_path, 'w') as uf, open(v_path, 'w') as vf:
+            uf.write('# Array shape: {0}\n'.format(U.shape))
+            vf.write('# Array shape: {0}\n'.format(U.shape))
                         
         ind = self.check_proper_index(search_dict,index_a = start_index)
 
@@ -674,6 +676,11 @@ class ParticleImage:
         np.savetxt(u_tstd_path,u_tstd)
         np.savetxt(v_tstd_path,v_tstd)          
         self.set_piv_param({'raw_or_cropped': False}) 
+
+        with open(os.path.join(results_path,'piv_over_time2_log.txt'),'a') as f:
+            f.write('%s \n' %datetime.datetime.now())
+            for k, v in self.piv_param.items():              
+                f.write('%s: %d\n' %(k,str(v)))
 
     def piv_over_time3(self,search_dict,start_index=1,N=90,tag = 'test'):
         self.set_piv_param({'raw_or_cropped': True})
@@ -725,6 +732,10 @@ class ParticleImage:
         np.savetxt(v_tstd_path,v_tstd)          
         self.set_piv_param({'raw_or_cropped': False}) 
                
+        with open(os.path.join(results_path,'piv_over_time3_log.txt'),'a') as f:
+            f.write('%s \n' %datetime.datetime.now())
+            for k, v in self.piv_param.items():              
+                f.write('%s: %d\n' %(k,str(v)))
 
     def point_statistics(self,search_dict,ind_x,ind_y,dt):
         location_path = [x['path'] for x in self.piv_dict_list if search_dict.items() <= x.items()]

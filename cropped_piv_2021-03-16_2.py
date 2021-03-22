@@ -51,7 +51,6 @@ fig.colorbar(c1, ax=ax)
 for pos in [1,2,3,4,5,6]:
     ax.plot([step*pos,step*pos],[0.5,np.max(x)],'k-')
 
-
 xx = np.linspace(56,156,100)
 yy = 5*np.sqrt(1e-6/0.54*(xx-56)/1000)*1000+0.5
 ax.plot(xx,yy,'b-')
