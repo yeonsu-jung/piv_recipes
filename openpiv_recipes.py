@@ -23,7 +23,12 @@ import sys
 class ParticleImage:    
     def __init__(self, folder_path, results_folder_path, version = None):
         self.path = os.path.normpath(folder_path)
-        rel_rpath = re.findall("[\d]{4}-[\d]{2}-[\d]{2}.*",folder_path)[0] + '_' + version
+        if version is not None:
+            version = '_' + version
+        elif version is None:
+            version = ''
+            
+        rel_rpath = re.findall("[\d]{4}-[\d]{2}-[\d]{2}.*",folder_path)[0] + version
         print('Result path:', rel_rpath)
         self.results_path = os.path.join(os.path.normpath(results_folder_path), rel_rpath)
         
