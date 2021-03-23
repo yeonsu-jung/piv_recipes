@@ -630,7 +630,7 @@ class ParticleImage:
         with open(os.path.join(results_path,'piv_over_time_log.txt'),'a') as f:
             f.write('%s \n' %datetime.datetime.now())
             for k, v in self.piv_param.items():              
-                f.write('%s: %d\n' %(k,str(v)))
+                f.write('%s: %s\n' %(k,str(v)))
 
     def piv_over_time2(self,search_dict,start_index=1,N=90):
         self.set_piv_param({'raw_or_cropped': True})
@@ -685,7 +685,7 @@ class ParticleImage:
         with open(os.path.join(results_path,'piv_over_time2_log.txt'),'a') as f:
             f.write('%s \n' %datetime.datetime.now())
             for k, v in self.piv_param.items():              
-                f.write('%s: %d\n' %(k,str(v)))
+                f.write('%s: %s\n' %(k,str(v)))
 
     def piv_over_time3(self,search_dict,start_index=1,N=90,tag = 'test'):
         self.set_piv_param({'raw_or_cropped': True})
@@ -740,7 +740,7 @@ class ParticleImage:
         with open(os.path.join(results_path,'piv_over_time3_log.txt'),'a') as f:
             f.write('%s \n' %datetime.datetime.now())
             for k, v in self.piv_param.items():              
-                f.write('%s: %d\n' %(k,str(v)))
+                f.write('%s: %s\n' %(k,str(v)))
 
     def point_statistics(self,search_dict,ind_x,ind_y,dt):
         location_path = [x['path'] for x in self.piv_dict_list if search_dict.items() <= x.items()]

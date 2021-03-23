@@ -11,8 +11,8 @@ t = time.time()
 importlib.reload(piv)
 # %%
 try:
-    folder_path = "/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-15/Flat_10 (black)_motor5"
-    results_folder_path = '/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-results'
+    folder_path = "C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-15/Flat_10 (black)_motor5"
+    results_folder_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-results'
     pi = piv.ParticleImage(folder_path,results_folder_path)
 except:
     folder_path = folder_path.replace('C:/Users/yj/','/Users/yeonsu/')
@@ -61,26 +61,14 @@ piv_cond = {
     "winsize": 28, "searchsize": 34, "overlap": 22,
     "pixel_density": 40,"scale_factor": 3e4, "arrow_width": 0.001,
     "u_bound": [-50,50],"v_bound": [-300,0],
-    "transpose": False, "crop": [0,0,580,0],
-    "sn_threshold": 1.0001,'dt': 0.0001,
-    "rotate": 0, "save_result": True,"show_result": False,
-    "check_angle": False
-}
-pi.set_piv_param(piv_cond)
-for pd in pi.piv_dict_list:
-    pi.piv_over_time3(pd,start_index=3,N=90,tag='upper')
-
-piv_cond = {
-    "winsize": 28, "searchsize": 34, "overlap": 22,
-    "pixel_density": 40,"scale_factor": 3e4, "arrow_width": 0.001,
-    "u_bound": [-50,50],"v_bound": [-300,0],
     "transpose": False, "crop": [0,0,0,580],
     "sn_threshold": 1.0001,'dt': 0.0001,
     "rotate": 0, "save_result": True,"show_result": False,
     "check_angle": False
 }
 pi.set_piv_param(piv_cond)
-pi.quick_piv({'pos':3, 'VOFFSET': 420})
 for pd in pi.piv_dict_list:
     pi.piv_over_time3(pd,start_index=3,N=90,tag='lower')
 
+
+# %%

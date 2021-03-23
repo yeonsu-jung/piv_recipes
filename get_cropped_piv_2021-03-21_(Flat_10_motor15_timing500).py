@@ -15,8 +15,8 @@ importlib.reload(piv)
 folder_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-11/Flat_10 (black)_motor15_timing500_cropped'
 results_folder_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-results'
 
-folder_path = folder_path.replace('C:/Users/yj/','/Users/yeonsu/')
-results_folder_path = results_folder_path.replace('C:/Users/yj/','/Users/yeonsu/')
+# folder_path = folder_path.replace('C:/Users/yj/','/Users/yeonsu/')
+# results_folder_path = results_folder_path.replace('C:/Users/yj/','/Users/yeonsu/')
 
 pi = piv.ParticleImage(folder_path,results_folder_path)
 # %% check point
@@ -29,8 +29,8 @@ piv_cond = {
     "rotate": 0, "save_result": True,"show_result": True, 'raw_or_cropped':True
 }
 pi.set_piv_param(piv_cond)
-d = pi.quick_piv({'pos': 3,'VOFFSET': 630})
+# d = pi.quick_piv({'pos': 3,'VOFFSET': 630})
 # %%
 pi.set_piv_param({"show_result": False})
-for sd in pi.search_dict_list:
+for sd in pi.piv_dict_list:
     pi.piv_over_time(sd,start_index=3,N=90)   
