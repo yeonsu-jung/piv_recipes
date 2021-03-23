@@ -7,7 +7,7 @@ import time
 import matplotlib.cm as cm
 from scipy.optimize import curve_fit
 from matplotlib import pyplot as plt
-
+from matplotlib import animation as animation
 # %%
 sys.path.append(os.path.dirname('../'))
 
@@ -46,11 +46,12 @@ def plot_dimensionless_velocity_profile(x, v_avg,v_std, start_i, stop_i, step_i 
     N = len(v_array)
     s = []
     
-    C = 3
-    
     rho = 1e3
     mu = 1e-3
+    U = np.mean(-v_avg[400:800,-1])*1e-3       
 
+    C = 3
+    
     for yy in (y_array): # -55 for rearrange x axis with LE being zero.
         Re = rho*0.5*(yy-55)/mu*1e-3       
         s.append('%d'%Re)
@@ -59,10 +60,10 @@ def plot_dimensionless_velocity_profile(x, v_avg,v_std, start_i, stop_i, step_i 
         # ax.plot(vv + C*y_array[i],x[0,:],'k--')
         # U = np.max(vv)*1e-3
         # U = 0.5
-        U = np.mean(-v_avg[400:800,-1])*1e-3        
+        # U = np.mean(-v_avg[400:800,-1])*1e-3        
 
 
-        Re = rho*U*(y_array[i]-55)/mu*1e-3       
+        Re = rho*U*(x[i]-55)/mu*1e-3       
         # x_c = (U/(mu/rho)/((y_array[i]-55)*1e-3))**0.5*1e-3
         x_c = 1
 
@@ -77,7 +78,7 @@ def plot_dimensionless_velocity_profile(x, v_avg,v_std, start_i, stop_i, step_i 
     delta = 5*((mu/rho)*xx/U)**0.5*1e3
     ax.plot(Re_x,delta,'g-')
 
-    ax.set_xticks(rho*U*(y_array-55)/mu*1e-3   )
+    ax.set_xticks(rho*U*(x-55)/mu*1e-3   )
     ax.set_xticklabels(s)
     ax.set_xlabel('Re_x')
     ax.set_ylabel('y (mm)')
@@ -85,22 +86,28 @@ def plot_dimensionless_velocity_profile(x, v_avg,v_std, start_i, stop_i, step_i 
 
     return ax
 
-def plot_single_profile(i,y_array,v_array,v_std_array,ax,x_cut = 0,**kw):
+def plot_single_profile(i,x,y,v_array,v_std_array,ax,x_cut = 0,**kw):
     C = 1        
     # y_array[i]
-    vv = v_array[i,:]
-    ax.plot(C*vv[x_cut:],x[0,x_cut:],'--',**kw)
-    ax.plot([0,0],[0,np.max(x)],'b-')
-    ax.plot([0+C*540,C*540],[0,np.max(x)],'b--')
-    for j, vvv in enumerate(vv[x_cut:]):         
-        ax.arrow(0, x[0,j+x_cut], C*(vvv), 0, head_width=0.02, head_length=0.2, fc='k', ec='k')
-        ax.arrow(0 + C*(vvv), x[0,j+x_cut], C*v_std_array[i,j+x_cut], 0, head_width=0.05, head_length=2, fc='r', ec='r')
-        ax.arrow(0 + C*(vvv), x[0,j+x_cut], -C*v_std_array[i,j+x_cut], 0, head_width=0.05, head_length=2, fc='r', ec='r')
 
-    ax.set_title('x = %.2f mm'%(y_array[i]-55))
+    rho = 1e3
+    mu = 1e-3
+    U = np.mean(-v_avg[400:800,-1])*1e-3       
+
+    vv = v_array[i,:]
+    ax.plot(C*vv[x_cut:],y[x_cut:],'--',**kw)
+    ax.plot([0,0],[0,np.max(y)],'b-')
+    ax.plot([0+C*U*1e3,C*U*1e3],[0,np.max(y)],'b--')
+    for j, vvv in enumerate(vv[x_cut:]):         
+        ax.arrow(0, y[j+x_cut], C*(vvv), 0, head_width=0.02, head_length=0.2, fc='k', ec='k')
+        ax.arrow(0 + C*(vvv), y[j+x_cut], C*v_std_array[i,j+x_cut], 0, head_width=0.05, head_length=2, fc='r', ec='r')
+        ax.arrow(0 + C*(vvv), y[j+x_cut], -C*v_std_array[i,j+x_cut], 0, head_width=0.05, head_length=2, fc='r', ec='r')
+
+    ax.set_title('x = %.2f mm; Re_x = %d'%(x[i]-55,rho*U*(x[i]-55)/mu*1e-3))
     ax.set_xlabel('u (mm/s)')
     ax.set_ylabel('y (mm)')
-    plt.savefig('individual_profile.png')
+    ax.axis([0,U*1.1*1e3,0,2.2])
+    # plt.savefig('individual_profile.png')
     # fig.savefig('individual_profile.png',dpi=900)
     return ax
 
@@ -116,16 +123,11 @@ except:
 
 # %%
 step = 25
-x,y,u_avg,v_avg,u_std,v_std = pi.get_entire_avg_velocity_map(step,'003_90')
-x = x - 0.4 # 0.4 
+x_entire,y_entire,u_avg,v_avg,u_std,v_std = pi.get_entire_avg_velocity_map(step,'003_90')
+x_entire = x_entire - 0.4 # 0.4 
 # %%
-plt.plot(-v_avg[:,-3])
-# plt.plot(-u_avg[:,-1])
-# %%
-np.mean(-v_avg)
-# %%
-fig,ax = plt.subplots(figsize=(20,5),dpi=600)
-ax = plot_dimensionless_velocity_profile(x,v_avg, v_std, 0,-1,50, ax,color='k')
+fig,ax_entire = plt.subplots(figsize=(20,5),dpi=600)
+ax = plot_dimensionless_velocity_profile(x_entire,v_avg, v_std, 0,-1,50, ax,color='k')
 # ax = plot_dimensionless_velocity_profile(x5,v_avg5, v_std5, 0,-1,50, ax,color='r')
 fig.savefig('dless_bl.png',bbox_inches='tight', pad_inches=0)
 # %%
@@ -171,7 +173,7 @@ v_bottom = -u1[:,:,-1]
 t = np.linspace(0,90/15,90)
 # %%
 T = 80
-fig,ax = plt.subplots(1,2,figsize=(20,10))
+fig,ax = plt.subplots(1,2,figsize=(10,5))
 ax[0].plot(u_left[T,:],y_lr,'o-',label='left')
 ax[0].plot(u_right[T,:],y_lr,'o-',label = 'right')
 ax[1].plot(x_top,v_top[T,:],'ko-',label = 'top')
@@ -182,6 +184,21 @@ ax[0].set_ylabel('y (mm)')
 ax[1].set_xlabel('x (mm)')
 ax[1].set_ylabel('v (mm/s)')
 fig.legend()
+fig.savefig('boundary_velocities.png',bbox_inches='tight', pad_inches=0)
+# %%
+T = 80
+fig,ax = plt.subplots(1,2,figsize=(10,5))
+ax[0].plot(np.mean(u_left,axis=0),y_lr,'o-',label='left')
+ax[0].plot(np.mean(u_right,axis=0),y_lr,'o-',label = 'right')
+ax[1].plot(x_top,np.mean(v_top,axis=0),'ko-',label = 'top')
+ax[1].plot(x_top,np.mean(v_bottom,axis=0),'ro-',label = 'bottom')
+
+ax[0].set_xlabel('u (mm/s)')
+ax[0].set_ylabel('y (mm)')
+ax[1].set_xlabel('x (mm)')
+ax[1].set_ylabel('v (mm/s)')
+fig.legend()
+fig.savefig('averaged_boundary_velocities.png',bbox_inches='tight', pad_inches=0)
 # %%
 rho = 1e3
 span = 0.048
@@ -201,6 +218,24 @@ momentum_bottom = rho*np.trapz(v_bottom*u_bottom,x_top)*1e-9*span # out
 momentum_deficit = momentum_left + momentum_right + momentum_top + momentum_bottom
 net_flowrate = flowrate_left + flowrate_right + flowrate_top + flowrate_bottom
 # %%
+flowrate_left2 = rho*np.trapz(np.mean(u_left,axis=0),y_lr)*1e-6*span
+flowrate_right2 = -rho*np.trapz(np.mean(u_right,axis=0),y_lr)*1e-6*span
+flowrate_top2 = -rho*np.trapz(np.mean(v_top,axis=0),x_top)*1e-6*span
+flowrate_bottom2 = rho*np.trapz(np.mean(v_bottom,axis=0),x_top)*1e-6*span
+
+momentum_left2 = rho*np.trapz(np.mean(u_left,axis=0)**2,y_lr)*1e-9*span # in
+momentum_right2 = -rho*np.trapz(np.mean(u_right,axis=0)**2,y_lr)*1e-9*span # out
+momentum_top2 = -rho*np.trapz(np.mean(v_top,axis=0)*np.mean(u_top,axis=0),x_top)*1e-9*span # out
+momentum_bottom2 = rho*np.trapz(np.mean(v_bottom,axis=0)*np.mean(u_bottom,axis=0),x_top)*1e-9*span # out
+# %%
+momentum_deficit2 = momentum_left2 + momentum_right2 + momentum_top2 + momentum_bottom2
+print(momentum_deficit2)
+# %%
+D = momentum_left2 + momentum_right2 - (flowrate_left2+flowrate_right2)*0.5
+print(momentum_left2+momentum_right2,flowrate_left2 + flowrate_right2)
+print(D)
+
+# %%
 print(np.mean(momentum_deficit), np.mean(net_flowrate))
 # %%
 mdot2 = flowrate_left + flowrate_right
@@ -210,12 +245,27 @@ print(np.mean(mdot2),np.mean(momentum_deficit2))
 # %%
 print(np.mean(momentum_left),np.mean(momentum_right),np.mean(momentum_top),np.mean(momentum_bottom))
 # %%
-
-# %%
-plt.plot(t,momentum_left)
-plt.plot(t,-momentum_right)
-plt.plot(t,-momentum_top)
-plt.plot(t,-momentum_bottom)
+plt.figure(dpi=300)
+plt.plot(t,momentum_left,label='left')
+plt.plot(t,momentum_right,label='right')
+plt.plot(t,momentum_top,label='top')
+plt.plot(t,momentum_bottom,label='bottom')
 plt.xlabel('time (s)')
 plt.ylabel('Momentum in (N s)')
+plt.legend()
+plt.savefig('momentum_entry.png')
+# %%
+C = 1        
+fig,ax = plt.subplots(figsize=(3.5,3.5),dpi=600)
+def update(i):
+    ax.clear() 
+    plot_single_profile(5*i,y_entire[:,0],x_entire[0,:],-v_avg,-v_std,ax,x_cut = 0,color='k')    
+
+ani = animation.FuncAnimation(fig,update,200,interval=30)
+writer = animation.writers['ffmpeg'](fps=10)
+plt.tight_layout()
+
+ani.save('boundary_layer_movie.mp4',writer=writer)
+# %%
+
 # %%

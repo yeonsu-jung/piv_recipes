@@ -378,7 +378,7 @@ class ParticleImage:
 
         return (entire_x,entire_y,entire_u_tavg,entire_v_tavg,entire_u_tstd,entire_v_tstd)
 
-    def get_entire_ul_velocity_map(self,camera_step,s):
+    def get_top_bottom_average_velocity_map(self,camera_step,s):
         lis = self.piv_dict_list    
         
         for pd in lis:
