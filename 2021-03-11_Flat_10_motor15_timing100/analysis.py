@@ -118,7 +118,7 @@ try:
 except:
     folder_path = folder_path.replace('C:/Users/yj/','/Users/yeonsu/')
     results_folder_path = results_folder_path.replace('C:/Users/yj/','/Users/yeonsu/')
-    pi = piv.ParticleImage(folder_path,results_folder_path)
+    pi = piv.ParticleImage(folder_path,results_folder_path,version='2')
 
 # %% For velocity field over sample
 step = 25
@@ -154,8 +154,8 @@ step = 25
 x1,y1,u1,v1,x2,y2,u2,v2 = pi.get_top_bottom_velocity_series(25,'003_90')
 # %%
 y_lr = x[0,:]
-u_left = -vl[:,0,:]
-v_left = ul[:,0,:]
+u_left = -vl[:,3,:]
+v_left = ul[:,3,:]
 
 u_right = -vr[:,-1,:]
 v_right = ur[:,-1,:]
@@ -169,6 +169,17 @@ u_bottom = -v1[:,:,-3]
 v_bottom = -u1[:,:,-3]
 
 t = np.linspace(0,90/15,90)
+# %%
+y_lr.shape
+# %%
+
+b, a = signal.butter(4, 0.11)
+u_left_filtered = signal.filtfilt(b,a,-vl[0,8,:])
+u_right_filtered = signal.filtfilt(b,a,-vr[0,8,:])
+plt.plot(u_left_filtered)
+plt.plot(u_right_filtered)
+plt.plot(-vl[0,8,:])
+plt.plot(-vr[0,8,:])
 # %%
 rho = 1e3
 span = 0.048
@@ -195,12 +206,41 @@ momentum_right2 = -rho*np.trapz(np.mean(u_right,axis=0)**2,y_lr)*1e-9*span # out
 momentum_top2 = -rho*np.trapz(np.mean(v_top,axis=0)*np.mean(u_top,axis=0),x_top)*1e-9*span # out
 momentum_bottom2 = rho*np.trapz(np.mean(v_bottom,axis=0)*np.mean(u_bottom,axis=0),x_top)*1e-9*span # out
 # %%
-# momentum_deficit2 = momentum_left2 + momentum_right2 + momentum_top2 + momentum_bottom2
-# print(momentum_deficit2)
+momentum_deficit2 = momentum_left2 + momentum_right2 + momentum_top2 + momentum_bottom2
+print(momentum_deficit2)
 # %%
 momentum_deficit3 = momentum_left2 + momentum_right2 - (flowrate_left2+flowrate_right2)*np.mean((u_top+u_bottom)/2*0.001)
 print(momentum_deficit3)
 
+# %%
+from scipy import signal
+
+b, a = signal.butter(4, 0.11)
+
+u_top_filtered = signal.filtfilt(b,a,np.mean(u_top,axis=0))
+v_top_filtered = signal.filtfilt(b,a,np.mean(v_top,axis=0))
+u_bottom_filtered = signal.filtfilt(b,a,np.mean(u_bottom,axis=0))
+v_bottom_filtered = signal.filtfilt(b,a,np.mean(v_bottom,axis=0))
+# %%
+# plt.plot(x_top,u_top_filtered)
+plt.plot(x_bottom,u_bottom_filtered)
+# plt.plot(x_top,u_top_filtered)
+# plt.axis([20,180,740,860])
+# %%
+# plt.plot(x_top,u_bottom_filtered)
+plt.plot(x_top,v_bottom_filtered*u_bottom_filtered,label='bottom')
+plt.plot(x_top,v_top_filtered*u_top_filtered,label='top')
+plt.legend()
+
+# %%
+momentum_top_filtered = -np.trapz(rho*u_top_filtered*v_top_filtered,x_top)*1e-9*span
+momentum_bottom_filtered = np.trapz(rho*u_bottom_filtered*v_bottom_filtered,x_bottom)*1e-9*span
+# %%
+print(momentum_bottom2,momentum_top2)
+print(momentum_bottom_filtered, momentum_top_filtered)
+# %%
+momentum_deficit_filtered = momentum_left2 + momentum_right2 + momentum_bottom_filtered + momentum_top_filtered
+print(momentum_deficit_filtered)
 # %% For pressure calculation
 u_bottom_avg = np.mean(u_bottom,axis=0)
 v_bottom_avg = np.mean(v_bottom,axis=0)
@@ -214,7 +254,38 @@ plt.plot(U_bottom_avg[-11:-1])
 U_inf_first = np.mean(U_bottom_avg[:10])*1e-3
 U_inf_last = np.mean(U_bottom_avg[-11:-1])*1e-3
 pressure_difference = 0.5 * rho * (U_inf_last**2 - U_inf_first**2)*0.048 * (np.max(x) - np.min(x)) * 0.001
+print(pressure_difference)
+# %%
+y_lr = x[3,:]
+u_left = -vl[:,3,:]
+v_left = ul[:,3,:]
+
+u_right = -vr[:,-3,:]
+v_right = ur[:,-3,:]
+
+ul_avg = np.mean(u_left, axis=0)
+vl_avg = np.mean(v_left, axis=0)
+ur_avg = np.mean(u_right, axis=0)
+vr_avg = np.mean(v_right, axis=0)
+
+UL = (ul_avg**2 + vl_avg**2)**0.5
+UR = (ur_avg**2 + vr_avg**2)**0.5
+# %%
+plt.plot(UL)
+plt.plot(UR)
+# %%
+
+# %%
+plt.plot(UL[-10:])
+plt.plot(UR[-10:])
+# %%
+U_inf_first = np.mean(UL[-10:])*1e-3
+U_inf_last = np.mean(UR[-10:])*1e-3
+pressure_difference = 0.5 * rho * (U_inf_last**2 - U_inf_first**2)*0.048 * (np.max(x) - np.min(x)) * 0.001
 print(0.5 * rho * (U_inf_last**2 - U_inf_first**2)*0.048 *  (np.max(x) - np.min(x)) * 0.001)
+# %%
+pressure_difference2 = (0.5 * rho * (np.trapz(UR**2,y_lr))*1e-6 - 0.5 * rho * U_inf_first**2 * (np.max(x) - np.min(x)) * 0.001) * 0.048 
+print(pressure_difference2)
 # %%
 Drag = momentum_deficit3 + pressure_difference
 print(Drag)
@@ -232,6 +303,19 @@ ax[1].set_xlabel('x (mm)')
 ax[1].set_ylabel('v (mm/s)')
 fig.legend()
 fig.savefig('boundary_velocities.png',bbox_inches='tight', pad_inches=0)
+# %%
+fig,ax = plt.subplots(1,2,figsize=(10,5))
+ax[0].plot(np.mean(u_left,axis=0),y_lr,'o-',label='left')
+ax[0].plot(np.mean(u_right,axis=0),y_lr,'o-',label = 'right')
+ax[1].plot(x_top,np.mean(v_top,axis=0),'ko-',label = 'top')
+ax[1].plot(x_top,np.mean(v_bottom,axis=0),'ro-',label = 'bottom')
+
+ax[0].set_xlabel('u (mm/s)')
+ax[0].set_ylabel('y (mm)')
+ax[1].set_xlabel('x (mm)')
+ax[1].set_ylabel('v (mm/s)')
+fig.legend()
+fig.savefig('averaged_boundary_velocities.png',bbox_inches='tight', pad_inches=0)
 
 # %%
 plt.figure(dpi=300)

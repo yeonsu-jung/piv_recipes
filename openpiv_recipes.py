@@ -506,6 +506,8 @@ class ParticleImage:
         ur_path = os.path.join(self.results_path,right_path,'u_full_series_%s.txt'%s)
         vr_path = os.path.join(self.results_path,right_path,'v_full_series_%s.txt'%s)
 
+        print(x_path)
+
         x = np.loadtxt(x_path)
         y = np.loadtxt(y_path)
 
