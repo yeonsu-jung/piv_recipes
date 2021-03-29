@@ -110,6 +110,22 @@ def plot_single_profile(i,x,y,v_array,v_std_array,ax,x_cut = 0,**kw):
     # fig.savefig('individual_profile.png',dpi=900)
     return ax
 
+def velocity_array(x,y,ul,vl,ur,vr):
+    y_lr = x[0,:]
+    u_left = -vl[:,3,:]
+    v_left = ul[:,3,:]
+
+    u_right = -vr[:,-1,:]
+    v_right = ur[:,-1,:]
+
+    x_top = y2[:,0]
+    u_top = -v2[:,:,0]
+    v_top = -u2[:,:,0]
+
+    x_bottom = y1[:,-3]
+    u_bottom = -v1[:,:,-3]
+    v_bottom = -u1[:,:,-3]
+    return y_lr,u_left,v_left,u_right,v_right,x_top,u_top,v_top,x_bottom,u_bottom,v_bottom
 # %%
 try:
     folder_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-11/Flat_10 (black)_motor15_cropped'
@@ -129,6 +145,45 @@ fig,ax = plt.subplots(figsize=(20,5),dpi=600)
 ax = plot_dimensionless_velocity_profile(x_entire,y_entire,v_avg, v_std, 0,-1,50, ax,color='k')
 # ax = plot_dimensionless_velocity_profile(x5,v_avg5, v_std5, 0,-1,50, ax,color='r')
 fig.savefig('dless_bl.png',bbox_inches='tight', pad_inches=0)
+
+# %%
+def plot_single_profile(i,x_array,y_array,v_array,v_std_array,ax,x_cut = 0,**kw):
+    C = 1        
+    # y_array[i]
+    vv = v_array[i,:]
+    ax.plot(C*vv[x_cut:],x_array[0,x_cut:],'--',**kw)
+    ax.plot([0,0],[0,np.max(x_array)],'b-')
+    ax.plot([0+C*540,C*540],[0,np.max(x_array)],'b--')
+    for j, vvv in enumerate(vv[x_cut:]):         
+        ax.arrow(0, x_array[0,j+x_cut], C*(vvv), 0, head_width=0.02, head_length=0.2, fc='k', ec='k')
+        ax.arrow(0 + C*(vvv), x_array[0,j+x_cut], C*v_std_array[i,j+x_cut], 0, head_width=0.05, head_length=2, fc='r', ec='r')
+        ax.arrow(0 + C*(vvv), x_array[0,j+x_cut], -C*v_std_array[i,j+x_cut], 0, head_width=0.05, head_length=2, fc='r', ec='r')
+
+    ax.set_title('x = %.2f mm'%(y_array[i]-55))
+    ax.set_xlabel('u (mm/s)')
+    ax.set_ylabel('y (mm)')
+    plt.savefig('individual_profile.png')
+    # fig.savefig('individual_profile.png',dpi=900)
+    return ax
+# %%
+N = 5
+fig,ax = plt.subplots(1,N,figsize=(3.5,3.5),dpi=600)
+
+for i in range(N):
+    ax[i] = plot_single_profile(360+i,x_entire,y_entire[:,0],-v_avg,-v_std,ax[i],x_cut = 0,color='k')
+
+# %%
+piv_cond = {
+    "winsize": 28, "searchsize": 34, "overlap": 22,
+    "pixel_density": 40,"scale_factor": 1e4, "arrow_width": 0.001,
+    "u_bound": [-25,25],"v_bound": [-800,100],
+    "transpose": False, "crop": [0,0,12,0],    
+    "sn_threshold": 1.000001,'dt': 0.0001,
+    "rotate": 0, "save_result": True,"show_result": True, 'raw_or_cropped':True
+}
+pi.set_piv_param(piv_cond)
+d = pi.quick_piv(pi.piv_dict_list[15])
+
 # %%
 with open('all_data.txt','a') as f:
     names = ('x','y','u_avg','v_avg','u_std','v_std')
@@ -153,26 +208,9 @@ x,y,ul,vl,ur,vr = pi.get_left_right_velocity_map_series('003_90')
 step = 25
 x1,y1,u1,v1,x2,y2,u2,v2 = pi.get_top_bottom_velocity_series(25,'003_90')
 # %%
-y_lr = x[0,:]
-u_left = -vl[:,3,:]
-v_left = ul[:,3,:]
-
-u_right = -vr[:,-1,:]
-v_right = ur[:,-1,:]
-
-x_top = y2[:,0]
-u_top = -v2[:,:,0]
-v_top = -u2[:,:,0]
-
-x_bottom = y1[:,-3]
-u_bottom = -v1[:,:,-3]
-v_bottom = -u1[:,:,-3]
-
+y_lr,u_left,v_left,u_right,v_right,x_top,u_top,v_top,x_bottom,u_bottom,v_bottom = velocity_array(x,y,ul,vl,ur,vr)
 t = np.linspace(0,90/15,90)
 # %%
-y_lr.shape
-# %%
-
 b, a = signal.butter(4, 0.11)
 u_left_filtered = signal.filtfilt(b,a,-vl[0,8,:])
 u_right_filtered = signal.filtfilt(b,a,-vr[0,8,:])
@@ -180,6 +218,11 @@ plt.plot(u_left_filtered)
 plt.plot(u_right_filtered)
 plt.plot(-vl[0,8,:])
 plt.plot(-vr[0,8,:])
+# %%
+def get_flowrate(y_lr,u_left,v_left,u_right,v_right,x_top,u_top,v_top,x_bottom,u_bottom,v_bottom):
+    
+    return , ,
+
 # %%
 rho = 1e3
 span = 0.048
