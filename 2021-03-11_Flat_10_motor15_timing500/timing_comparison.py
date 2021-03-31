@@ -11,31 +11,101 @@ from matplotlib import pyplot as plt
 
 import matplotlib.animation as animation
 # %%
-sys.path.append(os.path.dirname('/Users/yeonsu/Documents/github/piv_recipes/'))
+sys.path.append(os.path.dirname('../'))
 import openpiv_recipes as piv
 importlib.reload(piv)
 
 # %%
-folder_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-11/Flat_10 (black)_motor15_timing500_cropped'
-results_folder_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-results'
+try:
+    folder_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-11/Flat_10 (black)_motor15_timing500_cropped'
+    results_folder_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-results'
+    pi_500 = piv.ParticleImage(folder_path,results_folder_path)
+except:
+    folder_path = folder_path.replace('C:/Users/yj/','/Users/yeonsu/')
+    results_folder_path = results_folder_path.replace('C:/Users/yj/','/Users/yeonsu/')
+    pi_500 = piv.ParticleImage(folder_path,results_folder_path)
+# %%
+try:
+    folder_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-11/Flat_10 (black)_motor15_cropped'
+    results_folder_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-results'
+    pi_100 = piv.ParticleImage(folder_path,results_folder_path)
+except:
+    folder_path = folder_path.replace('C:/Users/yj/','/Users/yeonsu/')
+    results_folder_path = results_folder_path.replace('C:/Users/yj/','/Users/yeonsu/')
+    pi_100 = piv.ParticleImage(folder_path,results_folder_path)
+# %%
+def plot_single_profile(i,x_array,y_array,v_array,v_std_array,ax,x_cut = 0,**kw):
+    C = 1        
+    # y_array[i]
+    vv = v_array[i,:]
+    ax.plot(C*vv[x_cut:],x_array[0,x_cut:],'--',**kw)
+    ax.plot([0,0],[0,np.max(x_array)],'b-')
+    ax.plot([0+C*540,C*540],[0,np.max(x_array)],'b--')
+    for j, vvv in enumerate(vv[x_cut:]):         
+        ax.arrow(0, x_array[0,j+x_cut], C*(vvv), 0, head_width=0.02, head_length=0.2, fc='k', ec='k')
+        ax.arrow(0 + C*(vvv), x_array[0,j+x_cut], C*v_std_array[i,j+x_cut], 0, head_width=0.05, head_length=2, fc='r', ec='r')
+        ax.arrow(0 + C*(vvv), x_array[0,j+x_cut], -C*v_std_array[i,j+x_cut], 0, head_width=0.05, head_length=2, fc='r', ec='r')
 
-folder_path = folder_path.replace('C:/Users/yj/','/Users/yeonsu/')
-results_folder_path = results_folder_path.replace('C:/Users/yj/','/Users/yeonsu/')
+    ax.set_title('x = %.2f mm'%(y_array[i]-55))
+    ax.set_xlabel('u (mm/s)')
+    ax.set_ylabel('y (mm)')
+    plt.savefig('individual_profile.png')
+    # fig.savefig('individual_profile.png',dpi=900)
+    return ax
 
-pi_500 = piv.ParticleImage(folder_path,results_folder_path)
+# %%
+step = 25
+x5,y5,u_avg5,v_avg5,u_std5,v_std5 = pi_500.get_entire_avg_velocity_map(step,'003_90')
+x5 = x5 - 0.4 # 0.4 
+
+# %%
+step = 25
+x,y,u_avg,v_avg,u_std,v_std = pi_100.get_entire_avg_velocity_map(step,'003_90')
+x = x - 0.4 # 0.4 
+
+# %%
+ix = 200
+
+fig,ax = plt.subplots(figsize=(3.5,3.5),dpi=600)
+ax = plot_single_profile(ix,x,y[:,0],-v_avg,-v_std,ax,x_cut = 0,color='k')
+ax = plot_single_profile(ix,x,y[:,0],-v_avg5,-v_std5,ax,x_cut = 0,color='r')
+
+# %%
+piv_cond = {
+    "winsize": 28, "searchsize": 34, "overlap": 22,
+    "pixel_density": 40,"scale_factor": 1e4, "arrow_width": 0.001,
+    "u_bound": [-25,25],"v_bound": [-800,100],
+    "transpose": False, "crop": [0,0,12,0],    
+    "sn_threshold": 1.000001,'dt': 0.0001,
+    "rotate": 0, "save_result": True,"show_result": True, 'raw_or_cropped':True
+}
+pi_100.set_piv_param(piv_cond)
+pi_500.set_piv_param(piv_cond)
+# %%
+pi_100.piv_param
+# %%
+ix = 10
+d = pi_100.quick_piv(pi_100.piv_dict_list[ix])
+
+# %%
+piv_cond = {
+    "winsize": 28, "searchsize": 34, "overlap": 22,
+    "pixel_density": 40,"scale_factor": 1e4, "arrow_width": 0.001,
+    "u_bound": [-25,25],"v_bound": [-800,100],
+    "transpose": False, "crop": [0,0,12,0],    
+    "sn_threshold": 1.000001,'dt': 0.0005,
+    "rotate": 0, "save_result": True,"show_result": True, 'raw_or_cropped':True
+}
+pi_500.set_piv_param(piv_cond)
+
+d = pi_500.quick_piv(pi_500.piv_dict_list[ix])
 
 # %%
 step = 25
 x5,y5,u_avg5,v_avg5,u_std5,v_std5 = pi_500.get_entire_avg_velocity_map(step,'003_90')
 x5 = x5 - 0.4 # 0.4 
 # %%
-folder_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-11/Flat_10 (black)_motor15_cropped'
-results_folder_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-results'
 
-folder_path = folder_path.replace('C:/Users/yj/','/Users/yeonsu/')
-results_folder_path = results_folder_path.replace('C:/Users/yj/','/Users/yeonsu/')
-
-pi_100 = piv.ParticleImage(folder_path,results_folder_path)
 # %%
 step = 25
 x,y,u_avg,v_avg,u_std,v_std = pi_100.get_entire_avg_velocity_map(step,'003_90')
@@ -161,3 +231,15 @@ writer = animation.writers['ffmpeg'](fps=10)
 
 ani.save('boundary_layer_movie.mp4',writer=writer)
 # %%
+
+
+piv_cond = {
+    "winsize": 28, "searchsize": 34, "overlap": 22,
+    "pixel_density": 40,"scale_factor": 1e4, "arrow_width": 0.001,
+    "u_bound": [-25,25],"v_bound": [-800,100],
+    "transpose": False, "crop": [0,0,12,0],    
+    "sn_threshold": 1.000001,'dt': 0.0001,
+    "rotate": 0, "save_result": True,"show_result": True, 'raw_or_cropped':True
+}
+pi.set_piv_param(piv_cond)
+d = pi.quick_piv(pi.piv_dict_list[15])
