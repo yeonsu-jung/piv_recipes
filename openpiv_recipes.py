@@ -1255,9 +1255,12 @@ def quiver_and_contour(x,y,Ux,Vy,img_a_count,results_path, show_result=False):
     fig = plt.figure(figsize=(20, 5), dpi= 400, constrained_layout=True)
     ax = fig.add_subplot(1,1,1)
     CS = ax.contourf(y,x,(Ux**2+Vy**2)**0.5, 50, vmin = 0.00, vmax=np.max(np.absolute(Vy)), cmap = cm.coolwarm)
+    # CS = ax.contourf(y,x,(Ux**2+Vy**2)**0.5, 50, vmin = np.max(np.absolute(Vy))*0.8, vmax=np.max(np.absolute(Vy)), cmap = cm.coolwarm)
+
     m = plt.cm.ScalarMappable(cmap = cm.coolwarm)
     m.set_array((Ux**2+Vy**2)**0.5)
-    m.set_clim(0,np.max(np.absolute(Vy)))
+    m.set_clim(np.max(np.absolute(Vy))*0,np.max(np.absolute(Vy)))
+    # m.set_clim(np.max(np.absolute(Vy))*0.8,np.max(np.absolute(Vy)))
     ax.set_aspect('auto')
 
     plt.colorbar(m, orientation = 'vertical')
