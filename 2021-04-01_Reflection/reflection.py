@@ -8,6 +8,8 @@ import matplotlib.cm as cm
 from scipy.optimize import curve_fit
 from matplotlib import pyplot as plt
 from matplotlib import animation as animation
+
+from openpiv import tools, process, validation, filters, scaling, pyprocess
 # %%
 sys.path.append(os.path.dirname('../'))
 
@@ -123,25 +125,153 @@ def make_PI_instance(s):
 
 # %%
 try:
-    folder_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing200'
+    folder_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-31/'
     results_folder_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-results'
-    pi_200 = piv.ParticleImage(folder_path,results_folder_path)
+    pi = piv.ParticleImage(folder_path,results_folder_path)
 except:
     folder_path = folder_path.replace('C:/Users/yj/','/Users/yeonsu/')
     results_folder_path = results_folder_path.replace('C:/Users/yj/','/Users/yeonsu/')
-    pi_200 = piv.ParticleImage(folder_path,results_folder_path)    
+    pi = piv.ParticleImage(folder_path,results_folder_path)    
 # %%
 piv_cond = {
     "winsize": 28, "searchsize": 34, "overlap": 22,
     "pixel_density": 40,"scale_factor": 1e4, "arrow_width": 0.001,
     "u_bound": [-200,200],"v_bound": [-1000,0],
-    "transpose": False, "crop": [0,0,400,0],    
-    "sn_threshold": 1.000001,'dt': 0.0002,
+    "transpose": False, "crop": [0,0,380,0],    
+    "sn_threshold": 1.000001,'dt': 0.0005,
     "rotate": 0, "save_result": True,"show_result": True, 'raw_or_cropped':True
 }
-pi_200.set_piv_param(piv_cond)
+pi.set_piv_param(piv_cond)
 # %%
-d = pi_200.quick_piv(pi_200.piv_dict_list[15])
+d = pi.quick_piv({'path': 'PBS190_noND_motor25'},index_a=20,index_b=21)
+# %%
+img_a,img_b = pi.read_two_images({'path': 'PBS190_noND_motor25'},index_a=20,index_b=21)
+# %%
+d[0].shape
+np.array(img_a).shape
+# %%
+def get_windows(img,winsize,overlap):    
+    m = img.shape[0]
+    n = img.shape[1]
+    m2 = (m-overlap)//(winsize-overlap)
+    n2 = (n-overlap)//(winsize-overlap)
+    
+    windows = []
+    for i in range(m2):
+        win2 = []
+        left = i * (winsize-overlap)
+        for j in range(n2):            
+            top = j * (winsize - overlap)
+            win2.append(img[left:left+winsize,top:top+winsize])
+        windows.append(win2)    
+
+    return windows
+# %%
+windows = get_windows(np.array(img_a),28,22)
+# %%
+fig,ax = plt.subplots(3,3,figsize=(20,15))
+ax[0,0].imshow(windows[15][67])
+ax[0,1].imshow(windows[15][68])
+ax[0,2].imshow(windows[15][69])
+ax[1,0].imshow(windows[16][67])
+ax[1,1].imshow(windows[16][68])
+ax[1,2].imshow(windows[16][69])
+ax[2,0].imshow(windows[17][67])
+ax[2,1].imshow(windows[17][68])
+ax[2,2].imshow(windows[17][69])
+
+# %%
+fig,ax = plt.subplots(3,3,figsize=(20,15))
+ax[0,0].imshow(windows[15][32])
+ax[0,1].imshow(windows[15][31])
+ax[0,2].imshow(windows[15][30])
+ax[1,0].imshow(windows[16][32])
+ax[1,1].imshow(windows[16][31])
+ax[1,2].imshow(windows[16][30])
+ax[2,0].imshow(windows[17][32])
+ax[2,1].imshow(windows[17][31])
+ax[2,2].imshow(windows[17][30])
+
+# %%
+windows = get_windows(np.array(img_a),100,0)
+plt.imshow(windows[0][3])
+
+# %%
+
+# %%
+process.get_field_shape(img_a, 28, 22)
+# %%
+try:
+    folder_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-01/'
+    results_folder_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-results'
+    pi = piv.ParticleImage(folder_path,results_folder_path)
+except:
+    folder_path = folder_path.replace('C:/Users/yj/','/Users/yeonsu/')
+    results_folder_path = results_folder_path.replace('C:/Users/yj/','/Users/yeonsu/')
+    pi = piv.ParticleImage(folder_path,results_folder_path)    
+# %%
+piv_cond = {
+    "winsize": 28, "searchsize": 40, "overlap": 22,
+    "pixel_density": 40,"scale_factor": 1e4, "arrow_width": 0.001,
+    "u_bound": [-50,50],"v_bound": [-1000,0],
+    "transpose": False, "crop": [0,0,0,390],    
+    "sn_threshold": 1.000001,'dt': 0.00025,
+    "rotate": 0, "save_result": True,"show_result": True, 'raw_or_cropped':True
+}
+pi.set_piv_param(piv_cond)
+# %%
+d = pi.quick_piv({'path': 'nofm_test3'},index_a=100,index_b=101)
+# %%
+img_a,img_b = pi.read_two_images({'path': 'nofm_test3'},index_a=20,index_b=21)
+# %%
+d[0].shape
+np.array(img_a).shape
+# %%
+def get_windows(img,winsize,overlap):    
+    m = img.shape[0]
+    n = img.shape[1]
+    m2 = (m-overlap)//(winsize-overlap)
+    n2 = (n-overlap)//(winsize-overlap)
+    
+    windows = []
+    for i in range(m2):
+        win2 = []
+        left = i * (winsize-overlap)
+        for j in range(n2):            
+            top = j * (winsize - overlap)
+            win2.append(img[left:left+winsize,top:top+winsize])
+        windows.append(win2)    
+
+    return windows
+# %%
+windows = get_windows(np.array(img_a),28,22)
+# %%
+fig,ax = plt.subplots(3,3,figsize=(20,15))
+ax[0,0].imshow(windows[15][75])
+ax[0,1].imshow(windows[15][76])
+ax[0,2].imshow(windows[15][77])
+ax[1,0].imshow(windows[16][75])
+ax[1,1].imshow(windows[16][76])
+ax[1,2].imshow(windows[16][77])
+ax[2,0].imshow(windows[17][75])
+ax[2,1].imshow(windows[17][76])
+ax[2,2].imshow(windows[17][77])
+
+
+
+
+
+# %%
+from inspect import getmembers, isfunction
+
+print(getmembers(process, isfunction))
+# %%
+getmembers(process)
+
+
+
+
+
 # %%
 
 # %%
