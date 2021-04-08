@@ -274,6 +274,28 @@ def get_windows(img,winsize,overlap):
         windows.append(win2)    
 
     return windows
+
+def see_windows(i,j,im1,win1,win2,_winsize,_overlap):       
+    left = i * (_winsize - _overlap)
+    top = j * (_winsize - _overlap)
+
+    fig, ax = plt.subplots()
+    ax.imshow(im1)
+    rect = patches.Rectangle((top,left), _winsize, _winsize, linewidth=1, edgecolor='r', facecolor='none')
+    ax.add_patch(rect)
+
+    fig,ax = plt.subplots(3,3,figsize=(20,15))
+    ax[0,0].imshow(win1[i][j])
+    ax[0,1].imshow(win1[i][j+1])
+    ax[0,2].imshow(win1[i][j+2])
+
+    ax[1,0].imshow(win2[i][j])
+    ax[1,1].imshow(win2[i][j+1])
+    ax[1,2].imshow(win2[i][j+2])
+
+    ax[2,0].imshow(win2[i][j] - win1[i][j])
+    ax[2,1].imshow(win2[i][j+1] - win1[i][j+1])
+    ax[2,2].imshow(win2[i][j+2] - win1[i][j+2])
 # %%
 windows1 = get_windows(np.array(img_a),28,22)
 windows2 = get_windows(np.array(img_b),28,22)
@@ -318,41 +340,7 @@ ax[2,1].imshow(windows[i+2][j+1])
 ax[2,2].imshow(windows[i+2][j+2])
 
 # %%
-def see_windows(i,j,im1,win1,win2,_winsize,_overlap):       
 
-    # winsize = 28
-    # overlap = 22
-
-    # m = im1.shape[0]
-    # n = im2.shape[1]
-    # m2 = (m-overlap)//(winsize-overlap)
-    # n2 = (n-overlap)//(winsize-overlap)
-
-    # m2 = (m-overlap)//(winsize-overlap)
-    # n2 = (n-overlap)//(winsize-overlap)
-
-    # print(m, n, m2, n2)        
-
-    left = i * (_winsize - _overlap)
-    top = j * (_winsize - _overlap)
-
-    fig, ax = plt.subplots()
-    ax.imshow(im1)
-    rect = patches.Rectangle((top,left), _winsize, _winsize, linewidth=1, edgecolor='r', facecolor='none')
-    ax.add_patch(rect)
-
-    fig,ax = plt.subplots(3,3,figsize=(20,15))
-    ax[0,0].imshow(win1[i][j])
-    ax[0,1].imshow(win1[i][j+1])
-    ax[0,2].imshow(win1[i][j+2])
-
-    ax[1,0].imshow(win2[i][j])
-    ax[1,1].imshow(win2[i][j+1])
-    ax[1,2].imshow(win2[i][j+2])
-
-    ax[2,0].imshow(win2[i][j] - win1[i][j])
-    ax[2,1].imshow(win2[i][j+1] - win1[i][j+1])
-    ax[2,2].imshow(win2[i][j+2] - win1[i][j+2])
     
 see_windows(15,80,img_a,windows1,windows2,28,22)
 # %%
