@@ -1,21 +1,25 @@
 # %%
 from openpiv import tools, process, validation, filters, scaling, pyprocess
 import yaml
+from argparse import Namespace
+from scipy import ndimage
+import os
+
+import numpy as np
+from matplotlib import pyplot as plt
 
 # %%
 class piv_class():
     def __init__(self):
         with open('piv_setting.yaml') as f:
-            piv_param = yaml.safe_load(f)
-            for k,v in piv_cond.items():
+            self.piv_param = yaml.safe_load(f)
+            for k,v in self.piv_param.items():
                 print(k,v)
 
     def show_piv_param(self):
         print("- PIV parameters -")
         for x, y in self.piv_param.items():
-            print(x +":", y)
-
-    def 
+            print(x +":", y)    
 
     def run_piv(self, path, index_a = 100, index_b = 101, folder = None):
         self.show_piv_param()
@@ -76,9 +80,9 @@ class piv_class():
                                         max_iter=50,
                                         kernel_size=1)
         
-        if ns.check_angle:
-            # u3, v3 = angle_mean_check(u3,v3)           
-            u3, v3 = correct_by_angle(u3,v3)
+        # if ns.check_angle:
+        #     # u3, v3 = angle_mean_check(u3,v3)           
+        #     u3, v3 = correct_by_angle(u3,v3)
 
         #save in the simple ASCII table format        
         if ns.save_result is True:
