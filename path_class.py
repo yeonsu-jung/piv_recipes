@@ -9,8 +9,7 @@ class path_class:
     def __init__(self, parent_path):               
     
         self.path = parent_path
-        rel_rpath = re.findall("[\d]{4}-[\d]{2}-[\d]{2}.*",self.path)[0] # + version
-        self.path_list_for_stitching = []
+        rel_rpath = re.findall("[\d]{4}-[\d]{2}-[\d]{2}.*",self.path)[0] # + version        
 
         with open('path_setting.yml') as f:
             path_setting = yaml.safe_load(f)           
@@ -26,6 +25,8 @@ class path_class:
             os.makedirs(self.results_path)
         except FileExistsError:
             pass
+
+        self.stitching_parameters = {}
 
         self.get_image_dirs()
         self.parse_folder_name()
@@ -86,15 +87,9 @@ class path_class:
             self.parameter_list.append(param_dict)               
 
     def check_stitching_possibility(self):
-        # check if every folder has appropriate pos and VOFFSET
-        self.path_list_for_stitching = []
+        # check if every folder has appropriate pos and VOFFSET        
         try:
-            self.parameter_list = sorted(self.parameter_list,key=lambda d: (d['pos'],d['VOFFSET']))
-
-            # to do: raise warning if pos voffset are wrong
-            # for elm in self.parameter_list:
-            #     pos = elm['pos']
-            #     voffset = elm['VOFFSET']
+            self.parameter_list = sorted(self.parameter_list,key=lambda d: (d['pos'],d['VOFFSET']))            
 
             def check_missing_numbers(lst):
                 for x in range(lst[0], lst[-1]+1):
@@ -108,6 +103,11 @@ class path_class:
 
             [pos_list.append(int(x['pos'])) for x in self.parameter_list if x['pos'] not in pos_list]
             [voffset_list.append(int(x['VOFFSET'])) for x in self.parameter_list if x['VOFFSET'] not in voffset_list]            
+            path_list = [x['path'] for x in self.parameter_list]
+
+            self.stitching_parameters = {"pos_list": pos_list,
+                                        "voffset_list": voffset_list,
+                                        "path_list": path_list}
 
             check_missing_numbers(pos_list)
             check_missing_numbers(np.array(voffset_list)//voffset_list[1])
@@ -122,15 +122,18 @@ class path_class:
         print(msg)
         return True
         
-    # def get_stitching_lists(self):
-    #     assert self.check_stitching_possibility(), "Can't stitch images."
+    def get_stitching_lists(self):
+        assert self.check_stitching_possibility(), "Can't stitch images."
 
-    #     pos_list = []
-    #     voffset_list = []
-    #     path_list = []
+        pos_list = []
+        voffset_list = []
+        path_list = []
 
-    #     [pos_list.append(int(x['pos'])) for x in self.parameter_list if x['pos'] not in pos_list]
-    #     [voffset_list.append(int(x['VOFFSET'])) for x in self.parameter_list if x['VOFFSET'] not in voffset_list]            
+        [pos_list.append(int(x['pos'])) for x in self.parameter_list if x['pos'] not in pos_list]
+        [voffset_list.append(int(x['VOFFSET'])) for x in self.parameter_list if x['VOFFSET'] not in voffset_list]            
+        path_list = [x['path'] for x in self.parameter_list]
+
+        return pos_list, voffset_list, path_list
 
     def set_piv_list(self,exp_cond_dict):        
         self.piv_dict_list = [x for x in self.param_dict_list if exp_cond_dict.items() <= x.items()]
