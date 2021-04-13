@@ -2,14 +2,23 @@
 import numpy as np
 import os
 import re
+import yaml
 
 # %%
 class path_class:
-    def __init__(self, folder_path,results_folder_path):               
+    def __init__(self, parent_path):               
     
-        self.path = folder_path
+        self.path = parent_path
         rel_rpath = re.findall("[\d]{4}-[\d]{2}-[\d]{2}.*",self.path)[0] # + version
-        self.results_path = os.path.join(os.path.normpath(results_folder_path), rel_rpath)
+
+        with open('path_setting.yml') as f:
+            path_setting = yaml.safe_load(f)           
+        
+        try:
+            self.results_path = os.path.join(os.path.normpath(path_setting['result_path'][0]), rel_rpath)
+        except:
+            self.results_path = os.path.join(os.path.normpath(path_setting['result_path'][1]), rel_rpath)
+
         print(self.results_path)
         
         try:
@@ -18,6 +27,8 @@ class path_class:
             pass
 
         self.get_image_dirs()
+        self.parse_folder_name()
+        self.check_stitching_possibility()
 
     def listdir(self):
         for s in os.listdir(self.path):
@@ -37,14 +48,78 @@ class path_class:
         chosen_path = [x for x in self.image_dirs if path == x]         
         assert len(chosen_path) == 1, "multiple possibilities"
 
-        return chosen_path        
+        return chosen_path       
 
+    def set_param_string_list(self,new_param_string_list):
+        self.param_string_list = new_param_string_list        
+        self.param_dict_list = []
+
+        for x in self.param_string_list:
+            self.param_dict_list.append(self.param_string_to_dictionary(x))       
+
+    def parse_folder_name(self):
+        self.parameter_list = []
+        for pstr in self.image_dirs:
+
+            param_dict = {'path': pstr}
+            pstr = pstr.replace('.tiff',"")
+
+            running_parameter = re.findall("_[a-z]+[0-9]+[.]*[0-9]*", pstr, re.IGNORECASE)
+            date_parameter = re.findall("_\[.*?\]",pstr)
+            # sample_parameter = pstr.replace("img_","")
+
+            if date_parameter:
+                sample_parameter = pstr.replace(date_parameter[0],"")
+
+            for k in running_parameter:
+                sample_parameter = sample_parameter.replace(k,"")
+
+            sample_parameter = sample_parameter.replace('_01-18',"")
+
+            param_dict.update({'sample': sample_parameter})
+            for k in running_parameter:
+                kk = re.findall('[a-x]+', k,re.IGNORECASE)
+                vv = re.findall('[0-9]+[.]*[0-9]*', k,re.IGNORECASE)
+                param_dict[kk[0]] = float(vv[0])
+
+            self.parameter_list.append(param_dict)               
+
+    def check_stitching_possibility(self):
+        # check if every folder has appropriate pos and VOFFSET
+        try:
+            self.parameter_list = sorted(self.parameter_list,key=lambda d: (d['pos'],d['VOFFSET']))
+
+            # to do: raise warning if pos voffset are wrong
+            # for elm in self.parameter_list:
+            #     pos = elm['pos']
+            #     voffset = elm['VOFFSET']
+            
+        except KeyError:
+            print('The parent folder cannot generate stitched PIV.')
+            return False
+        
+
+
+    def set_piv_list(self,exp_cond_dict):        
+        self.piv_dict_list = [x for x in self.param_dict_list if exp_cond_dict.items() <= x.items()]
+        self.search_dict_list = self.check_piv_dict_list()       
+        
+
+parent_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-08/Flat_10 (black)_motor10_stitching'
+
+ins = path_class(parent_path)
+ins.parameter_list
+# %%
+parent_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-08'
+ins = path_class(parent_path)
+
+ins.parameter_list
 
 # %%
-folder_path = os.path.join('/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-06/')
+parent_path = os.path.join('/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-06/')
 results_folder_path = '/Users/yeonsu/Documents/piv-results'
 
-ins = path_class(folder_path,results_folder_path)
+ins = path_class(parent_path,results_folder_path)
 # %%
 ins.choose_by_path('Flat_10 (black)_motor25_particle4_hori1280_laser1-4_nd0p7')
 
