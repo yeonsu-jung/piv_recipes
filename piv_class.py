@@ -11,6 +11,7 @@ from scipy import ndimage
 from importlib import reload
 import datetime
 import shutil
+from PIL import Image
 
 reload(path)
 # %%
@@ -18,7 +19,7 @@ class piv_class():
     def __init__(self,parent_path):        
         self.update_piv_param()
         self.parent_path = parent_path       
-        self.path_handler = path.path_class(self.parent_path,'/Users/yeonsu/Documents/piv-results')
+        self.path_handler = path.path_class(self.parent_path)
 
     def update_piv_param(self):
         with open('piv_setting.yaml') as f:
@@ -28,7 +29,7 @@ class piv_class():
         for x, y in self.piv_param.items():
             print(x +":", y)
         
-    def read_image(self,path,index):
+    def read_image(self,path,index=1):
         assert isinstance(index,int), "Frame index should be of int type."
         
         file_a_path = os.path.join(self.parent_path,path,'frame_%06d.tiff' %index)        
@@ -130,15 +131,90 @@ class piv_class():
     def quick_piv(self,index = 1):
         self.run_piv(self.path_handler.image_dirs[0],index = index)
 
+    def stitch_images(self, step, update = False, index = 1):
+        entire_image_path = os.path.join(self.path_handler.results_path,'_entire_image.png')        
+
+        assert self.path_handler.check_stitching_possibility(), "Can't stitch images."            
+
+        try:
+            if update == True:
+                raise FileNotFoundError
+            else:
+                im = Image.open(entire_image_path)
+        except FileNotFoundError:            
+
+            sorted_parameters = self.path_handler.parameter_list
+
+            pos_list = [int(x['pos']) for x in sorted_parameters]
+            voffset_list = [int(x['VOFFSET']) for x in sorted_parameters]
+            path_list = [x['path'] for x in sorted_parameters]
+
+            print(pos_list)
+            print(voffset_list)
+            # print(path_list)
+
+            img_a = self.read_image(path_list[0], index = 10)            
+            num_row, num_col = img_a.T.shape            
+
+            num_pos = len(pos_list)
+            num_voffset = len(voffset_list)
+            voffset_unit = voffset_list[1]
+
+            used_sensor_size = num_voffset * num_col - (num_voffset - 1) * (num_col - voffset_unit)
+            overlap = int(used_sensor_size - step * self.piv_param["pixel_density"])                                  
+
+            num_entire_col = voffset_unit*num_voffset*num_pos + (num_col-voffset_unit) - overlap * (num_pos - 1)
+            entire_image = np.zeros((num_row,num_entire_col))
+
+            print("entire image shape:",entire_image.shape)
+
+            i = 0
+            for path in path_list:
+                img_a = self.read_image(path,index=index)
+                pos = pos_list[i]
+                voffset = voffset_list[i]
+
+                xl = int(pos-pos_list[0]) * num_voffset * voffset_unit + int(voffset) - overlap * (int(pos) - 1)
+                xr = xl + num_col
+
+                print(xl,xr)
+                print(img_a.T.shape)
+                print(entire_image[:,xl:xr].shape)
+                entire_image[:,xl:xr] = img_a.T
+                i = i + 1
+
+            # for pos in pos_list:
+            #     for voffset in voffset_list:
+            #         sd = {'pos': pos, 'VOFFSET': voffset}
+            #         img_a, img_b = self.read_two_images(sd)
+
+            #         img_a = self.read_image(path_list)
+
+            #         xl = int(pos-pos_list[0]) * num_voffset * voffset_unit + int(voffset) - overlap * (int(pos) - 1)
+            #         xr = xl + num_col
+
+            #         print(xl,xr)
+            #         print(img_a.T.shape)
+            #         print(entire_image[:,xl:xr].shape)
+            #         entire_image[:,xl:xr] = img_a.T
+
+            io.imwrite(entire_image_path,entire_image)
+            im = Image.open(entire_image_path)
+            # im.show(entire_image_path)
+
+            im.show(entire_image_path)           
+
+        return im
+        
 
 
-# %%
-folder_path = os.path.join('/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-06/')
-pi = piv_class(folder_path)
-# %%
-pi.path_handler.show_image_dirs()
-# %%
-img_a = pi.read_image(pi.path_handler.image_dirs[2],100)
-plt.imshow(img_a)
-# %%
-pi.quick_piv()
+# # %%
+# folder_path = os.path.join('/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-06/')
+# pi = piv_class(folder_path)
+# # %%
+# pi.path_handler.show_image_dirs()
+# # %%
+# img_a = pi.read_image(pi.path_handler.image_dirs[2],100)
+# plt.imshow(img_a)
+# # %%
+# pi.quick_piv()
