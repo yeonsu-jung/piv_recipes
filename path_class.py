@@ -26,6 +26,12 @@ class path_class:
     def get_image_dirs(self):
         self.image_dirs = [x for x in os.listdir(self.path) if not x.startswith('.') and not x.startswith('_')]
 
+    def show_image_dirs(self):
+        i = 0
+        for x in self.image_dirs:
+            print(i,':',x)
+            i = i + 1
+
     def choose_by_path(self,path):
 
         chosen_path = [x for x in self.image_dirs if path == x]         

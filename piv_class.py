@@ -1,46 +1,61 @@
 # %%
 from openpiv import tools, process, validation, filters, scaling, pyprocess
 import yaml
+import os
+import imageio as io
+import numpy as np
+import path_class as path
+from matplotlib import pyplot as plt
+from argparse import Namespace
+from scipy import ndimage
+from importlib import reload
+import datetime
+import shutil
 
+reload(path)
 # %%
 class piv_class():
-    def __init__(self):
-        with open('piv_setting.yaml') as f:
-            piv_param = yaml.safe_load(f)
-            for k,v in piv_cond.items():
-                print(k,v)
+    def __init__(self,parent_path):        
+        self.update_piv_param()
+        self.parent_path = parent_path       
+        self.path_handler = path.path_class(self.parent_path,'/Users/yeonsu/Documents/piv-results')
 
-    def show_piv_param(self):
+    def update_piv_param(self):
+        with open('piv_setting.yaml') as f:
+            self.piv_param = yaml.safe_load(f)           
+
         print("- PIV parameters -")
         for x, y in self.piv_param.items():
             print(x +":", y)
-
-    def 
-
-    def run_piv(self, path, index_a = 100, index_b = 101, folder = None):
-        self.show_piv_param()
-        ns = Namespace(**self.piv_param)
-
-        if folder == None:
-            img_a, img_b = self.read_two_images(search_dict,index_a=index_a,index_b=index_b,raw=ns.raw_or_cropped)
-
-            location_path = [x['path'] for x in self.piv_dict_list if search_dict.items() <= x.items()]
-            results_path = os.path.join(self.results_path,*location_path)
-            try:
-                os.makedirs(results_path)
-            except FileExistsError:
-                pass
-        else:
-            try:
-                file_a_path = os.path.join(self.path,folder,'frame_%06d.tiff' %index_a)
-                file_b_path = os.path.join(self.path,folder,'frame_%06d.tiff' %index_b)
-
-                img_a = np.array(Image.open(file_a_path))
-                img_b = np.array(Image.open(file_b_path))                
-            except:
-                return None
         
-        # crop
+    def read_image(self,path,index):
+        assert isinstance(index,int), "Frame index should be of int type."
+        
+        file_a_path = os.path.join(self.parent_path,path,'frame_%06d.tiff' %index)        
+        img_a = io.imread(file_a_path)  
+        
+        print('Read image from:', file_a_path)
+
+        return img_a
+
+    def run_piv(self, path, index = 100):
+        self.update_piv_param()
+        ns = Namespace(**self.piv_param)
+        
+        figure_export_folder = '%d_%d_%d'%(ns.winsize,ns.overlap,ns.searchsize)
+        time_stamp = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
+
+        setting_path = os.path.join(self.path_handler.results_path,figure_export_folder,'piv_setting_%s.yaml'%time_stamp)
+        shutil.copy('piv_setting.yaml',setting_path)
+
+        try:
+                os.makedirs(os.path.join(self.path_handler.results_path,figure_export_folder))
+        except FileExistsError:
+            pass
+
+        img_a = self.read_image(path,index)
+        img_b = self.read_image(path,index+1)
+                
         img_a = ndimage.rotate(img_a, ns.rotate)
         img_b = ndimage.rotate(img_b, ns.rotate)
 
@@ -63,7 +78,7 @@ class piv_class():
 
         u0, v0, mask = validation.global_val(u0,v0,ns.u_bound,ns.v_bound)        
 
-        x,y,u0,v0,mask,sig2noise = peel_off_edges((x,y,u0,v0,mask,sig2noise))       
+        # x,y,u0,v0,mask,sig2noise = peel_off_edges((x,y,u0,v0,mask,sig2noise))
 
         print('Number of invalid vectors:',np.sum(np.isnan(mask)))
 
@@ -76,43 +91,54 @@ class piv_class():
                                         max_iter=50,
                                         kernel_size=1)
         
-        if ns.check_angle:
-            # u3, v3 = angle_mean_check(u3,v3)           
-            u3, v3 = correct_by_angle(u3,v3)
+        # if ns.check_angle:
+        #     # u3, v3 = angle_mean_check(u3,v3)           
+        #     u3, v3 = correct_by_angle(u3,v3)
 
         #save in the simple ASCII table format        
-        if ns.save_result is True:
-            tools.save(x, y, u3, v3, mask, os.path.join(results_path,'Stream_%05d.txt'%index_a))            
-            io.imwrite(os.path.join(results_path,ns.figure_export_name),img_a)
-            quiver_and_contour(x,y,u3,v3,index_a,results_path,show_result = ns.show_result)
-        
-        if ns.image_check == True:
-            fig,ax = plt.subplots(2,1,figsize=(24,12))
-            ax[0].imshow(img_a)
-            ax[1].imshow(img_b)       
+        txt_path = os.path.join(self.path_handler.results_path,figure_export_folder,'Stream_%05d_%s.txt'%(index,time_stamp))
+        img_path = os.path.join(self.path_handler.results_path,figure_export_folder,'Stream_%05d_%s.png'%(index,time_stamp))
+        if ns.save_result is True:            
+            tools.save(x, y, u3, v3, mask, txt_path)
+            io.imwrite(img_path,img_a)
+
+            # quiver_and_contour(x,y,u3,v3,index,self.path_handler.results_path,show_result = ns.show_result)       
+               
 
         if ns.show_result == True:
             fig, ax = plt.subplots(figsize=(24,12))
-            tools.display_vector_field( os.path.join(results_path,'Stream_%05d.txt'%index_a), 
+            tools.display_vector_field( txt_path, 
                                         ax=ax,
                                         scaling_factor= ns.pixel_density, 
                                         scale=ns.scale_factor, # scale defines here the arrow length
                                         width=ns.arrow_width, # width is the thickness of the arrow
                                         on_img=True, # overlay on the image
-                                        image_name= os.path.join(results_path,ns.figure_export_name))
-            fig.savefig(os.path.join(results_path,ns.figure_export_name))                    
+                                        image_name= img_path)
+            fig.savefig(os.path.join(self.path_handler.results_path,figure_export_folder))                    
         
         print('Mean of u: %.3f' %np.mean(u3))
         print('Std of u: %.3f' %np.std(u3))        
         print('Mean of v: %.3f' %np.mean(v3))
         print('Std of v: %.3f' %np.std(v3))
 
-        output = np.array([np.mean(u3),np.std(u3),np.mean(v3),np.std(v3)])
+        # output = np.array([np.mean(u3),np.std(u3),np.mean(v3),np.std(v3)])
         # if np.absolute(np.mean(v3)) < 50:
         #     output = self.quick_piv(search_dict,index_a = index_a + 1, index_b = index_b + 1)
 
         return x,y,u3,v3
 
+    def quick_piv(self,index = 1):
+        self.run_piv(self.path_handler.image_dirs[0],index = index)
+
+
+
 # %%
-pi = piv_class()
+folder_path = os.path.join('/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-06/')
+pi = piv_class(folder_path)
 # %%
+pi.path_handler.show_image_dirs()
+# %%
+img_a = pi.read_image(pi.path_handler.image_dirs[2],100)
+plt.imshow(img_a)
+# %%
+pi.quick_piv()

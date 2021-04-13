@@ -2,8 +2,8 @@ arrow_width: 0.001
 crop:
 - 0
 - 0
-- 1120
-- 500
+- 0
+- 0
 pixel_density: 40
 rotate: 0
 scale_factor: 10000.0
