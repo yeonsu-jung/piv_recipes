@@ -2,7 +2,7 @@ arrow_width: 0.001
 crop:
 - 0
 - 0
-- 0
+- 400
 - 0
 pixel_density: 70
 rotate: 0
@@ -15,7 +15,7 @@ sn_threshold: 1.000001
 show_result: true
 transpose: false
 save_result: true
-raw_or_cropped: true
+# raw_or_cropped: true
 u_bound:
 - -200
 - 200
