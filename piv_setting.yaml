@@ -2,14 +2,14 @@ arrow_width: 0.001
 crop:
 - 0
 - 0
-- 400
+- 860
 - 0
 pixel_density: 70
 rotate: 0
 scale_factor: 10000.0
-dt: 0.00025
+dt: 0.0004
 winsize: 32
-searchsize: 40
+searchsize: 50
 overlap: 26
 sn_threshold: 1.000001
 show_result: true

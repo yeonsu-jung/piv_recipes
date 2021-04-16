@@ -89,7 +89,7 @@ class path_class:
     def check_stitching_possibility(self):
         # check if every folder has appropriate pos and VOFFSET        
         try:
-            self.parameter_list = sorted(self.parameter_list,key=lambda d: (d['pos'],d['VOFFSET']))            
+            self.parameter_list = sorted(self.parameter_list,key=lambda d: (d['pos'],d['VOFFSET']))
 
             def check_missing_numbers(lst):
                 for x in range(lst[0], lst[-1]+1):

@@ -21,7 +21,10 @@ reload(path)
 # %%
 class piv_class():
     def __init__(self,parent_path):                        
+        owd = os.getcwd()
+
         self.path = path.path_class(parent_path)
+        self.piv_setting_path = os.path.join(owd,'piv_setting.yaml')
 
     def get_image_path(self,path,index):
         # assuming image file names start with frame_
@@ -29,13 +32,50 @@ class piv_class():
         return img_path
 
     def choose_path(self):
-        path_list = os.listdir(self.path.path)
+        
+        try:           
+            _,_,path_list = self.path.get_stitching_lists()            
+        except:
+            path_list = os.listdir(self.path.path)
+
+
         for i, pth in enumerate(path_list):
             print(i,'\t', pth)
         path_no = int(input('Choose number corresponding to the path you want.') )       
         assert path_no in range(i), "Choose number between %d and %d"%(0,i)
 
         return path_list[path_no]
+
+    def read_image_from_path(self,path,index=1):
+        assert isinstance(index,int), "Frame index should be of int type."
+        
+        file_a_path = os.path.join(self.path.path,path,'frame_%06d.tiff' %index)        
+        img_a = io.imread(file_a_path)  
+        
+        # print('Read image from:', file_a_path)
+
+        return img_a
+
+    def check_proper_index(self,path,index):
+        piv_param = update_piv_param(setting_file=self.piv_setting_path,mute = True)
+        ns = Namespace(**piv_param)
+
+        img_a = self.read_image_from_path(path,index)
+        img_b = self.read_image_from_path(path,index+1)
+        img_c = self.read_image_from_path(path,index+2)
+
+        img_a = img_a[ns.crop[0]:-ns.crop[1]-1,ns.crop[2]:-ns.crop[3]-1]
+        img_b = img_b[ns.crop[0]:-ns.crop[1]-1,ns.crop[2]:-ns.crop[3]-1]        
+        img_c = img_c[ns.crop[0]:-ns.crop[1]-1,ns.crop[2]:-ns.crop[3]-1]
+        
+        corr1 = pyprocess.correlate_windows(img_a,img_b)
+        corr2 = pyprocess.correlate_windows(img_b,img_c)
+
+        if np.max(corr1) > np.max(corr2):
+            out = index
+        else:
+            out = index + 1
+        return out
     
     def piv_over_time(self,path = None,start_index=1,N=2):
         t = time()
@@ -44,11 +84,11 @@ class piv_class():
 
         results_path = os.path.join(self.path.results_path,path)
 
-        piv_param = update_piv_param()
+        piv_param = update_piv_param(setting_file=self.piv_setting_path)
         ns = Namespace(**piv_param)
 
         # relative_path = '[%d,%d,%d,%d]_[%d,%d,%d]'%(ns.crop[0],ns.crop[1],ns.crop[2],ns.crop[3],ns.winsize,ns.overlap,ns.searchsize)
-        relative_path = get_rel_path()
+        relative_path = get_rel_path(piv_setting_path=self.piv_setting_path)
         full_path = os.path.join(results_path,relative_path,'series_%03d_%d'%(start_index,N))
         try:
             os.makedirs(full_path)
@@ -73,7 +113,7 @@ class piv_class():
             uf.write('# Array shape: {0}\n'.format(U.shape))
             vf.write('# Array shape: {0}\n'.format(U.shape))                       
         
-        ind = check_proper_index(os.path.join(self.path.path,path),index = start_index)
+        ind = self.check_proper_index(path,index = start_index)
 
         for i in range(N):
             x,y,U,V = self.quick_piv(path=path,index = ind,mute=True)
@@ -87,17 +127,31 @@ class piv_class():
         elapsed = time() - t
         print('PIV over time has been done. Elapsed time is %.2f'%elapsed)
 
-    
+    def piv_over_sample(self,start_index,N):
+        pos_list,voffset_list,path_list = self.path.get_stitching_lists()
+
+        for pth in path_list:
+            self.piv_over_time(pth,start_index=start_index,N=N)           
         
-    def temporal_average(self,result_path):
-        u_series = load_nd_array(u_path)
-        v_series = load_nd_array(v_path)
+    def temporal_average(self,series_path):
 
-        u_tavg = np.mean(u_series,axis=0)
-        v_tavg = np.mean(v_series,axis=0)
+        # relative_path = '[%d,%d,%d,%d]_[%d,%d,%d]'%(ns.crop[0],ns.crop[1],ns.crop[2],ns.crop[3],ns.winsize,ns.overlap,ns.searchsize)
+        
+        x_path = os.path.join(series_path, 'x.txt')
+        y_path = os.path.join(series_path, 'y.txt')
+        u_path = os.path.join(series_path, 'u.txt')
+        v_path = os.path.join(series_path, 'v.txt')
 
-        u_tstd = np.std(u_series,axis=0)
-        v_tstd = np.std(u_series,axis=0)
+        x = np.loadtxt(x_path)
+        y = np.loadtxt(y_path)
+        u = load_nd_array(u_path)
+        v = load_nd_array(v_path)
+
+        u_tavg = np.mean(u,axis=0)
+        v_tavg = np.mean(v,axis=0)
+
+        u_tstd = np.std(u,axis=0)
+        v_tstd = np.std(u,axis=0)
         
         
         u_tavg_path = os.path.join(results_path, 'u_%s_tavg_%03d_%d.txt' %(note,start_index,N))
@@ -124,18 +178,9 @@ class piv_class():
         path_a = self.get_image_path(path,index)
         path_b = self.get_image_path(path,index+1)
 
-        return run_piv(path_a,path_b, export_parent_path = os.path.join(self.path.results_path,path), mute=mute)
+        return run_piv(path_a,path_b, export_parent_path = os.path.join(self.path.results_path,path), piv_setting_path = self.piv_setting_path,mute=mute)
         # return x,y,U,V
-
-    def silent_piv(self,path = None,index = 1):
-        # choose path
-        if path == None:            
-            path = self.choose_path()
-
-        path_a = self.get_image_path(path,index)
-        path_b = self.get_image_path(path,index+1)
-
-        x,y,U,V = run_piv(path_a,path_b, export_parent_path = os.path.join(self.path.results_path,path), mute=False)        
+    
 
     def stitch_images(self, step, update = False, index = 1):
         entire_image_path = os.path.join(self.path.results_path,'_entire_image.png')        
@@ -215,8 +260,8 @@ def update_piv_param(setting_file = 'piv_setting.yaml', mute = False):
         
         return piv_param  
 
-def run_piv(img_a_path, img_b_path, export_parent_path = None, mute = False):
-    
+def run_piv(img_a_path, img_b_path, export_parent_path = None, piv_setting_path = 'piv_setting.yaml', mute = False):
+    owd = os.getcwd()
     try:
         img_a = io.imread(img_a_path)
         img_b = io.imread(img_b_path)
@@ -226,7 +271,7 @@ def run_piv(img_a_path, img_b_path, export_parent_path = None, mute = False):
     name_a = os.path.splitext(os.path.basename(img_a_path))[0]    
     name_b = os.path.splitext(os.path.basename(img_b_path))[0]
 
-    piv_param = update_piv_param(mute = mute)
+    piv_param = update_piv_param(setting_file=piv_setting_path,mute = mute)
     ns = Namespace(**piv_param)
 
     if mute:
@@ -234,10 +279,11 @@ def run_piv(img_a_path, img_b_path, export_parent_path = None, mute = False):
         ns.save_result = False
 
     # export_param = ()    
-        
+
     # relative_path = '%d_%d_%d'%(ns.winsize,ns.overlap,ns.searchsize)
-    relative_path = get_rel_path()
-    full_path = os.path.join(export_parent_path,relative_path)
+    relative_path = get_rel_path(piv_setting_path=piv_setting_path)
+    # full_path = os.path.join(export_parent_path,relative_path)
+    full_path = relative_path
 
     if mute:
         time_stamp = ''
@@ -245,10 +291,12 @@ def run_piv(img_a_path, img_b_path, export_parent_path = None, mute = False):
         time_stamp = datetime.datetime.now().strftime('_%Y%m%d_%H%M%S')
 
     try:
-        os.makedirs(full_path)
+        os.makedirs(os.path.join(export_parent_path,relative_path))
     except FileExistsError:
         pass        
-            
+    
+    os.chdir(export_parent_path)
+                
     img_a = ndimage.rotate(img_a, ns.rotate)
     img_b = ndimage.rotate(img_b, ns.rotate)
 
@@ -289,15 +337,17 @@ def run_piv(img_a_path, img_b_path, export_parent_path = None, mute = False):
     #     u3, v3 = correct_by_angle(u3,v3)
 
     #save in the simple ASCII table format        
-    txt_path = os.path.join(full_path,'%s%s.txt'%(name_a,time_stamp))
+    txt_path = os.path.expanduser( os.path.join(full_path,'%s%s.txt'%(name_a,time_stamp)) )
     img_path = os.path.join(full_path,'%s%s.png'%(name_a,time_stamp))
-    field_path = os.path.join(full_path,'Field_%s%s.png'%(name_a,time_stamp))
+    # field_path = os.path.normcase(os.path.join(full_path,'Field_%s%s.png'%(name_a,time_stamp)))
+    field_path = os.path.normcase(os.path.join(full_path,'Field_%s.png'%(time_stamp)))
+    # field_path = os.path.normcase(os.path.join(full_path,'test.png'))
 
     if ns.save_result is True:            
         tools.save(x, y, u3, v3, mask, txt_path)
         io.imwrite(img_path,img_a)
         setting_path = os.path.join(full_path,'piv_setting%s.yaml'%time_stamp)
-        shutil.copy('piv_setting.yaml',setting_path)
+        shutil.copy(os.path.join(owd,'piv_setting.yaml'),setting_path)
 
         # quiver_and_contour(x,y,u3,v3,index,self.path_handler.results_path,show_result = ns.show_result)                   
 
@@ -310,7 +360,9 @@ def run_piv(img_a_path, img_b_path, export_parent_path = None, mute = False):
                                     width=ns.arrow_width, # width is the thickness of the arrow
                                     on_img=True, # overlay on the image
                                     image_name= img_path)
-        fig.savefig( field_path )
+        
+        fig.savefig(field_path)
+        # fig.savefig('test.png')
     
     if not mute:
         print('Mean of u: %.3f' %np.mean(u3))
@@ -322,17 +374,11 @@ def run_piv(img_a_path, img_b_path, export_parent_path = None, mute = False):
     # if np.absolute(np.mean(v3)) < 50:
     #     output = self.quick_piv(search_dict,index_a = index_a + 1, index_b = index_b + 1)
 
+    os.chdir(owd)
+
     return x,y,u3,v3
 
-def read_image_from_path(path,index=1):
-    assert isinstance(index,int), "Frame index should be of int type."
-    
-    file_a_path = os.path.join(path,'frame_%06d.tiff' %index)        
-    img_a = io.imread(file_a_path)  
-    
-    # print('Read image from:', file_a_path)
 
-    return img_a
 
 def save_nd_array(path,ndarray):
     with open(path, 'w') as file:
@@ -351,6 +397,7 @@ def save_nd_array(path,ndarray):
             file.write('# New slice\n')
 
 def load_nd_array(path):        
+    print('foo')
     with open(path) as f:
         shape_info = f.readline()
         shape = re.findall("\d+",shape_info)
@@ -374,30 +421,10 @@ def load_nd_array(path):
         ar = ar.reshape(field_shape)        
     return ar
 
-def get_rel_path():
-    piv_param = update_piv_param(mute = True)
+def get_rel_path(piv_setting_path = 'piv_setting.yaml'):
+    piv_param = update_piv_param(setting_file=piv_setting_path,mute = True)
     ns = Namespace(**piv_param)
 
-    relative_path = '[%d,%d,%d,%d]_[%d,%d,%d]'%(ns.crop[0],ns.crop[1],ns.crop[2],ns.crop[3],ns.winsize,ns.overlap,ns.searchsize)
+    relative_path = '%d,%d,%d,%d_%d,%d,%d'%(ns.crop[0],ns.crop[1],ns.crop[2],ns.crop[3],ns.winsize,ns.overlap,ns.searchsize)
     return relative_path
 
-def check_proper_index(path,index):
-    piv_param = update_piv_param(mute = True)
-    ns = Namespace(**piv_param)        
-
-    img_a = read_image_from_path(path,index)
-    img_b = read_image_from_path(path,index+1)
-    img_c = read_image_from_path(path,index+2)
-
-    img_a = img_a[ns.crop[0]:-ns.crop[1]-1,ns.crop[2]:-ns.crop[3]-1]
-    img_b = img_b[ns.crop[0]:-ns.crop[1]-1,ns.crop[2]:-ns.crop[3]-1]        
-    img_c = img_c[ns.crop[0]:-ns.crop[1]-1,ns.crop[2]:-ns.crop[3]-1]
-    
-    corr1 = pyprocess.correlate_windows(img_a,img_b)
-    corr2 = pyprocess.correlate_windows(img_b,img_c)
-
-    if np.max(corr1) > np.max(corr2):
-        out = index
-    else:
-        out = index + 1
-    return out
