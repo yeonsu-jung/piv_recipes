@@ -1,10 +1,13 @@
 # %%
+from re import A
 import cv2
 from skimage.measure import regionprops
 import piv_class as pi
 from importlib import reload
 import numpy as np
 from matplotlib import pyplot as plt
+
+from skimage import measure
 
 reload(pi)
 
@@ -55,7 +58,7 @@ def get_img_wo_sample(img,rightmost):
 img_a = ins.read_image_from_path('C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-06\Flat_10 (black)_motor10_particle4_hori1280_laser1-4_nd0p7',index=100)
 img_b = ins.read_image_from_path('C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-06\Flat_10 (black)_motor10_particle4_hori1280_laser1-4_nd0p7',index=101)
 # %%
-bw = img_a[:,600:] > 100
+bw = img_a[:,:] > 100
 plt.imshow(bw)
 
 # %%
@@ -75,20 +78,64 @@ wall = wall_1 | wall_2
 
 plt.imshow(wall.astype(np.uint8),cmap=plt.cm.gray)
 # %%
-plt.figure(figsize=())
+plt.figure(figsize=(15,15))
 plt.subplot(2,1,1)
 plt.imshow(img_a[:,600:])
 plt.subplot(2,1,2)
 plt.imshow(img_a[:,600:]*~wall)
+# %%
+
+def locate_line(wall_img):
+    nonzeros = np.where(wall_img)
+    nz_y = nonzeros[0]
+    nz_x = nonzeros[1]    
+
+    data = np.hstack((nz_x[:,np.newaxis],nz_y[:,np.newaxis]))
+    datamean = data.mean(axis=0)
+
+    uu, dd, vv = np.linalg.svd(data - datamean)
+
+    linepts = vv[0] * np.mgrid[-100:100:2j][:, np.newaxis]
+    # shift by the mean to get the line in the right place
+    linepts += datamean    
+
+    # plt.plot(nz_x,nz_y,'.')
+    # plt.axis('equal')
+
+    plt.scatter(*data.T)
+    plt.plot(*linepts.T,'k-')
+    # plt.plot(*linepts2.T,'k--')
+    plt.axis('equal')
+    plt.xlim([0,1280])
+    plt.ylim([0,240])    
+
+    print('Centroid:', datamean)
+    print('Angle:', np.arctan(vv[0,0]/vv[0,1]) * 180/np.pi)
+
+# %%
+locate_line(wall_2)
+# %%
+from scipy import ndimage
+
+wall_1_rot = ndimage.rotate(wall_1,0.4149)
+wall_2_rot = ndimage.rotate(wall_2,0.4760)
+# %%
+# locate_line(wall_1_rot)
+locate_line(wall_2_rot)
 
 # %%
 
-nonzeros = np.where(wall_1)
-nz_x = nonzeros[0]
-nz_y = nonzeros[1]
+
+# %%
+
+nonzeros = np.where(wall_2)
+nz_y = nonzeros[0]
+nz_x = nonzeros[1]
 
 plt.plot(nz_x,nz_y,'.')
 plt.axis('equal')
+# %%
+
 # %%
 nz_y[:,np.newaxis].shape
 # %%
@@ -97,17 +144,61 @@ datamean = data.mean(axis=0)
 
 uu, dd, vv = np.linalg.svd(data - datamean)
 
-linepts = vv[0] * np.mgrid[-1000:1000:2j][:, np.newaxis]
-linepts2 = vv[1] * np.mgrid[-1000:1000:2j][:, np.newaxis]
+linepts = vv[0] * np.mgrid[-100:100:2j][:, np.newaxis]
 # shift by the mean to get the line in the right place
 linepts += datamean
 
 plt.scatter(*data.T)
 plt.plot(*linepts.T,'k-')
-plt.plot(*linepts2.T,'k--')
+# plt.plot(*linepts2.T,'k--')
 plt.axis('equal')
-plt.xlim([0,300])
-plt.ylim([0,250])
+plt.xlim([0,1280])
+plt.ylim([0,240])
+# %%
+datamean
+# %%
+vv[0,0]
+vv[0,1]
+
+print(np.arctan(vv[0,0]/vv[0,1]) * 180/np.pi)
+
+# %%
+row = np.floor(linepts.T[0]).astype(np.uint16)
+col = np.floor(linepts.T[1]).astype(np.uint16)
+row,col
+# %%
+np.where(wall_1)
+# %%
+ln = np.zeros(bw.shape)
+
+idx = ( (col,row) )
+idx
+# %%
+ln[idx] = 1
+
+plt.imshow(ln)
+
+# %%
+
+
+
+# %%
+
+vv[0] * np.mgrid[0:250:2j][:, np.newaxis]
+
+# %%
+def foo(ln):
+    print(ln)
+
+# %%
+print(*linepts.T)
+
+
+
+# np.sum(vv[0]**2)
+
+# %%
+linepts
 
 # %%
 
@@ -253,4 +344,12 @@ iws_b = get_img_wo_sample(img_b,rightmost_a)
 fig,ax = plt.subplots(2)
 ax[0].imshow(iws_a)
 ax[1].imshow(iws_b)
+# %%
+import preprocess_class as pc
+reload(pc)
+# %%
+pp = pc.preprocess_class(img_a)
+
+# %%
+pp.locate_lines2(wall_1)
 # %%
