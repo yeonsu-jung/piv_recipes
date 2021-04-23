@@ -44,6 +44,8 @@ class piv_class():
         path_no = int(input('Choose number corresponding to the path you want.') )       
         assert path_no in range(i), "Choose number between %d and %d"%(0,i)
 
+        print('Chose: %d'%path_no, path_list[path_no])
+
         return path_list[path_no]
 
     def read_image_from_path(self,path,index=1):
@@ -83,6 +85,7 @@ class piv_class():
             path = self.choose_path()
 
         results_path = os.path.join(self.path.results_path,path)
+        print('Result_path: %s'%results_path)
 
         piv_param = update_piv_param(setting_file=self.piv_setting_path)
         ns = Namespace(**piv_param)
@@ -261,6 +264,9 @@ def update_piv_param(setting_file = 'piv_setting.yaml', mute = False):
         return piv_param  
 
 def run_piv(img_a_path, img_b_path, export_parent_path = None, piv_setting_path = 'piv_setting.yaml', mute = False):
+    if export_parent_path is None:
+        export_parent_path = '_test'
+
     owd = os.getcwd()
     try:
         img_a = io.imread(img_a_path)
@@ -373,7 +379,6 @@ def run_piv(img_a_path, img_b_path, export_parent_path = None, piv_setting_path 
     # output = np.array([np.mean(u3),np.std(u3),np.mean(v3),np.std(v3)])
     # if np.absolute(np.mean(v3)) < 50:
     #     output = self.quick_piv(search_dict,index_a = index_a + 1, index_b = index_b + 1)
-
     os.chdir(owd)
 
     return x,y,u3,v3
