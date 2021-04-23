@@ -4,10 +4,10 @@ crop:
 - 0
 - 0
 - 0
-pixel_density: 70
+pixel_density: 40
 rotate: 0
 scale_factor: 10000.0
-dt: 0.0004
+dt: 0.00025
 winsize: 32
 searchsize: 50
 overlap: 26
