@@ -16,7 +16,9 @@ import shutil
 from PIL import Image
 import pathlib as Path
 import re
+import get_wall_position as gw
 
+reload(gw)
 reload(path)
 # %%
 class piv_class():
@@ -135,6 +137,49 @@ class piv_class():
 
         for pth in path_list:
             self.piv_over_time(pth,start_index=start_index,N=N)           
+
+    def get_wall_position(self,path = None,index = 10):        
+        if path == None:            
+            path = self.choose_path()
+
+        results_path = os.path.join(self.path.results_path,path)
+        print('Result_path: %s'%results_path)
+
+        # piv_param = update_piv_param(setting_file=self.piv_setting_path)
+        # ns = Namespace(**piv_param)
+
+        # relative_path = '[%d,%d,%d,%d]_[%d,%d,%d]'%(ns.crop[0],ns.crop[1],ns.crop[2],ns.crop[3],ns.winsize,ns.overlap,ns.searchsize)
+        # relative_path = get_rel_path(piv_setting_path=self.piv_setting_path)
+        # full_path = os.path.join(results_path,relative_path)
+        full_path = results_path
+
+        try:
+            os.makedirs(full_path)
+        except:
+            pass
+
+        # shutil.copy('piv_setting.yaml',os.path.join(full_path,'piv_setting.yaml')) # to be replaced with class member
+        # time_stamp = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
+
+        img_a = self.read_image_from_path(path,index)
+        img_b = self.read_image_from_path(path,index+1)
+        
+        wa1_pos, wa2_pos, wa1, wa2 = gw.get_wall_pos2(img_a,check_img = True)
+        wb1_pos, wb2_pos, wb1, wb2 = gw.get_wall_pos2(img_b,check_img = True)
+
+        # plt.subplot(2,1,1)
+        # plt.imshow(wa1 | wa2)
+        # plt.subplot(2,1,2)
+        # plt.imshow(wb1 | wb2)
+        # plt.show()
+
+        wpos_a_path = os.path.join(full_path, 'wall_a_position.txt')
+        wpos_b_path = os.path.join(full_path, 'wall_b_position.txt')
+
+        np.savetxt(wpos_a_path,[wa1_pos,wa2_pos],fmt='%d')
+        np.savetxt(wpos_b_path,[wb1_pos,wb2_pos],fmt='%d')
+        
+        # ind = self.check_proper_index(path,index = index)
         
     def temporal_average(self,series_path):
 
