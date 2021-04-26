@@ -113,7 +113,6 @@ def piv_over_time(path = None,start_index=1,N=2):
     piv_param = update_piv_param(setting_file=self.piv_setting_path)
     ns = Namespace(**piv_param)
 
-    
 
     # relative_path = '[%d,%d,%d,%d]_[%d,%d,%d]'%(ns.crop[0],ns.crop[1],ns.crop[2],ns.crop[3],ns.winsize,ns.overlap,ns.searchsize)
     relative_path = get_rel_path(piv_setting_path=self.piv_setting_path)

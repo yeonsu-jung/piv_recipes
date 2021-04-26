@@ -1,4 +1,5 @@
 # %%
+from re import T
 import piv_class as pi
 from importlib import reload
 
@@ -9,7 +10,7 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 
 # %%
-parent_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-06'
+parent_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-06/'
 ins = pi.piv_class(parent_path)
 
 # %%
@@ -17,9 +18,67 @@ os.listdir(parent_path)
 
 # %%
 d = ins.quick_piv(index = 100)
+# %%
+ins.piv_over_time(start_index=3,N=1)
+
+# %%
+os.listdir(parent_path)
+
+# %%
+lst = [
+ 'Flat_10 (black)_motor10_particle4_hori1920_laser1-4_nd0p7',
+ 'Flat_10 (black)_motor10_particle4_hori1920_laser1-4_nd0p7_RE',
+ 'Flat_10 (black)_motor10_particle4_hori640_laser1-4_nd0p7',
+ 'Flat_10 (black)_motor10_particle4_hori800_laser1-4_nd0p7',
+ 'Flat_10 (black)_motor25_particle4_hori1024_laser1-4_nd0p7',
+ 'Flat_10 (black)_motor25_particle4_hori1280_laser1-4_nd0p7',
+ 'Flat_10 (black)_motor25_particle4_hori1408_laser1-4_nd0p7',
+ 'Flat_10 (black)_motor25_particle4_hori1600_laser1-4_nd0p7',
+ 'Flat_10 (black)_motor25_particle4_hori1920_laser1-4_nd0p7']
+# %%
+for pth in lst:  
+    ins.piv_over_time(path=pth,start_index=3,N=95)
 
 # %%
 ins.piv_over_time(start_index=3,N=95)
+
+# %%
+
+os.path.join('a','b') + 'c'
+# %%
+import time
+t = time.time()
+ins.piv_over_sample(3,95)
+el = time.time() - t
+print('Elapsed time: %.2f sec'%el)
+# %%
+
+ins.piv_over_time(start_index=3,N=95)
+# %%
+for x in os.listdir(parent_path):
+    if x.startswith('vid'):
+        continue
+    if x.startswith('Flat_10 (black)_stitching process'):
+        continue
+    if x.startswith('Flat_10 (black)_stitching process_cropped'):
+        continue
+    print(x)
+
+# %%
+for x in os.listdir(parent_path):
+    if x.startswith('vid'):
+        continue
+    if x.startswith('Flat_10 (black)_stitching process'):
+        continue
+    if x.startswith('Flat_10 (black)_stitching process_cropped'):
+        continue
+    print(x)
+
+    ins.piv_over_time(path = x,start_index=3,N=95)
+
+# %%
+
+
 
 # %%
 ins.piv_over_sample(start_index=3,N=95)

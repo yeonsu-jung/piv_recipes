@@ -93,6 +93,20 @@ class piv_class():
         try:
             os.makedirs(full_path)
         except:
+            lst = [x for x in os.listdir(os.path.join(results_path,relative_path)) if 'series_%03d_%d'%(start_index,N) in x]
+            numbering = []
+            for pth in lst:
+                num = re.findall('\((\d)\)',pth)
+                if num == []:
+                    numbering.append(1)
+                else:
+                    numbering.append(int( num[0] ))
+
+            new_no = max(numbering) + 1
+
+            full_path = os.path.join(results_path,relative_path,'series_%03d_%d(%d)'%(start_index,N,new_no))
+            os.makedirs(full_path)
+
             pass
 
         shutil.copy('piv_setting.yaml',os.path.join(full_path,'piv_setting.yaml')) # to be replaced with class member
