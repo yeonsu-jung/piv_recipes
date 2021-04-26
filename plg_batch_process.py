@@ -1,6 +1,6 @@
 # %%
-from re import A
-import cv2
+import re
+# import cv2
 from skimage.measure import regionprops
 import piv_class as pi
 from importlib import reload
@@ -17,6 +17,7 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 # %%
 parent_path = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-06'
+parent_path = parent_path.replace('C:/Users/yj/','/Users/yeonsu/')
 ins = pi.piv_class(parent_path)
 
 # %%
@@ -55,8 +56,13 @@ def get_img_wo_sample(img,rightmost):
 
 
 # %%
-img_a = ins.read_image_from_path('C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-06\Flat_10 (black)_motor10_particle4_hori1280_laser1-4_nd0p7',index=100)
-img_b = ins.read_image_from_path('C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-06\Flat_10 (black)_motor10_particle4_hori1280_laser1-4_nd0p7',index=101)
+path_a='C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-06/Flat_10 (black)_motor10_particle4_hori1280_laser1-4_nd0p7'
+path_a = path_a.replace('C:/Users/yj/','/Users/yeonsu/')
+path_b='C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-06/Flat_10 (black)_motor10_particle4_hori1280_laser1-4_nd0p7'
+path_b = path_a.replace('C:/Users/yj/','/Users/yeonsu/')
+
+img_a = ins.read_image_from_path(path_a,index=100)
+img_b = ins.read_image_from_path(path_b,index=101)
 # %%
 bw = img_a[:,:] > 100
 plt.imshow(bw)
@@ -80,11 +86,10 @@ plt.imshow(wall.astype(np.uint8),cmap=plt.cm.gray)
 # %%
 plt.figure(figsize=(15,15))
 plt.subplot(2,1,1)
-plt.imshow(img_a[:,600:])
+plt.imshow(img_a)
 plt.subplot(2,1,2)
-plt.imshow(img_a[:,600:]*~wall)
+plt.imshow(img_a*~wall)
 # %%
-
 def locate_line(wall_img):
     nonzeros = np.where(wall_img)
     nz_y = nonzeros[0]
