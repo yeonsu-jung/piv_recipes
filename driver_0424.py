@@ -10,7 +10,6 @@ import os
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 
-
 # %%
 parent_path = '/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-08/Flat_10 (black)_motor10_stitching'
 parent_path = parent_path.replace('C:/Users/yj/','/Users/yeonsu/')
@@ -41,3 +40,4 @@ _ = ins.quick_piv(index = 2)
 ins.piv_over_sample(3,2)
 
 # %%
+parent_path = '/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-08/Flat_10 (black)_motor10_stitching'

@@ -296,7 +296,6 @@ vfront = -v[:,0,xtmp>w2]
 # %%
 
 k = 15
-
 fig = plt.figure(figsize=(15,5))
 plt.subplot(1,2,1)
 for i in range(u.shape[0]):
