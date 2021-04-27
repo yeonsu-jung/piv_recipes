@@ -386,7 +386,7 @@ def run_piv(img_a_path, img_b_path, export_parent_path = None, piv_setting_path 
 
     # x,y,u0,v0,mask,sig2noise = peel_off_edges((x,y,u0,v0,mask,sig2noise))
 
-    print('Number of invalid vectors:',np.sum(np.isnan(mask)))
+    # print('Number of invalid vectors:',np.sum(np.isnan(mask)))
 
     u1, v1, mask = validation.sig2noise_val( u0, v0, 
                                             sig2noise, 
