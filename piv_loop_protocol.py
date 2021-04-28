@@ -9,6 +9,7 @@ import shutil
 import matplotlib.image as mpimg
 from argparse import Namespace
 from openpiv import tools, process, validation, filters, scaling, pyprocess
+from time import time
 
 from piv_class import run_piv
 from importlib import reload
@@ -122,7 +123,6 @@ with open('not_yet_analyzed.txt','w') as f:
 [x for x in not_analyzed_paths if x in already_analyzed_paths]
 # %%
 tmpth = Path('/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos1_[03-30]_VOFFSET210')
-
 parent_name = str(tmpth.parent.parent.name)
 
 matched = re.match('\d{4}-\d{2}-\d{2}', parent_name)
@@ -155,10 +155,47 @@ def check_proper_index(image_dir_path,index,piv_setting_path):
     else:
         out = index + 1
     return out
+# %%
+def check_piv_setting_file(image_dir_path = None):
+    assert image_dir_path != None
+    assert isinstance(image_dir_path,Path)    
+    
+    current_path = image_dir_path
+
+    num_img = len([x for x in image_dir_path.glob('frame_*.tiff')])           
+    assert(num_img > 10)
+
+    while True:
+        try:
+            piv_setting_path = current_path.joinpath('_piv_setting.yaml')
+            # print(piv_setting_path)
+            with open(piv_setting_path) as f:
+                piv_param = yaml.safe_load(f)                       
+                return True             
+            
+        except:
+            if bool(re.match('\d{4}-\d{2}-\d{2}',str(current_path.name))):
+                break          
+
+            current_path = current_path.parent            
+            # print(current_path.name)
+
+    return False
+
+tmpth = Path('C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos1_[03-30]_VOFFSET210')
+tmpth = Path('C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos1_[03-30]_VOFFSET210')
+
+tmpth = Path('/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos1_[03-30]_VOFFSET210')
+check_piv_setting_file(tmpth)
+# %%
+not_analyzed_paths = [x for x in all_paths if not x in already_analyzed_paths]
+
+for pth in not_analyzed_paths:    
+    if not check_piv_setting_file(pth):
+        print(pth)
 
 
 # %%
-from time import time
 
 def piv_over_time(image_dir_path = None,start_index=3,N=2):
     assert image_dir_path != None
@@ -167,6 +204,12 @@ def piv_over_time(image_dir_path = None,start_index=3,N=2):
     t = time()    
     imdir_out_path = base_to_out(image_dir_path)
     current_path = image_dir_path
+
+    num_img = len([x for x in image_dir_path.glob('frame_*.tiff')])
+    assert(num_img>10) # raise what error, to continue in a loop
+
+    start_index = 3
+    N = num_img//2-5
            
     while True:
         try:
