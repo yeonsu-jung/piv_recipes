@@ -97,8 +97,9 @@ for containing_dir in all_paths:
 
        
 # %%
-not_analyzed_paths = [str(x) for x in all_paths if not x in already_analyzed_paths]
-
+not_analyzed_paths = [x for x in all_paths if not x in already_analyzed_paths]
+# %%
+len(not_analyzed_paths)
 
 
 # %%
@@ -155,7 +156,7 @@ def check_proper_index(image_dir_path,index,piv_setting_path):
         out = index + 1
     return out
 
-# %%
+
 # %%
 from time import time
 
@@ -176,11 +177,14 @@ def piv_over_time(image_dir_path = None,start_index=3,N=2):
                 break
             
         except:
+            if bool(re.match('\d{4}-\d{2}-\d{2}',str(current_path.name))):
+                break          
+
             current_path = current_path.parent            
             # print(current_path.name)
 
-        if bool(re.match('\d{4}-\d{2}-\d{2}',str(current_path.name))):
-            break          
+        # if bool(re.match('\d{4}-\d{2}-\d{2}',str(current_path.name))):
+        #     break          
 
     # piv_param = update_piv_param(setting_file=self.piv_setting_path)
     ns = Namespace(**piv_param)
@@ -253,18 +257,20 @@ def piv_over_time(image_dir_path = None,start_index=3,N=2):
     elapsed = time() - t
     print('PIV over time has been done. Elapsed time is %.2f'%elapsed)
 # %%
-tmpth = Path('/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos4_[03-30]_VOFFSET420')
+tmpth = Path(r'C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-31\PBS160_ND0p3_motor25')
 piv_over_time(image_dir_path=tmpth,start_index=3,N=1)
 
-# %%
 
+# %%
+t = time()
 not_analyzed_paths = [x for x in all_paths if not x in already_analyzed_paths]
 
-for pth in not_analyzed_paths[0:1]:
+for pth in not_analyzed_paths:
     print(pth.name)
-    piv_over_time(pth,start_index=3,N=1)    
+    piv_over_time(pth,start_index=3,N=95)
 
-
+el = time()-t
+print('Total elapsed time: %.4f sec'% el)
 # %%
 
      
