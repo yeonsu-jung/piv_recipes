@@ -7,13 +7,15 @@ from matplotlib import pyplot as plt
 from pathlib import Path
 from importlib import reload
 # %%
-import matplotlib
-reload(matplotlib)
-matplotlib.get_backend()
+# import matplotlib
+# reload(matplotlib)
+# matplotlib.get_backend()
 # %%
 import matplotlib
 matplotlib.use('agg')
 matplotlib.get_backend()
+# %%
+plt.plot([1,1],[2,2])
 
 # %%
 out_path = '/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-results/'
@@ -24,11 +26,11 @@ matches_list = sorted(matches)
 
 # %%
 for x in matches_list:
-    if '2021-04-06' in str(x):
+    if '2021-04-07' in str(x):
         print(x)
 
 # %%
-matches_partial_list = [x for x in matches_list if '2021-04-06' in str(x)]
+matches_partial_list = [x for x in matches_list if '2021-04-07' in str(x)]
 len(matches_partial_list)
 
 # %%
@@ -93,6 +95,7 @@ for x in matches_partial_list:
     plt.xlim([0,right])       
     
     plt.savefig(x.parent.joinpath('raw+mean.png'))
+    plt.close()
 
 # %%
 for x in matches_partial_list:
@@ -141,6 +144,7 @@ for x in matches_partial_list:
     plt.xlim([0,right])       
     
     plt.savefig(x.parent.joinpath('raw+mean.png'))
+    plt.close()
 
 # %%
 out_path = Path('/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-results/')

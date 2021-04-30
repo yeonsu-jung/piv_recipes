@@ -1,331 +1,331 @@
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-29\Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos1_[03-29]_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-29\Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos1_[03-29]_VOFFSET210
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-29\Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos1_[03-29]_VOFFSET420
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-29\Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos1_[03-29]_VOFFSET630
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-29\Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos1_[03-29]_VOFFSET840
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-29\Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos2_[03-29]_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-29\Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos2_[03-29]_VOFFSET210
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-29\Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos2_[03-29]_VOFFSET420
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-29\Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos2_[03-29]_VOFFSET630
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-29\Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos2_[03-29]_VOFFSET840
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-29\Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos3_[03-29]_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-29\Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos3_[03-29]_VOFFSET210
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-29\Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos3_[03-29]_VOFFSET420
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-29\Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos3_[03-29]_VOFFSET630
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-29\Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos3_[03-29]_VOFFSET840
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-29\Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos4_[03-29]_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-29\Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos4_[03-29]_VOFFSET210
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-29\Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos4_[03-29]_VOFFSET420
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-29\Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos4_[03-29]_VOFFSET630
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-29\Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos4_[03-29]_VOFFSET840
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-29\Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos5_[03-29]_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-29\Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos5_[03-29]_VOFFSET210
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-29\Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos5_[03-29]_VOFFSET420
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-29\Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos5_[03-29]_VOFFSET630
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-29\Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos5_[03-29]_VOFFSET840
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-29\Timing500\Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos1_[03-29]_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-29\Timing500\Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos1_[03-29]_VOFFSET210
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-29\Timing500\Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos1_[03-29]_VOFFSET420
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-29\Timing500\Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos1_[03-29]_VOFFSET630
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-29\Timing500\Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos1_[03-29]_VOFFSET840
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-29\Timing500\Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos2_[03-29]_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-29\Timing500\Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos2_[03-29]_VOFFSET210
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-29\Timing500\Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos2_[03-29]_VOFFSET420
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-29\Timing500\Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos2_[03-29]_VOFFSET630
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-29\Timing500\Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos2_[03-29]_VOFFSET840
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-29\Timing500\Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos3_[03-29]_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-29\Timing500\Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos3_[03-29]_VOFFSET210
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-29\Timing500\Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos3_[03-29]_VOFFSET420
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-29\Timing500\Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos3_[03-29]_VOFFSET630
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-29\Timing500\Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos3_[03-29]_VOFFSET840
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-29\Timing500\Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos4_[03-29]_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-29\Timing500\Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos4_[03-29]_VOFFSET210
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-29\Timing500\Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos4_[03-29]_VOFFSET420
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-29\Timing500\Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos4_[03-29]_VOFFSET630
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-29\Timing500\Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos4_[03-29]_VOFFSET840
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-29\Timing500\Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos5_[03-29]_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-29\Timing500\Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos5_[03-29]_VOFFSET210
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-29\Timing500\Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos5_[03-29]_VOFFSET420
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-29\Timing500\Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos5_[03-29]_VOFFSET630
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-29\Timing500\Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos5_[03-29]_VOFFSET840
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing200\Flat_10 (black)_timing200_ag1_dg1_laser1_motor25.00_pos1_[03-30]_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing200\Flat_10 (black)_timing200_ag1_dg1_laser1_motor25.00_pos1_[03-30]_VOFFSET210
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing200\Flat_10 (black)_timing200_ag1_dg1_laser1_motor25.00_pos1_[03-30]_VOFFSET420
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing200\Flat_10 (black)_timing200_ag1_dg1_laser1_motor25.00_pos1_[03-30]_VOFFSET630
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing200\Flat_10 (black)_timing200_ag1_dg1_laser1_motor25.00_pos1_[03-30]_VOFFSET840
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing200\Flat_10 (black)_timing200_ag1_dg1_laser1_motor25.00_pos2_[03-30]_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing200\Flat_10 (black)_timing200_ag1_dg1_laser1_motor25.00_pos2_[03-30]_VOFFSET210
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing200\Flat_10 (black)_timing200_ag1_dg1_laser1_motor25.00_pos2_[03-30]_VOFFSET420
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing200\Flat_10 (black)_timing200_ag1_dg1_laser1_motor25.00_pos2_[03-30]_VOFFSET630
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing200\Flat_10 (black)_timing200_ag1_dg1_laser1_motor25.00_pos2_[03-30]_VOFFSET840
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing200\Flat_10 (black)_timing200_ag1_dg1_laser1_motor25.00_pos3_[03-30]_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing200\Flat_10 (black)_timing200_ag1_dg1_laser1_motor25.00_pos3_[03-30]_VOFFSET210
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing200\Flat_10 (black)_timing200_ag1_dg1_laser1_motor25.00_pos3_[03-30]_VOFFSET420
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing200\Flat_10 (black)_timing200_ag1_dg1_laser1_motor25.00_pos3_[03-30]_VOFFSET630
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing200\Flat_10 (black)_timing200_ag1_dg1_laser1_motor25.00_pos3_[03-30]_VOFFSET840
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing200\Flat_10 (black)_timing200_ag1_dg1_laser1_motor25.00_pos4_[03-30]_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing200\Flat_10 (black)_timing200_ag1_dg1_laser1_motor25.00_pos4_[03-30]_VOFFSET210
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing200\Flat_10 (black)_timing200_ag1_dg1_laser1_motor25.00_pos4_[03-30]_VOFFSET420
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing200\Flat_10 (black)_timing200_ag1_dg1_laser1_motor25.00_pos4_[03-30]_VOFFSET630
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing200\Flat_10 (black)_timing200_ag1_dg1_laser1_motor25.00_pos4_[03-30]_VOFFSET840
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing200\Flat_10 (black)_timing200_ag1_dg1_laser1_motor25.00_pos5_[03-30]_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing200\Flat_10 (black)_timing200_ag1_dg1_laser1_motor25.00_pos5_[03-30]_VOFFSET210
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing200\Flat_10 (black)_timing200_ag1_dg1_laser1_motor25.00_pos5_[03-30]_VOFFSET420
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing200\Flat_10 (black)_timing200_ag1_dg1_laser1_motor25.00_pos5_[03-30]_VOFFSET630
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing200\Flat_10 (black)_timing200_ag1_dg1_laser1_motor25.00_pos5_[03-30]_VOFFSET840
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos1_[03-30]_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos1_[03-30]_VOFFSET210
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos1_[03-30]_VOFFSET420
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos1_[03-30]_VOFFSET630
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos1_[03-30]_VOFFSET840
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos2_[03-30]_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos2_[03-30]_VOFFSET210
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos2_[03-30]_VOFFSET420
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos2_[03-30]_VOFFSET630
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos2_[03-30]_VOFFSET840
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos3_[03-30]_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos3_[03-30]_VOFFSET210
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos3_[03-30]_VOFFSET420
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos3_[03-30]_VOFFSET630
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos3_[03-30]_VOFFSET840
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos4_[03-30]_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos4_[03-30]_VOFFSET210
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos4_[03-30]_VOFFSET420
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos4_[03-30]_VOFFSET630
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos4_[03-30]_VOFFSET840
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos5_[03-30]_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos5_[03-30]_VOFFSET210
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos5_[03-30]_VOFFSET420
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos5_[03-30]_VOFFSET630
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos5_[03-30]_VOFFSET840
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing400\Flat_10 (black)_timing400_ag1_dg1_laser1_motor25.00_pos1_[03-30]_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing400\Flat_10 (black)_timing400_ag1_dg1_laser1_motor25.00_pos1_[03-30]_VOFFSET210
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing400\Flat_10 (black)_timing400_ag1_dg1_laser1_motor25.00_pos1_[03-30]_VOFFSET420
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing400\Flat_10 (black)_timing400_ag1_dg1_laser1_motor25.00_pos1_[03-30]_VOFFSET630
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing400\Flat_10 (black)_timing400_ag1_dg1_laser1_motor25.00_pos1_[03-30]_VOFFSET840
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing400\Flat_10 (black)_timing400_ag1_dg1_laser1_motor25.00_pos2_[03-30]_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing400\Flat_10 (black)_timing400_ag1_dg1_laser1_motor25.00_pos2_[03-30]_VOFFSET210
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing400\Flat_10 (black)_timing400_ag1_dg1_laser1_motor25.00_pos2_[03-30]_VOFFSET420
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing400\Flat_10 (black)_timing400_ag1_dg1_laser1_motor25.00_pos2_[03-30]_VOFFSET630
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing400\Flat_10 (black)_timing400_ag1_dg1_laser1_motor25.00_pos2_[03-30]_VOFFSET840
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing400\Flat_10 (black)_timing400_ag1_dg1_laser1_motor25.00_pos3_[03-30]_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing400\Flat_10 (black)_timing400_ag1_dg1_laser1_motor25.00_pos3_[03-30]_VOFFSET210
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing400\Flat_10 (black)_timing400_ag1_dg1_laser1_motor25.00_pos3_[03-30]_VOFFSET420
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing400\Flat_10 (black)_timing400_ag1_dg1_laser1_motor25.00_pos3_[03-30]_VOFFSET630
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing400\Flat_10 (black)_timing400_ag1_dg1_laser1_motor25.00_pos3_[03-30]_VOFFSET840
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing400\Flat_10 (black)_timing400_ag1_dg1_laser1_motor25.00_pos4_[03-30]_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing400\Flat_10 (black)_timing400_ag1_dg1_laser1_motor25.00_pos4_[03-30]_VOFFSET210
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing400\Flat_10 (black)_timing400_ag1_dg1_laser1_motor25.00_pos4_[03-30]_VOFFSET420
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing400\Flat_10 (black)_timing400_ag1_dg1_laser1_motor25.00_pos4_[03-30]_VOFFSET630
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing400\Flat_10 (black)_timing400_ag1_dg1_laser1_motor25.00_pos4_[03-30]_VOFFSET840
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing400\Flat_10 (black)_timing400_ag1_dg1_laser1_motor25.00_pos5_[03-30]_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing400\Flat_10 (black)_timing400_ag1_dg1_laser1_motor25.00_pos5_[03-30]_VOFFSET210
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing400\Flat_10 (black)_timing400_ag1_dg1_laser1_motor25.00_pos5_[03-30]_VOFFSET420
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing400\Flat_10 (black)_timing400_ag1_dg1_laser1_motor25.00_pos5_[03-30]_VOFFSET630
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing400\Flat_10 (black)_timing400_ag1_dg1_laser1_motor25.00_pos5_[03-30]_VOFFSET840
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing500\Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos1_[03-30]_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing500\Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos1_[03-30]_VOFFSET210
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing500\Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos1_[03-30]_VOFFSET420
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing500\Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos1_[03-30]_VOFFSET630
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing500\Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos1_[03-30]_VOFFSET840
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing500\Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos2_[03-30]_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing500\Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos2_[03-30]_VOFFSET210
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing500\Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos2_[03-30]_VOFFSET420
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing500\Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos2_[03-30]_VOFFSET630
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing500\Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos2_[03-30]_VOFFSET840
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing500\Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos3_[03-30]_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing500\Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos3_[03-30]_VOFFSET210
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing500\Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos3_[03-30]_VOFFSET420
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing500\Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos3_[03-30]_VOFFSET630
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing500\Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos3_[03-30]_VOFFSET840
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing500\Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos4_[03-30]_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing500\Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos4_[03-30]_VOFFSET210
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing500\Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos4_[03-30]_VOFFSET420
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing500\Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos4_[03-30]_VOFFSET630
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing500\Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos4_[03-30]_VOFFSET840
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing500\Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos5_[03-30]_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing500\Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos5_[03-30]_VOFFSET210
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing500\Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos5_[03-30]_VOFFSET420
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing500\Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos5_[03-30]_VOFFSET630
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser1_Timing500\Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos5_[03-30]_VOFFSET840
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser3_Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos1_[03-30]_again_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser3_Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos1_[03-30]_again_VOFFSET210
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser3_Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos1_[03-30]_again_VOFFSET420
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser3_Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos1_[03-30]_again_VOFFSET630
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser3_Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos1_[03-30]_again_VOFFSET840
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser3_Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos1_[03-30]_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser3_Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos1_[03-30]_VOFFSET210
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser3_Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos2_[03-30]_again_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser3_Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos2_[03-30]_again_VOFFSET210
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser3_Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos2_[03-30]_again_VOFFSET420
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser3_Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos2_[03-30]_again_VOFFSET630
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser3_Timing300\Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos2_[03-30]_again_VOFFSET840
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser3_Timing300\Flat_10 (black)_timing300_ag1_dg1_laser3_motor25.00_pos3_[03-30]_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser3_Timing300\Flat_10 (black)_timing300_ag1_dg1_laser3_motor25.00_pos3_[03-30]_VOFFSET210
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser3_Timing300\Flat_10 (black)_timing300_ag1_dg1_laser3_motor25.00_pos3_[03-30]_VOFFSET420
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser3_Timing300\Flat_10 (black)_timing300_ag1_dg1_laser3_motor25.00_pos3_[03-30]_VOFFSET630
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser3_Timing300\Flat_10 (black)_timing300_ag1_dg1_laser3_motor25.00_pos3_[03-30]_VOFFSET840
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser3_Timing300\Flat_10 (black)_timing300_ag1_dg1_laser3_motor25.00_pos4_[03-30]_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser3_Timing300\Flat_10 (black)_timing300_ag1_dg1_laser3_motor25.00_pos4_[03-30]_VOFFSET210
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser3_Timing300\Flat_10 (black)_timing300_ag1_dg1_laser3_motor25.00_pos4_[03-30]_VOFFSET420
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser3_Timing300\Flat_10 (black)_timing300_ag1_dg1_laser3_motor25.00_pos4_[03-30]_VOFFSET630
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser3_Timing300\Flat_10 (black)_timing300_ag1_dg1_laser3_motor25.00_pos4_[03-30]_VOFFSET840
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser3_Timing300\Flat_10 (black)_timing300_ag1_dg1_laser3_motor25.00_pos5_[03-30]_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser3_Timing300\Flat_10 (black)_timing300_ag1_dg1_laser3_motor25.00_pos5_[03-30]_VOFFSET210
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser3_Timing300\Flat_10 (black)_timing300_ag1_dg1_laser3_motor25.00_pos5_[03-30]_VOFFSET420
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser3_Timing300\Flat_10 (black)_timing300_ag1_dg1_laser3_motor25.00_pos5_[03-30]_VOFFSET630
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-30\Laser3_Timing300\Flat_10 (black)_timing300_ag1_dg1_laser3_motor25.00_pos5_[03-30]_VOFFSET840
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-31\PBS160_ND0p3_motor25
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-31\PBS160_ND1p5_motor10
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-31\PBS160_noND_motor10
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-31\PBS160_noND_motor25
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-31\PBS170_noND_motor10
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-31\PBS180_noND_motor10
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-31\PBS190_ND0p3_motor25
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-31\PBS190_ND1p5_motor10
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-31\PBS190_noND_motor10
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-31\PBS190_noND_motor25
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-31\PBS200_noND_motor10
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-31\PBS210_noND_motor10
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-31\PBS220_ND0p3_motor25
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-31\PBS220_ND1p5_motor10
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-31\PBS220_noND_motor10
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-03-31\PBS220_noND_motor25
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-01\Clear acrylic\Flat_10 (clear)_timing250_ag1_dg1_laser1_motor25.00_pos1_[04-01]_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-01\Clear acrylic\Flat_10 (clear)_timing250_ag1_dg1_laser1_motor25.00_pos1_[04-01]_VOFFSET210
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-01\Clear acrylic\Flat_10 (clear)_timing250_ag1_dg1_laser1_motor25.00_pos1_[04-01]_VOFFSET420
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-01\Clear acrylic\Flat_10 (clear)_timing250_ag1_dg1_laser1_motor25.00_pos1_[04-01]_VOFFSET630
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-01\Clear acrylic\Flat_10 (clear)_timing250_ag1_dg1_laser1_motor25.00_pos1_[04-01]_VOFFSET840
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-01\Clear acrylic\Flat_10 (clear)_timing250_ag1_dg1_laser1_motor25.00_pos2_[04-01]_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-01\Clear acrylic\Flat_10 (clear)_timing250_ag1_dg1_laser1_motor25.00_pos2_[04-01]_VOFFSET210
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-01\Clear acrylic\Flat_10 (clear)_timing250_ag1_dg1_laser1_motor25.00_pos2_[04-01]_VOFFSET420
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-01\Clear acrylic\Flat_10 (clear)_timing250_ag1_dg1_laser1_motor25.00_pos2_[04-01]_VOFFSET630
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-01\Clear acrylic\Flat_10 (clear)_timing250_ag1_dg1_laser1_motor25.00_pos2_[04-01]_VOFFSET840
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-01\Clear acrylic\Flat_10 (clear)_timing250_ag1_dg1_laser1_motor25.00_pos3_[04-01]_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-01\Clear acrylic\Flat_10 (clear)_timing250_ag1_dg1_laser1_motor25.00_pos3_[04-01]_VOFFSET210
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-01\Clear acrylic\Flat_10 (clear)_timing250_ag1_dg1_laser1_motor25.00_pos3_[04-01]_VOFFSET420
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-01\Clear acrylic\Flat_10 (clear)_timing250_ag1_dg1_laser1_motor25.00_pos3_[04-01]_VOFFSET630
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-01\Clear acrylic\Flat_10 (clear)_timing250_ag1_dg1_laser1_motor25.00_pos3_[04-01]_VOFFSET840
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-01\Clear acrylic\Flat_10 (clear)_timing250_ag1_dg1_laser1_motor25.00_pos4_[04-01]_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-01\Clear acrylic\Flat_10 (clear)_timing250_ag1_dg1_laser1_motor25.00_pos4_[04-01]_VOFFSET210
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-01\Clear acrylic\Flat_10 (clear)_timing250_ag1_dg1_laser1_motor25.00_pos4_[04-01]_VOFFSET420
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-01\Clear acrylic\Flat_10 (clear)_timing250_ag1_dg1_laser1_motor25.00_pos4_[04-01]_VOFFSET630
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-01\Clear acrylic\Flat_10 (clear)_timing250_ag1_dg1_laser1_motor25.00_pos4_[04-01]_VOFFSET840
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-01\Clear acrylic\Flat_10 (clear)_timing250_ag1_dg1_laser1_motor25.00_pos5_[04-01]_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-01\Clear acrylic\Flat_10 (clear)_timing250_ag1_dg1_laser1_motor25.00_pos5_[04-01]_VOFFSET210
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-01\Clear acrylic\Flat_10 (clear)_timing250_ag1_dg1_laser1_motor25.00_pos5_[04-01]_VOFFSET420
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-01\Clear acrylic\Flat_10 (clear)_timing250_ag1_dg1_laser1_motor25.00_pos5_[04-01]_VOFFSET630
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-01\Clear acrylic\Flat_10 (clear)_timing250_ag1_dg1_laser1_motor25.00_pos5_[04-01]_VOFFSET840
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-01\clear_3dp
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-01\nofm_test
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-01\nofm_test2
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-01\nofm_test3
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-02\Clear 3dp\Flat_10 (clear3dp)_timing250_ag1_dg1_laser1_motor25.00_pos1_[04-02]_RE_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-02\Clear 3dp\Flat_10 (clear3dp)_timing250_ag1_dg1_laser1_motor25.00_pos1_[04-02]_RE_VOFFSET210
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-02\Clear 3dp\Flat_10 (clear3dp)_timing250_ag1_dg1_laser1_motor25.00_pos1_[04-02]_RE_VOFFSET420
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-02\Clear 3dp\Flat_10 (clear3dp)_timing250_ag1_dg1_laser1_motor25.00_pos1_[04-02]_RE_VOFFSET630
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-02\Clear 3dp\Flat_10 (clear3dp)_timing250_ag1_dg1_laser1_motor25.00_pos1_[04-02]_RE_VOFFSET840
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-02\Clear 3dp\Flat_10 (clear3dp)_timing250_ag1_dg1_laser1_motor25.00_pos2_[04-02]_RE_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-02\Clear 3dp\Flat_10 (clear3dp)_timing250_ag1_dg1_laser1_motor25.00_pos2_[04-02]_RE_VOFFSET210
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-02\Clear 3dp\Flat_10 (clear3dp)_timing250_ag1_dg1_laser1_motor25.00_pos2_[04-02]_RE_VOFFSET420
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-02\Clear 3dp\Flat_10 (clear3dp)_timing250_ag1_dg1_laser1_motor25.00_pos2_[04-02]_RE_VOFFSET630
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-02\Clear 3dp\Flat_10 (clear3dp)_timing250_ag1_dg1_laser1_motor25.00_pos2_[04-02]_RE_VOFFSET840
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-02\Clear 3dp\Flat_10 (clear3dp)_timing250_ag1_dg1_laser1_motor25.00_pos3_[04-02]_RE_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-02\Clear 3dp\Flat_10 (clear3dp)_timing250_ag1_dg1_laser1_motor25.00_pos3_[04-02]_RE_VOFFSET210
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-02\Clear 3dp\Flat_10 (clear3dp)_timing250_ag1_dg1_laser1_motor25.00_pos3_[04-02]_RE_VOFFSET420
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-02\Clear 3dp\Flat_10 (clear3dp)_timing250_ag1_dg1_laser1_motor25.00_pos3_[04-02]_RE_VOFFSET630
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-02\Clear 3dp\Flat_10 (clear3dp)_timing250_ag1_dg1_laser1_motor25.00_pos3_[04-02]_RE_VOFFSET840
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-02\Clear 3dp\Flat_10 (clear3dp)_timing250_ag1_dg1_laser1_motor25.00_pos4_[04-02]_RE_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-02\Clear 3dp\Flat_10 (clear3dp)_timing250_ag1_dg1_laser1_motor25.00_pos4_[04-02]_RE_VOFFSET210
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-02\Clear 3dp\Flat_10 (clear3dp)_timing250_ag1_dg1_laser1_motor25.00_pos4_[04-02]_RE_VOFFSET420
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-02\Clear 3dp\Flat_10 (clear3dp)_timing250_ag1_dg1_laser1_motor25.00_pos4_[04-02]_RE_VOFFSET630
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-02\Clear 3dp\Flat_10 (clear3dp)_timing250_ag1_dg1_laser1_motor25.00_pos4_[04-02]_RE_VOFFSET840
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-02\Clear 3dp\Flat_10 (clear3dp)_timing250_ag1_dg1_laser1_motor25.00_pos5_[04-02]_RE_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-02\Clear 3dp\Flat_10 (clear3dp)_timing250_ag1_dg1_laser1_motor25.00_pos5_[04-02]_RE_VOFFSET210
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-02\Clear 3dp\Flat_10 (clear3dp)_timing250_ag1_dg1_laser1_motor25.00_pos5_[04-02]_RE_VOFFSET420
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-02\Clear 3dp\Flat_10 (clear3dp)_timing250_ag1_dg1_laser1_motor25.00_pos5_[04-02]_RE_VOFFSET630
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-02\Clear 3dp\Flat_10 (clear3dp)_timing250_ag1_dg1_laser1_motor25.00_pos5_[04-02]_RE_VOFFSET840
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-07\Flat_10 (black)_stitching process\Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos10_[04-07]_RERE_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-07\Flat_10 (black)_stitching process\Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos10_[04-07]_RERE_VOFFSET320
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-07\Flat_10 (black)_stitching process\Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos10_[04-07]_RERE_VOFFSET640
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-07\Flat_10 (black)_stitching process\Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos11_[04-07]_RERE_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-07\Flat_10 (black)_stitching process\Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos11_[04-07]_RERE_VOFFSET320
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-07\Flat_10 (black)_stitching process\Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos11_[04-07]_RERE_VOFFSET640
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-07\Flat_10 (black)_stitching process\Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos12_[04-07]_RERE_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-07\Flat_10 (black)_stitching process\Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos12_[04-07]_RERE_VOFFSET320
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-07\Flat_10 (black)_stitching process\Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos12_[04-07]_RERE_VOFFSET640
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-07\Flat_10 (black)_stitching process\Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos1_[04-07]_RE_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-07\Flat_10 (black)_stitching process\Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos1_[04-07]_RE_VOFFSET320
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-07\Flat_10 (black)_stitching process\Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos1_[04-07]_RE_VOFFSET640
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-07\Flat_10 (black)_stitching process\Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos2_[04-07]_RERE_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-07\Flat_10 (black)_stitching process\Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos2_[04-07]_RERE_VOFFSET320
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-07\Flat_10 (black)_stitching process\Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos2_[04-07]_RERE_VOFFSET640
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-07\Flat_10 (black)_stitching process\Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos3_[04-07]_RERE_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-07\Flat_10 (black)_stitching process\Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos3_[04-07]_RERE_VOFFSET320
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-07\Flat_10 (black)_stitching process\Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos3_[04-07]_RERE_VOFFSET640
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-07\Flat_10 (black)_stitching process\Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos4_[04-07]_RERE_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-07\Flat_10 (black)_stitching process\Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos4_[04-07]_RERE_VOFFSET320
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-07\Flat_10 (black)_stitching process\Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos4_[04-07]_RERE_VOFFSET640
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-07\Flat_10 (black)_stitching process\Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos5_[04-07]_RERE_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-07\Flat_10 (black)_stitching process\Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos5_[04-07]_RERE_VOFFSET320
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-07\Flat_10 (black)_stitching process\Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos5_[04-07]_RERE_VOFFSET640
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-07\Flat_10 (black)_stitching process\Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos6_[04-07]_RERE_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-07\Flat_10 (black)_stitching process\Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos6_[04-07]_RERE_VOFFSET320
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-07\Flat_10 (black)_stitching process\Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos6_[04-07]_RERE_VOFFSET640
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-07\Flat_10 (black)_stitching process\Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos7_[04-07]_RERE_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-07\Flat_10 (black)_stitching process\Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos7_[04-07]_RERE_VOFFSET320
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-07\Flat_10 (black)_stitching process\Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos7_[04-07]_RERE_VOFFSET640
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-07\Flat_10 (black)_stitching process\Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos8_[04-07]_RERE_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-07\Flat_10 (black)_stitching process\Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos8_[04-07]_RERE_VOFFSET320
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-07\Flat_10 (black)_stitching process\Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos8_[04-07]_RERE_VOFFSET640
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-07\Flat_10 (black)_stitching process\Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos9_[04-07]_RERE_VOFFSET0
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-07\Flat_10 (black)_stitching process\Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos9_[04-07]_RERE_VOFFSET320
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-07\Flat_10 (black)_stitching process\Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos9_[04-07]_RERE_VOFFSET640
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-07\vid_2021-04-07_11-24-13
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-07\vid_2021-04-07_11-39-27
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-08\2_1_1_10 (clear 3dp)_timing400_ag1_dg1_laser1_shutter30_motor10_pos8_[04-08]
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-08\Flat_10 (black)_timing250_ag1_dg1_laser1_shutter100_motor25_pos8_[04-07]
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-08\Flat_10 (black)_timing250_ag1_dg1_laser1_shutter100_motor25_pos8_[04-07]_RE
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-08\Flat_10 (black)_timing400_ag1_dg1_laser1_shutter100_motor10_pos8_[04-07]
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-12\2_1_1_10 (black)_timing400\2_1_1_10 (black)_motor0.00
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-12\2_1_1_10 (black)_timing400\2_1_1_10 (black)_motor1.32
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-12\2_1_1_10 (black)_timing400\2_1_1_10 (black)_motor11.84
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-12\2_1_1_10 (black)_timing400\2_1_1_10 (black)_motor13.16
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-12\2_1_1_10 (black)_timing400\2_1_1_10 (black)_motor14.47
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-12\2_1_1_10 (black)_timing400\2_1_1_10 (black)_motor15.79
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-12\2_1_1_10 (black)_timing400\2_1_1_10 (black)_motor17.11
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-12\2_1_1_10 (black)_timing400\2_1_1_10 (black)_motor18.42
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-12\2_1_1_10 (black)_timing400\2_1_1_10 (black)_motor19.74
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-12\2_1_1_10 (black)_timing400\2_1_1_10 (black)_motor2.63
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-12\2_1_1_10 (black)_timing400\2_1_1_10 (black)_motor21.05
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-12\2_1_1_10 (black)_timing400\2_1_1_10 (black)_motor22.37
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-12\2_1_1_10 (black)_timing400\2_1_1_10 (black)_motor23.68
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-12\2_1_1_10 (black)_timing400\2_1_1_10 (black)_motor25.00
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-12\2_1_1_10 (black)_timing400\2_1_1_10 (black)_motor3.95
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-12\2_1_1_10 (black)_timing400\2_1_1_10 (black)_motor5.26
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-12\2_1_1_10 (black)_timing400\2_1_1_10 (black)_motor6.58
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-12\2_1_1_10 (black)_timing400\2_1_1_10 (black)_motor7.89
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-12\2_1_1_10 (black)_timing400\2_1_1_10 (black)_motor9.21
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-12\Flat_10 (black)_timing400\Flat_10 (black) (9)_motor0.00
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-12\Flat_10 (black)_timing400\Flat_10 (black) (9)_motor1.32
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-12\Flat_10 (black)_timing400\Flat_10 (black) (9)_motor11.84
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-12\Flat_10 (black)_timing400\Flat_10 (black) (9)_motor13.16
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-12\Flat_10 (black)_timing400\Flat_10 (black) (9)_motor14.47
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-12\Flat_10 (black)_timing400\Flat_10 (black) (9)_motor15.79
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-12\Flat_10 (black)_timing400\Flat_10 (black) (9)_motor17.11
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-12\Flat_10 (black)_timing400\Flat_10 (black) (9)_motor18.42
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-12\Flat_10 (black)_timing400\Flat_10 (black) (9)_motor19.74
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-12\Flat_10 (black)_timing400\Flat_10 (black) (9)_motor2.63
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-12\Flat_10 (black)_timing400\Flat_10 (black) (9)_motor21.05
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-12\Flat_10 (black)_timing400\Flat_10 (black) (9)_motor22.37
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-12\Flat_10 (black)_timing400\Flat_10 (black) (9)_motor23.68
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-12\Flat_10 (black)_timing400\Flat_10 (black) (9)_motor25.00
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-12\Flat_10 (black)_timing400\Flat_10 (black) (9)_motor3.95
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-12\Flat_10 (black)_timing400\Flat_10 (black) (9)_motor5.26
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-12\Flat_10 (black)_timing400\Flat_10 (black) (9)_motor6.58
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-12\Flat_10 (black)_timing400\Flat_10 (black) (9)_motor7.89
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-12\Flat_10 (black)_timing400\Flat_10 (black) (9)_motor9.21
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-19\RoughSphere_3cmAway_motor10_timing400
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-19\RoughSphere_3cmAway_motor20_timing400
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-19\RoughSphere_outermost_motor10_timing400
-C:\Users\yj\Dropbox (Harvard University)\Riblet\data\piv-data\2021-04-19\RoughSphere_outermost_motor20_timing400
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-02/Clear 3dp/Flat_10 (clear3dp)_timing250_ag1_dg1_laser1_motor25.00_pos1_[04-02]_RE_VOFFSET630
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-02/Clear 3dp/Flat_10 (clear3dp)_timing250_ag1_dg1_laser1_motor25.00_pos5_[04-02]_RE_VOFFSET420
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-02/Clear 3dp/Flat_10 (clear3dp)_timing250_ag1_dg1_laser1_motor25.00_pos5_[04-02]_RE_VOFFSET840
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-02/Clear 3dp/Flat_10 (clear3dp)_timing250_ag1_dg1_laser1_motor25.00_pos3_[04-02]_RE_VOFFSET630
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-02/Clear 3dp/Flat_10 (clear3dp)_timing250_ag1_dg1_laser1_motor25.00_pos4_[04-02]_RE_VOFFSET210
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-02/Clear 3dp/Flat_10 (clear3dp)_timing250_ag1_dg1_laser1_motor25.00_pos2_[04-02]_RE_VOFFSET210
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-02/Clear 3dp/Flat_10 (clear3dp)_timing250_ag1_dg1_laser1_motor25.00_pos3_[04-02]_RE_VOFFSET840
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-02/Clear 3dp/Flat_10 (clear3dp)_timing250_ag1_dg1_laser1_motor25.00_pos3_[04-02]_RE_VOFFSET420
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-02/Clear 3dp/Flat_10 (clear3dp)_timing250_ag1_dg1_laser1_motor25.00_pos5_[04-02]_RE_VOFFSET630
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-02/Clear 3dp/Flat_10 (clear3dp)_timing250_ag1_dg1_laser1_motor25.00_pos1_[04-02]_RE_VOFFSET840
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-02/Clear 3dp/Flat_10 (clear3dp)_timing250_ag1_dg1_laser1_motor25.00_pos1_[04-02]_RE_VOFFSET420
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-02/Clear 3dp/Flat_10 (clear3dp)_timing250_ag1_dg1_laser1_motor25.00_pos5_[04-02]_RE_VOFFSET210
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-02/Clear 3dp/Flat_10 (clear3dp)_timing250_ag1_dg1_laser1_motor25.00_pos2_[04-02]_RE_VOFFSET630
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-02/Clear 3dp/Flat_10 (clear3dp)_timing250_ag1_dg1_laser1_motor25.00_pos4_[04-02]_RE_VOFFSET420
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-02/Clear 3dp/Flat_10 (clear3dp)_timing250_ag1_dg1_laser1_motor25.00_pos4_[04-02]_RE_VOFFSET840
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-02/Clear 3dp/Flat_10 (clear3dp)_timing250_ag1_dg1_laser1_motor25.00_pos2_[04-02]_RE_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-02/Clear 3dp/Flat_10 (clear3dp)_timing250_ag1_dg1_laser1_motor25.00_pos3_[04-02]_RE_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-02/Clear 3dp/Flat_10 (clear3dp)_timing250_ag1_dg1_laser1_motor25.00_pos4_[04-02]_RE_VOFFSET630
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-02/Clear 3dp/Flat_10 (clear3dp)_timing250_ag1_dg1_laser1_motor25.00_pos2_[04-02]_RE_VOFFSET840
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-02/Clear 3dp/Flat_10 (clear3dp)_timing250_ag1_dg1_laser1_motor25.00_pos2_[04-02]_RE_VOFFSET420
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-02/Clear 3dp/Flat_10 (clear3dp)_timing250_ag1_dg1_laser1_motor25.00_pos3_[04-02]_RE_VOFFSET210
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-02/Clear 3dp/Flat_10 (clear3dp)_timing250_ag1_dg1_laser1_motor25.00_pos1_[04-02]_RE_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-02/Clear 3dp/Flat_10 (clear3dp)_timing250_ag1_dg1_laser1_motor25.00_pos1_[04-02]_RE_VOFFSET210
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-02/Clear 3dp/Flat_10 (clear3dp)_timing250_ag1_dg1_laser1_motor25.00_pos5_[04-02]_RE_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-02/Clear 3dp/Flat_10 (clear3dp)_timing250_ag1_dg1_laser1_motor25.00_pos4_[04-02]_RE_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing200/Flat_10 (black)_timing200_ag1_dg1_laser1_motor25.00_pos1_[03-30]_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing200/Flat_10 (black)_timing200_ag1_dg1_laser1_motor25.00_pos5_[03-30]_VOFFSET630
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing200/Flat_10 (black)_timing200_ag1_dg1_laser1_motor25.00_pos5_[03-30]_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing200/Flat_10 (black)_timing200_ag1_dg1_laser1_motor25.00_pos3_[03-30]_VOFFSET840
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing200/Flat_10 (black)_timing200_ag1_dg1_laser1_motor25.00_pos3_[03-30]_VOFFSET420
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing200/Flat_10 (black)_timing200_ag1_dg1_laser1_motor25.00_pos4_[03-30]_VOFFSET210
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing200/Flat_10 (black)_timing200_ag1_dg1_laser1_motor25.00_pos2_[03-30]_VOFFSET210
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing200/Flat_10 (black)_timing200_ag1_dg1_laser1_motor25.00_pos3_[03-30]_VOFFSET630
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing200/Flat_10 (black)_timing200_ag1_dg1_laser1_motor25.00_pos5_[03-30]_VOFFSET840
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing200/Flat_10 (black)_timing200_ag1_dg1_laser1_motor25.00_pos5_[03-30]_VOFFSET420
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing200/Flat_10 (black)_timing200_ag1_dg1_laser1_motor25.00_pos4_[03-30]_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing200/Flat_10 (black)_timing200_ag1_dg1_laser1_motor25.00_pos1_[03-30]_VOFFSET210
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing200/Flat_10 (black)_timing200_ag1_dg1_laser1_motor25.00_pos1_[03-30]_VOFFSET630
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing200/Flat_10 (black)_timing200_ag1_dg1_laser1_motor25.00_pos3_[03-30]_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing200/Flat_10 (black)_timing200_ag1_dg1_laser1_motor25.00_pos3_[03-30]_VOFFSET210
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing200/Flat_10 (black)_timing200_ag1_dg1_laser1_motor25.00_pos4_[03-30]_VOFFSET840
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing200/Flat_10 (black)_timing200_ag1_dg1_laser1_motor25.00_pos4_[03-30]_VOFFSET420
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing200/Flat_10 (black)_timing200_ag1_dg1_laser1_motor25.00_pos2_[03-30]_VOFFSET630
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing200/Flat_10 (black)_timing200_ag1_dg1_laser1_motor25.00_pos2_[03-30]_VOFFSET840
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing200/Flat_10 (black)_timing200_ag1_dg1_laser1_motor25.00_pos2_[03-30]_VOFFSET420
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing200/Flat_10 (black)_timing200_ag1_dg1_laser1_motor25.00_pos2_[03-30]_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing200/Flat_10 (black)_timing200_ag1_dg1_laser1_motor25.00_pos4_[03-30]_VOFFSET630
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing200/Flat_10 (black)_timing200_ag1_dg1_laser1_motor25.00_pos5_[03-30]_VOFFSET210
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing200/Flat_10 (black)_timing200_ag1_dg1_laser1_motor25.00_pos1_[03-30]_VOFFSET420
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing200/Flat_10 (black)_timing200_ag1_dg1_laser1_motor25.00_pos1_[03-30]_VOFFSET840
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser3_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos1_[03-30]_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser3_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos2_[03-30]_again_VOFFSET630
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser3_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser3_motor25.00_pos4_[03-30]_VOFFSET840
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser3_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser3_motor25.00_pos4_[03-30]_VOFFSET420
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser3_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser3_motor25.00_pos3_[03-30]_VOFFSET210
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser3_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos1_[03-30]_again_VOFFSET210
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser3_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser3_motor25.00_pos3_[03-30]_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser3_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser3_motor25.00_pos5_[03-30]_VOFFSET210
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser3_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser3_motor25.00_pos4_[03-30]_VOFFSET630
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser3_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos1_[03-30]_VOFFSET210
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser3_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos2_[03-30]_again_VOFFSET420
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser3_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos2_[03-30]_again_VOFFSET840
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser3_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos2_[03-30]_again_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser3_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser3_motor25.00_pos4_[03-30]_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser3_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser3_motor25.00_pos4_[03-30]_VOFFSET210
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser3_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser3_motor25.00_pos5_[03-30]_VOFFSET630
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser3_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser3_motor25.00_pos3_[03-30]_VOFFSET840
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser3_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser3_motor25.00_pos3_[03-30]_VOFFSET420
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser3_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos1_[03-30]_again_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser3_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos1_[03-30]_again_VOFFSET630
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser3_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos1_[03-30]_again_VOFFSET840
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser3_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos1_[03-30]_again_VOFFSET420
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser3_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser3_motor25.00_pos3_[03-30]_VOFFSET630
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser3_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser3_motor25.00_pos5_[03-30]_VOFFSET840
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser3_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser3_motor25.00_pos5_[03-30]_VOFFSET420
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser3_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser3_motor25.00_pos5_[03-30]_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser3_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos2_[03-30]_again_VOFFSET210
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing500/Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos4_[03-30]_VOFFSET210
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing500/Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos2_[03-30]_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing500/Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos5_[03-30]_VOFFSET630
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing500/Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos3_[03-30]_VOFFSET420
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing500/Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos3_[03-30]_VOFFSET840
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing500/Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos3_[03-30]_VOFFSET630
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing500/Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos5_[03-30]_VOFFSET420
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing500/Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos5_[03-30]_VOFFSET840
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing500/Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos2_[03-30]_VOFFSET210
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing500/Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos1_[03-30]_VOFFSET210
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing500/Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos3_[03-30]_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing500/Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos1_[03-30]_VOFFSET630
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing500/Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos4_[03-30]_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing500/Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos4_[03-30]_VOFFSET420
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing500/Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos4_[03-30]_VOFFSET840
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing500/Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos2_[03-30]_VOFFSET630
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing500/Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos3_[03-30]_VOFFSET210
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing500/Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos5_[03-30]_VOFFSET210
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing500/Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos2_[03-30]_VOFFSET420
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing500/Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos2_[03-30]_VOFFSET840
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing500/Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos5_[03-30]_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing500/Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos4_[03-30]_VOFFSET630
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing500/Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos1_[03-30]_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing500/Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos1_[03-30]_VOFFSET840
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing500/Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos1_[03-30]_VOFFSET420
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing400/Flat_10 (black)_timing400_ag1_dg1_laser1_motor25.00_pos5_[03-30]_VOFFSET630
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing400/Flat_10 (black)_timing400_ag1_dg1_laser1_motor25.00_pos2_[03-30]_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing400/Flat_10 (black)_timing400_ag1_dg1_laser1_motor25.00_pos3_[03-30]_VOFFSET420
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing400/Flat_10 (black)_timing400_ag1_dg1_laser1_motor25.00_pos3_[03-30]_VOFFSET840
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing400/Flat_10 (black)_timing400_ag1_dg1_laser1_motor25.00_pos4_[03-30]_VOFFSET210
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing400/Flat_10 (black)_timing400_ag1_dg1_laser1_motor25.00_pos2_[03-30]_VOFFSET210
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing400/Flat_10 (black)_timing400_ag1_dg1_laser1_motor25.00_pos3_[03-30]_VOFFSET630
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing400/Flat_10 (black)_timing400_ag1_dg1_laser1_motor25.00_pos5_[03-30]_VOFFSET420
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing400/Flat_10 (black)_timing400_ag1_dg1_laser1_motor25.00_pos5_[03-30]_VOFFSET840
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing400/Flat_10 (black)_timing400_ag1_dg1_laser1_motor25.00_pos3_[03-30]_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing400/Flat_10 (black)_timing400_ag1_dg1_laser1_motor25.00_pos1_[03-30]_VOFFSET210
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing400/Flat_10 (black)_timing400_ag1_dg1_laser1_motor25.00_pos1_[03-30]_VOFFSET630
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing400/Flat_10 (black)_timing400_ag1_dg1_laser1_motor25.00_pos4_[03-30]_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing400/Flat_10 (black)_timing400_ag1_dg1_laser1_motor25.00_pos3_[03-30]_VOFFSET210
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing400/Flat_10 (black)_timing400_ag1_dg1_laser1_motor25.00_pos4_[03-30]_VOFFSET420
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing400/Flat_10 (black)_timing400_ag1_dg1_laser1_motor25.00_pos4_[03-30]_VOFFSET840
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing400/Flat_10 (black)_timing400_ag1_dg1_laser1_motor25.00_pos2_[03-30]_VOFFSET630
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing400/Flat_10 (black)_timing400_ag1_dg1_laser1_motor25.00_pos2_[03-30]_VOFFSET420
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing400/Flat_10 (black)_timing400_ag1_dg1_laser1_motor25.00_pos5_[03-30]_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing400/Flat_10 (black)_timing400_ag1_dg1_laser1_motor25.00_pos2_[03-30]_VOFFSET840
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing400/Flat_10 (black)_timing400_ag1_dg1_laser1_motor25.00_pos4_[03-30]_VOFFSET630
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing400/Flat_10 (black)_timing400_ag1_dg1_laser1_motor25.00_pos5_[03-30]_VOFFSET210
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing400/Flat_10 (black)_timing400_ag1_dg1_laser1_motor25.00_pos1_[03-30]_VOFFSET840
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing400/Flat_10 (black)_timing400_ag1_dg1_laser1_motor25.00_pos1_[03-30]_VOFFSET420
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing400/Flat_10 (black)_timing400_ag1_dg1_laser1_motor25.00_pos1_[03-30]_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos1_[03-30]_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos4_[03-30]_VOFFSET210
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos5_[03-30]_VOFFSET630
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos5_[03-30]_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos3_[03-30]_VOFFSET840
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos3_[03-30]_VOFFSET420
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos3_[03-30]_VOFFSET630
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos5_[03-30]_VOFFSET840
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos5_[03-30]_VOFFSET420
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos2_[03-30]_VOFFSET210
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos1_[03-30]_VOFFSET210
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos4_[03-30]_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos1_[03-30]_VOFFSET630
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos3_[03-30]_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos4_[03-30]_VOFFSET840
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos4_[03-30]_VOFFSET420
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos2_[03-30]_VOFFSET630
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos3_[03-30]_VOFFSET210
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos5_[03-30]_VOFFSET210
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos2_[03-30]_VOFFSET840
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos2_[03-30]_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos2_[03-30]_VOFFSET420
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos4_[03-30]_VOFFSET630
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos1_[03-30]_VOFFSET420
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-30/Laser1_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos1_[03-30]_VOFFSET840
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-19/RoughSphere_outermost_motor10_timing400
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-19/RoughSphere_3cmAway_motor20_timing400
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-19/RoughSphere_3cmAway_motor10_timing400
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-19/RoughSphere_outermost_motor20_timing400
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-31/PBS210_noND_motor10
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-31/PBS180_noND_motor10
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-31/PBS220_noND_motor10
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-31/PBS220_ND0p3_motor25
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-31/PBS220_ND1p5_motor10
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-31/PBS190_noND_motor25
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-31/PBS160_noND_motor10
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-31/PBS170_noND_motor10
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-31/PBS160_ND1p5_motor10
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-31/PBS190_ND1p5_motor10
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-31/PBS220_noND_motor25
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-31/PBS160_ND0p3_motor25
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-31/PBS190_ND0p3_motor25
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-31/PBS190_noND_motor10
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-31/PBS200_noND_motor10
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-31/PBS160_noND_motor25
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-07/Flat_10 (black)_stitching process/Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos5_[04-07]_RERE_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-07/Flat_10 (black)_stitching process/Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos5_[04-07]_RERE_VOFFSET640
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-07/Flat_10 (black)_stitching process/Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos11_[04-07]_RERE_VOFFSET320
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-07/Flat_10 (black)_stitching process/Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos2_[04-07]_RERE_VOFFSET320
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-07/Flat_10 (black)_stitching process/Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos12_[04-07]_RERE_VOFFSET640
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-07/Flat_10 (black)_stitching process/Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos7_[04-07]_RERE_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-07/Flat_10 (black)_stitching process/Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos6_[04-07]_RERE_VOFFSET320
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-07/Flat_10 (black)_stitching process/Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos9_[04-07]_RERE_VOFFSET320
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-07/Flat_10 (black)_stitching process/Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos5_[04-07]_RERE_VOFFSET320
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-07/Flat_10 (black)_stitching process/Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos9_[04-07]_RERE_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-07/Flat_10 (black)_stitching process/Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos2_[04-07]_RERE_VOFFSET640
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-07/Flat_10 (black)_stitching process/Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos11_[04-07]_RERE_VOFFSET640
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-07/Flat_10 (black)_stitching process/Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos12_[04-07]_RERE_VOFFSET320
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-07/Flat_10 (black)_stitching process/Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos9_[04-07]_RERE_VOFFSET640
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-07/Flat_10 (black)_stitching process/Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos11_[04-07]_RERE_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-07/Flat_10 (black)_stitching process/Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos6_[04-07]_RERE_VOFFSET640
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-07/Flat_10 (black)_stitching process/Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos3_[04-07]_RERE_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-07/Flat_10 (black)_stitching process/Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos8_[04-07]_RERE_VOFFSET320
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-07/Flat_10 (black)_stitching process/Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos7_[04-07]_RERE_VOFFSET320
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-07/Flat_10 (black)_stitching process/Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos4_[04-07]_RERE_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-07/Flat_10 (black)_stitching process/Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos3_[04-07]_RERE_VOFFSET320
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-07/Flat_10 (black)_stitching process/Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos10_[04-07]_RERE_VOFFSET320
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-07/Flat_10 (black)_stitching process/Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos4_[04-07]_RERE_VOFFSET640
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-07/Flat_10 (black)_stitching process/Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos1_[04-07]_RE_VOFFSET640
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-07/Flat_10 (black)_stitching process/Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos6_[04-07]_RERE_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-07/Flat_10 (black)_stitching process/Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos7_[04-07]_RERE_VOFFSET640
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-07/Flat_10 (black)_stitching process/Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos8_[04-07]_RERE_VOFFSET640
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-07/Flat_10 (black)_stitching process/Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos12_[04-07]_RERE_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-07/Flat_10 (black)_stitching process/Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos8_[04-07]_RERE_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-07/Flat_10 (black)_stitching process/Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos1_[04-07]_RE_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-07/Flat_10 (black)_stitching process/Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos10_[04-07]_RERE_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-07/Flat_10 (black)_stitching process/Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos10_[04-07]_RERE_VOFFSET640
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-07/Flat_10 (black)_stitching process/Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos3_[04-07]_RERE_VOFFSET640
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-07/Flat_10 (black)_stitching process/Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos2_[04-07]_RERE_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-07/Flat_10 (black)_stitching process/Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos1_[04-07]_RE_VOFFSET320
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-07/Flat_10 (black)_stitching process/Flat_10 (black)_timing250_ag1_dg1_laser1_shutter30_motor10.00_pos4_[04-07]_RERE_VOFFSET320
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-07/vid_2021-04-07_11-24-13
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-07/vid_2021-04-07_11-39-27
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-01/nofm_test
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-01/Clear acrylic/Flat_10 (clear)_timing250_ag1_dg1_laser1_motor25.00_pos4_[04-01]_VOFFSET210
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-01/Clear acrylic/Flat_10 (clear)_timing250_ag1_dg1_laser1_motor25.00_pos3_[04-01]_VOFFSET840
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-01/Clear acrylic/Flat_10 (clear)_timing250_ag1_dg1_laser1_motor25.00_pos3_[04-01]_VOFFSET420
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-01/Clear acrylic/Flat_10 (clear)_timing250_ag1_dg1_laser1_motor25.00_pos4_[04-01]_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-01/Clear acrylic/Flat_10 (clear)_timing250_ag1_dg1_laser1_motor25.00_pos5_[04-01]_VOFFSET630
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-01/Clear acrylic/Flat_10 (clear)_timing250_ag1_dg1_laser1_motor25.00_pos1_[04-01]_VOFFSET210
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-01/Clear acrylic/Flat_10 (clear)_timing250_ag1_dg1_laser1_motor25.00_pos5_[04-01]_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-01/Clear acrylic/Flat_10 (clear)_timing250_ag1_dg1_laser1_motor25.00_pos5_[04-01]_VOFFSET840
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-01/Clear acrylic/Flat_10 (clear)_timing250_ag1_dg1_laser1_motor25.00_pos5_[04-01]_VOFFSET420
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-01/Clear acrylic/Flat_10 (clear)_timing250_ag1_dg1_laser1_motor25.00_pos3_[04-01]_VOFFSET630
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-01/Clear acrylic/Flat_10 (clear)_timing250_ag1_dg1_laser1_motor25.00_pos1_[04-01]_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-01/Clear acrylic/Flat_10 (clear)_timing250_ag1_dg1_laser1_motor25.00_pos2_[04-01]_VOFFSET210
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-01/Clear acrylic/Flat_10 (clear)_timing250_ag1_dg1_laser1_motor25.00_pos2_[04-01]_VOFFSET630
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-01/Clear acrylic/Flat_10 (clear)_timing250_ag1_dg1_laser1_motor25.00_pos4_[04-01]_VOFFSET840
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-01/Clear acrylic/Flat_10 (clear)_timing250_ag1_dg1_laser1_motor25.00_pos4_[04-01]_VOFFSET420
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-01/Clear acrylic/Flat_10 (clear)_timing250_ag1_dg1_laser1_motor25.00_pos3_[04-01]_VOFFSET210
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-01/Clear acrylic/Flat_10 (clear)_timing250_ag1_dg1_laser1_motor25.00_pos1_[04-01]_VOFFSET630
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-01/Clear acrylic/Flat_10 (clear)_timing250_ag1_dg1_laser1_motor25.00_pos2_[04-01]_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-01/Clear acrylic/Flat_10 (clear)_timing250_ag1_dg1_laser1_motor25.00_pos1_[04-01]_VOFFSET420
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-01/Clear acrylic/Flat_10 (clear)_timing250_ag1_dg1_laser1_motor25.00_pos1_[04-01]_VOFFSET840
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-01/Clear acrylic/Flat_10 (clear)_timing250_ag1_dg1_laser1_motor25.00_pos5_[04-01]_VOFFSET210
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-01/Clear acrylic/Flat_10 (clear)_timing250_ag1_dg1_laser1_motor25.00_pos3_[04-01]_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-01/Clear acrylic/Flat_10 (clear)_timing250_ag1_dg1_laser1_motor25.00_pos4_[04-01]_VOFFSET630
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-01/Clear acrylic/Flat_10 (clear)_timing250_ag1_dg1_laser1_motor25.00_pos2_[04-01]_VOFFSET840
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-01/Clear acrylic/Flat_10 (clear)_timing250_ag1_dg1_laser1_motor25.00_pos2_[04-01]_VOFFSET420
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-01/nofm_test3
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-01/nofm_test2
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-01/clear_3dp
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-29/Timing500/Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos3_[03-29]_VOFFSET420
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-29/Timing500/Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos3_[03-29]_VOFFSET840
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-29/Timing500/Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos5_[03-29]_VOFFSET630
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-29/Timing500/Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos4_[03-29]_VOFFSET210
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-29/Timing500/Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos2_[03-29]_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-29/Timing500/Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos1_[03-29]_VOFFSET210
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-29/Timing500/Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos3_[03-29]_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-29/Timing500/Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos2_[03-29]_VOFFSET210
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-29/Timing500/Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos5_[03-29]_VOFFSET420
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-29/Timing500/Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos5_[03-29]_VOFFSET840
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-29/Timing500/Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos3_[03-29]_VOFFSET630
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-29/Timing500/Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos3_[03-29]_VOFFSET210
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-29/Timing500/Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos4_[03-29]_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-29/Timing500/Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos2_[03-29]_VOFFSET630
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-29/Timing500/Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos4_[03-29]_VOFFSET420
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-29/Timing500/Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos4_[03-29]_VOFFSET840
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-29/Timing500/Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos1_[03-29]_VOFFSET630
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-29/Timing500/Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos5_[03-29]_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-29/Timing500/Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos1_[03-29]_VOFFSET840
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-29/Timing500/Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos1_[03-29]_VOFFSET420
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-29/Timing500/Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos4_[03-29]_VOFFSET630
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-29/Timing500/Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos2_[03-29]_VOFFSET420
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-29/Timing500/Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos2_[03-29]_VOFFSET840
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-29/Timing500/Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos1_[03-29]_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-29/Timing500/Flat_10 (black)_timing500_ag1_dg1_laser1_motor25.00_pos5_[03-29]_VOFFSET210
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-29/Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos3_[03-29]_VOFFSET840
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-29/Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos3_[03-29]_VOFFSET420
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-29/Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos5_[03-29]_VOFFSET630
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-29/Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos1_[03-29]_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-29/Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos4_[03-29]_VOFFSET210
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-29/Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos5_[03-29]_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-29/Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos1_[03-29]_VOFFSET210
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-29/Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos4_[03-29]_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-29/Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos2_[03-29]_VOFFSET210
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-29/Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos5_[03-29]_VOFFSET840
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-29/Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos5_[03-29]_VOFFSET420
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-29/Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos3_[03-29]_VOFFSET630
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-29/Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos3_[03-29]_VOFFSET210
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-29/Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos3_[03-29]_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-29/Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos2_[03-29]_VOFFSET630
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-29/Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos4_[03-29]_VOFFSET840
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-29/Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos4_[03-29]_VOFFSET420
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-29/Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos1_[03-29]_VOFFSET630
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-29/Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos2_[03-29]_VOFFSET0
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-29/Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos1_[03-29]_VOFFSET420
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-29/Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos1_[03-29]_VOFFSET840
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-29/Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos4_[03-29]_VOFFSET630
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-29/Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos2_[03-29]_VOFFSET840
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-29/Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos2_[03-29]_VOFFSET420
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-29/Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos5_[03-29]_VOFFSET210
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-08/Flat_10 (black)_timing250_ag1_dg1_laser1_shutter100_motor25_pos8_[04-07]
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-08/2_1_1_10 (clear 3dp)_timing400_ag1_dg1_laser1_shutter30_motor10_pos8_[04-08]
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-08/Flat_10 (black)_timing400_ag1_dg1_laser1_shutter100_motor10_pos8_[04-07]
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-08/Flat_10 (black)_timing250_ag1_dg1_laser1_shutter100_motor25_pos8_[04-07]_RE
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-12/Flat_10 (black)_timing400/Flat_10 (black) (9)_motor3.95
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-12/Flat_10 (black)_timing400/Flat_10 (black) (9)_motor6.58
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-12/Flat_10 (black)_timing400/Flat_10 (black) (9)_motor22.37
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-12/Flat_10 (black)_timing400/Flat_10 (black) (9)_motor9.21
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-12/Flat_10 (black)_timing400/Flat_10 (black) (9)_motor21.05
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-12/Flat_10 (black)_timing400/Flat_10 (black) (9)_motor7.89
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-12/Flat_10 (black)_timing400/Flat_10 (black) (9)_motor0.00
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-12/Flat_10 (black)_timing400/Flat_10 (black) (9)_motor23.68
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-12/Flat_10 (black)_timing400/Flat_10 (black) (9)_motor18.42
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-12/Flat_10 (black)_timing400/Flat_10 (black) (9)_motor14.47
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-12/Flat_10 (black)_timing400/Flat_10 (black) (9)_motor5.26
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-12/Flat_10 (black)_timing400/Flat_10 (black) (9)_motor11.84
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-12/Flat_10 (black)_timing400/Flat_10 (black) (9)_motor15.79
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-12/Flat_10 (black)_timing400/Flat_10 (black) (9)_motor2.63
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-12/Flat_10 (black)_timing400/Flat_10 (black) (9)_motor19.74
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-12/Flat_10 (black)_timing400/Flat_10 (black) (9)_motor25.00
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-12/Flat_10 (black)_timing400/Flat_10 (black) (9)_motor1.32
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-12/Flat_10 (black)_timing400/Flat_10 (black) (9)_motor17.11
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-12/Flat_10 (black)_timing400/Flat_10 (black) (9)_motor13.16
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-12/2_1_1_10 (black)_timing400/2_1_1_10 (black)_motor5.26
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-12/2_1_1_10 (black)_timing400/2_1_1_10 (black)_motor2.63
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-12/2_1_1_10 (black)_timing400/2_1_1_10 (black)_motor21.05
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-12/2_1_1_10 (black)_timing400/2_1_1_10 (black)_motor1.32
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-12/2_1_1_10 (black)_timing400/2_1_1_10 (black)_motor22.37
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-12/2_1_1_10 (black)_timing400/2_1_1_10 (black)_motor13.16
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-12/2_1_1_10 (black)_timing400/2_1_1_10 (black)_motor17.11
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-12/2_1_1_10 (black)_timing400/2_1_1_10 (black)_motor3.95
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-12/2_1_1_10 (black)_timing400/2_1_1_10 (black)_motor6.58
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-12/2_1_1_10 (black)_timing400/2_1_1_10 (black)_motor9.21
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-12/2_1_1_10 (black)_timing400/2_1_1_10 (black)_motor25.00
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-12/2_1_1_10 (black)_timing400/2_1_1_10 (black)_motor15.79
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-12/2_1_1_10 (black)_timing400/2_1_1_10 (black)_motor19.74
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-12/2_1_1_10 (black)_timing400/2_1_1_10 (black)_motor11.84
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-12/2_1_1_10 (black)_timing400/2_1_1_10 (black)_motor14.47
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-12/2_1_1_10 (black)_timing400/2_1_1_10 (black)_motor7.89
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-12/2_1_1_10 (black)_timing400/2_1_1_10 (black)_motor23.68
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-12/2_1_1_10 (black)_timing400/2_1_1_10 (black)_motor0.00
+/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-04-12/2_1_1_10 (black)_timing400/2_1_1_10 (black)_motor18.42

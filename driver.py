@@ -231,6 +231,8 @@ def foo5(path):
     os.chdir(owd)
 
     return x,y,u,v
+# %%
+foo2('/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-results/2021-03-30/Laser1_Timing300/Flat_10 (black)_timing300_ag1_dg1_laser1_motor25.00_pos4_[03-30]_VOFFSET420/0,0,0,0_32,26,50/series_003_1')
 
 # %%
 path_flat1 = 'C:/Users/yj/Dropbox (Harvard University)/Riblet/data/piv-results/2021-04-12/Flat_10 (black)_timing400/Flat_10 (black) (9)_motor10.53/0,0,700,0_32,26,40/series_003_95'

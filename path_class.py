@@ -4,6 +4,11 @@ import os
 import re
 import yaml
 
+# import pathlib
+# pathlib.Path.cwd()
+
+# %%
+
 # %%
 class path_class:
     def __init__(self, parent_path):               
@@ -12,7 +17,7 @@ class path_class:
         rel_rpath = re.findall("[\d]{4}-[\d]{2}-[\d]{2}.*",self.path)[0] # + version        
 
         with open('path_setting.yml') as f:
-            path_setting = yaml.safe_load(f)           
+            path_setting = yaml.safe_load(f)
         
         try:
             self.results_path = os.path.join(os.path.normpath(path_setting['result_path'][0]), rel_rpath)

@@ -13,7 +13,7 @@ from pathlib import Path
 base_path = Path('/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/')
 out_path = Path('/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-results/')
 
-date = '2021-04-06'
+date = '2021-04-05'
 # %%
 def base_to_out(path_in):    
     assert isinstance(path_in,Path)        
