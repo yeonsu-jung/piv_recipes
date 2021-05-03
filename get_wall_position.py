@@ -7,6 +7,44 @@ from matplotlib import pyplot as plt
 from scipy.signal import argrelextrema
 from scipy.signal import find_peaks
 
+def get_wall_pos3(img, check_img = False): # img or img path
+    num_col = img.shape[1]
+    row_averaged = np.zeros(num_col)
+    for i in range(num_col):
+        row_averaged[i] = np.sum(img[:,i])
+
+    # plt.plot(row_averaged,'o-')
+    # plt.show()
+
+    peaks, _ = find_peaks(row_averaged,distance=100)
+    peaks = sorted(peaks,key = lambda x: -row_averaged[x])
+    
+    # print(peaks)
+
+    # plt.plot(row_averaged[peaks],'o-')
+    # plt.show()
+
+    idx1 = min(peaks[0],peaks[1])
+    idx2 = max(peaks[0],peaks[1])
+
+    w1_new = np.zeros(img.shape,dtype=np.bool)
+    w2_new = np.zeros(img.shape,dtype=np.bool)
+
+    w1_new[:,idx1] = 1    
+    w2_new[:,idx2] = 1
+
+    if check_img:
+        row_dim = img.shape[0]
+        plt.imshow(img)
+        plt.plot([idx1,idx1],[0,row_dim],'r-',linewidth=0.5)
+        plt.plot([idx2,idx2],[0,row_dim],'r-',linewidth=0.5)
+        plt.show()
+
+    return idx1, idx2, w1_new, w2_new
+
+
+# %%
+
 def get_wall_pos2(img, check_img = False): # img or img path
     num_col = img.shape[1]
     row_averaged = np.zeros(num_col)
