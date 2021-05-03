@@ -3,7 +3,11 @@ import falkner_skan
 reload(falkner_skan)
 from falkner_skan import falkner_skan
 
-
+# %%
+def fs_query(eta_q,delta_eta,m):
+    eta,f0,f1,f2 = falkner_skan(m)
+    return np.interp(eta_q,eta-delta_eta,f1)
+# %%
 # %%
 eta,f0,f1,f2= falkner_skan(-0.01,7)
 plt.plot(eta,f1)
@@ -16,12 +20,6 @@ plt.plot(eta,f1)
 
 eta,f0,f1,f2= falkner_skan(0.2,7)
 plt.plot(eta,f1)
-
-# %%
-def fs_query(eta_q,delta_eta,m):
-    eta,f0,f1,f2 = falkner_skan(m)
-    return np.interp(eta_q,eta-delta_eta,f1)
-# %%
 
 # %%
 xtmp = np.linspace(0,7,15)
