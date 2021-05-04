@@ -166,10 +166,10 @@ containing_dir_list
 # %% SHORTLISTING
 containing_dir_shortlist = []
 
-keyword1 = '2021-04-06'
-keyword2 = ''
-exclude1 = '1600'
-exclude2 = 'filled'
+keyword1 = '2021-04-07'
+keyword2 = 'stitching'
+exclude1 = 'qq'
+exclude2 = 'cropped'
 for pth in containing_dir_list:
     if keyword1 in str(pth) and keyword2 in str(pth) and not exclude1 in str(pth) and not exclude2 in str(pth):
         containing_dir_shortlist.append(pth)
@@ -191,8 +191,8 @@ for img_dir in img_dir_list:
     img_a = mpimg.imread(img_dir.joinpath('frame_000010.tiff'))
     img_b = mpimg.imread(img_dir.joinpath('frame_000011.tiff'))
 
-    wa1_pos, wa2_pos, wa1, wa2 = get_wall_pos3(img_a, check_img=False, check_plots = False)
-    wb1_pos, wb2_pos, wb1, wb2 = get_wall_pos3(img_b, check_img=False, check_plots = False)
+    wa1_pos, wa2_pos, wa1, wa2 = get_wall_pos3(img_a, check_img=True, check_plots = False)
+    wb1_pos, wb2_pos, wb1, wb2 = get_wall_pos3(img_b, check_img=True, check_plots = False)
 
     wpos_a_path = base_to_out(img_dir).joinpath('wall_a_position.txt')
     wpos_b_path = base_to_out(img_dir).joinpath('wall_b_position.txt')
@@ -236,15 +236,26 @@ for pth in containing_dir_shortlist:
     np.savetxt(pth.joinpath('v_se.txt'),v_se)
 
 # %%
+import logging
+logger = logging.getLogger('piv')
+hdlr = logging.FileHandler('piv.log')
+formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
+hdlr.setFormatter(formatter)
+logger.addHandler(hdlr)
+logger.setLevel(logging.INFO)
+
 def fs_wall_shear(m):
     eta,f0,f1,f2 = falkner_skan(m)
     return f2[0]
 
-def falkner_scan_fitting(xx,yy,ee,img_path):
-    _p0 = (0,0,600,10)
-    _bounds = ((-10,-0.08,200,0.1),(10,3,1200,100))
+def falkner_scan_fitting(xx,yy,ee,img_path,_p0 = (0,0,300,10),_bounds = ((-10,-0.08,200,0.1),(10,3,1000,100))):    
     
-    popt,pcov = curve_fit(fs_query,xx,yy,p0=_p0,bounds=_bounds)
+    try:
+        popt,pcov = curve_fit(fs_query,xx,yy,p0=_p0,bounds=_bounds)
+    except RuntimeError as e:
+        logger.error('RuntimeError in %s: '%str(img_path)+ str(e))
+        return
+
     perr = np.sqrt(np.diag(pcov))
     rel_err = perr/popt
         
@@ -263,7 +274,7 @@ def falkner_scan_fitting(xx,yy,ee,img_path):
     tau = f20*1e-3*((m+1)/2)**0.5*(346**3/1e-6/50)**0.5*1e-3
     tau_err = tau*(rel_err[1]*0.5 + rel_err[2]*1.5 + x_err/x*0.5)
 
-    xtmp2 = np.linspace(-delta_y,np.max(xtmp),100)
+    xtmp2 = np.linspace(-delta_y,np.max(xx),100)
 
     plt.errorbar(xx,yy,ee,fmt='o',capsize=4)
 
@@ -288,7 +299,13 @@ def falkner_scan_fitting(xx,yy,ee,img_path):
     plt.close()
 
 # %%
-for pth in containing_dir_shortlist:
+containing_dir_shortlist = sorted(containing_dir_shortlist,key=lambda x: (int(re.findall('_pos(\d+)_',x.parents[1].name)[0]),int(re.findall('_VOFFSET(\d+)',x.parents[1].name)[0])))
+containing_dir_shortlist
+# %%
+for ii,pth in enumerate(containing_dir_shortlist):
+    print(ii, pth.parents[1].name)
+# %%
+for pth in containing_dir_shortlist[10:]:
     xpath = os.path.join(pth,'x.txt')
     ypath = os.path.join(pth,'y.txt')
     upath = os.path.join(pth,'u.txt')
@@ -329,23 +346,44 @@ for pth in containing_dir_shortlist:
 
     if not si_pth.is_dir():
         os.makedirs(si_pth)
+    elif si_pth.is_dir():        
+        m = si_pth.parent.glob(str(si_pth.name)+'*')
+        m = sorted(m)
+        for tmp in m:
+            lst = []
+            num = re.findall('\((\d)\)',tmp.name)    
+            if num == []:
+                lst.append(1)
+            else:
+                lst.append(int( num[0] ))
+            new_no = sorted([x for x in range(lst[0], lst[-1]+2) if x not in lst])[0]
+        si_pth = pth.joinpath(f'starting_index_{starting_index1}_{starting_index2} ({new_no})')        
+        os.makedirs(si_pth)
 
-    for k in range(x_data.shape[0]):
+    for k in range(x_data.shape[0]//5,4*x_data.shape[0]//5,10):
         x1 = -x_data[k,:starting_index1]+x_data[k,starting_index1]
         y1 = -v_mean[k,:starting_index1]
         e1 = v_se[k,:starting_index1]
+        
+        p0 = (0,0,400,10)
+        bounds = ((-1,-0.08,200,0.1),(3,2,600,10))
 
-        falkner_scan_fitting(x1,y1,e1,si_pth.joinpath('fitting_back_%03d.png'%k))    
+        falkner_scan_fitting(x1,y1,e1,si_pth.joinpath('fitting_back_%03d.png'%k),_p0=p0,_bounds=bounds)
 
         x2 = x_data[k,starting_index2:]-x_data[k,starting_index2]
         y2 = -v_mean[k,starting_index2:]
         e2 = v_se[k,starting_index2:]
 
-        falkner_scan_fitting(x2,y2,e2,si_pth.joinpath('fitting_front_%03d.png'%k))
+        falkner_scan_fitting(x2,y2,e2,si_pth.joinpath('fitting_front_%03d.png'%k),_p0=p0,_bounds=bounds)
 # %%
 out_to_base(pth)
 # %%
-pth
+print(si_pth)
+
+
+# %%
+for tst in range(x_data.shape[0]//5,4*x_data.shape[0]//5,10):
+    print(tst)
 # %%
 starting_index1 = 1
 'starting_index_{si}'.format(si=starting_index1)
