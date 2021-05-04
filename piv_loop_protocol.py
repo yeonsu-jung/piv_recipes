@@ -324,13 +324,13 @@ len(matches)
 
 
 # %%
+base_path = Path('/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/')
+out_path = Path('/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-results/')
 
 # %%
-t = time()
+tmpth = base_path.joinpath('2021-04-06/Flat_10 (black)_motor10_particle4_hori1024_laser1-4_nd0p7')
+# %%
+tmpth.is_dir()
+# %%
+piv_over_time(image_dir_path=tmpth,start_index=3,N=1)
 
-for pth in [x for x in base_path.joinpath('2021-04-06').iterdir()]:
-    print(pth.name)
-    piv_over_time(pth,start_index=3,N=2)
-
-el = time()-t
-print('Total elapsed time: %.4f sec'% el)

@@ -4,7 +4,7 @@ crop:
 - 0
 - 0
 - 0
-pixel_density: 40
+pixel_density: 70
 rotate: 0
 scale_factor: 10000.0
 dt: 0.00025
