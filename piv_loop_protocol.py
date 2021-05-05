@@ -42,7 +42,7 @@ for subd in out_path.iterdir():
 
     
 # %%
-date = '2021-04-06'
+date = '2021-03-31'
 
 
 # %%
@@ -315,6 +315,13 @@ for pth in not_analyzed_paths:
 el = time()-t
 print('Total elapsed time: %.4f sec'% el)
 # %%
+specific_path = Path('/Users/yeonsu/Dropbox (Harvard University)/Riblet/data/piv-data/2021-03-31')
+pth_lst = []
+
+for pth in specific_path.iterdir():
+    if pth.is_dir():
+        print(pth.name)
+    piv_over_time(pth)
 
      
 
