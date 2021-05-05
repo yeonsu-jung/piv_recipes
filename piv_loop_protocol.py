@@ -70,7 +70,8 @@ for subd in base_path.iterdir():
 
     print(subd.name)
     active_paths.append(subd)
-
+# %%
+active_path = ['2021-04-06']
 # %%
 all_paths = []
 for apth in active_paths:
@@ -92,7 +93,7 @@ for containing_dir in all_paths:
         u_containing_dir = u.parent            
 
         num_frames = int(re.findall('\d+_(\d+)',str(u_containing_dir.name))[0])
-        print(num_frames)
+        # print(num_frames)
         if num_frames > 60:
             already_analyzed_paths.append(containing_dir)
 
